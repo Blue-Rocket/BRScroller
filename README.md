@@ -59,7 +59,8 @@ Finally, you'll need to add the path to the directory containing the
 `BRScroller.framework` bundle as a **Framework Search Paths** value in
 the **Build Settings** tab of the project settings.
 
-Dependent Project Integration -----------------------------
+Dependent Project Integration
+-----------------------------
 
 The other way you can integrate BRScroller into your project is to add
 the BRScroller Xcode project as a dependent project of your project. The
