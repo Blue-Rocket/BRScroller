@@ -26,7 +26,22 @@ of the demos available in that project:
 * **AsyncPhotoViewController**
 
   A demo that showcases a common scenario: the display of images in a
-  similar way to the iOS built-in Photos app.
+  similar way to the iOS built-in Photos app. Smaller _preview_ images
+  are shown while scrolling between photos. When you pinch to zoom any
+  particular photo, the full-resolution version of that is shown.
+  
+* **DemoTiledViewController**
+
+  Demonstrates using a `CATiledLayer` backed view to render arbitrarily
+  large content.
+
+* **MultiViewController**
+
+  Shows how multiple scrollers can be used together, with a full-screen
+  scroller representing full-detail pages of content and a small ribbon
+  scroller representing thumbnails corresponding to the full-detail
+  pages. Tapping on a thumbnail causes the full-detail page to animate
+  into view.
 
 Static Framework Project Integration
 ------------------------------------
