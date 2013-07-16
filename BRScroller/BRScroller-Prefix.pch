@@ -1,0 +1,18 @@
+//
+// Prefix header for all source files of the 'BRScroller' target in the 'BRScroller' project
+//
+
+#ifdef __OBJC__
+	#import <Foundation/Foundation.h>
+#endif
+
+#define log4Error NSLog
+#ifdef LOGGING
+#define log4Info NSLog
+#define log4Debug NSLog
+#define log4Trace NSLog
+#else
+#define log4Info(...)
+#define log4Debug(...)
+#define log4Trace(...)
+#endif

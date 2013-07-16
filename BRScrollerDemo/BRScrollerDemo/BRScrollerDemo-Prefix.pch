@@ -1,0 +1,25 @@
+//
+// Prefix header for all source files of the 'BRScrollerDemo' target in the 'BRScrollerDemo' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_1
+#warning "This project uses features only available in iOS SDK 5.1 and later."
+#endif
+
+#ifdef __OBJC__
+	#import <UIKit/UIKit.h>
+	#import <Foundation/Foundation.h>
+#endif
+
+#define log4Error NSLog
+#ifdef LOGGING
+#define log4Info NSLog
+#define log4Debug NSLog
+#define log4Trace NSLog
+#else
+#define log4Info(...)
+#define log4Debug(...)
+#define log4Trace(...)
+#endif
