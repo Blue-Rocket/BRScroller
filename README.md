@@ -73,7 +73,7 @@ section of the **Build Phases** tab in the project settings:
 
  * `QuartzCore.framework`
 
-Next, add `-ObjC` as an *Other Linker Flags* build setting.
+Next, add `-ObjC` as an **Other Linker Flags** build setting.
 
 Finally, you'll need to add the path to the directory containing the
 `BRScroller.framework` bundle as a **Framework Search Paths** value in
@@ -100,7 +100,7 @@ section of the **Build Phases** tab in the project settings:
 
  * `QuartzCore.framework`
 
-Next, add `-ObjC` as an *Other Linker Flags* build setting.
+Next, add `-ObjC` as an **Other Linker Flags** build setting.
 
 Finally, you'll need to add the path to the directory containing the
 *BRScroller.xcodeproj* file as a **Header Search Paths** value in the
