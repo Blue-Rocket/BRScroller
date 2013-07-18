@@ -3,12 +3,26 @@ BRScroller
 
 Memory-friendly iOS horizontally scrolling view.
 
-BRScroller provides a `UIScrollView` subclass that efficiently manages horizontally-scrolling *pages* of content, much like a `UITableView` manages vertically-scrolling *rows* of content. In addition, BRScroller provides some scaffolding for the memory-efficient and UI-responsive display of high resolution content, such as photos. In this respect, BRScroller can be used in similar ways as [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser), [TTPhotoViewController](https://github.com/enormego/three20), or [EGOPhotoViewer](https://github.com/enormego/PhotoViewer). Where BRScroller differs, however, is that it does not provide any built-in UI. Instead of forcing any particular UI, you can build any UI that suits your application, relying on BRScroller to perform just the low-level (dare I say, *boring*) work of helping you managing memory efficiently.
+BRScroller provides a `UIScrollView` subclass that efficiently manages
+horizontally-scrolling *pages* of content, much like a `UITableView`
+manages vertically-scrolling *rows* of content. In addition, BRScroller
+provides some scaffolding for the memory-efficient and UI-responsive
+display of high resolution content, such as photos. In this respect,
+BRScroller can be used in similar ways as
+[MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser),
+[TTPhotoViewController](https://github.com/enormego/three20), or
+[EGOPhotoViewer](https://github.com/enormego/PhotoViewer). Where
+BRScroller differs, however, is that it does not provide any built-in
+UI. Instead of forcing any particular UI, you can build any UI that
+suits your application, relying on BRScroller to perform just the
+low-level (dare I say, *boring*) work of helping you managing memory
+efficiently.
 
 Requirements
 ------------
 
-BRScroller has no dependencies outside the iOS SDK. It supports deployment to any iOS device, version **5.1** or later.
+BRScroller has no dependencies outside the iOS SDK. It supports
+deployment to any iOS device, version **5.1** or later.
 
 Example Usage
 -------------
@@ -53,6 +67,12 @@ that target, which will produce a `BRScroller.framework` bundle at the
 root project directory. Copy that framework into your project and add it
 as a build dependency.
 
+You must also add the following linker build dependencies, which you can
+do by clicking the **+** button in the **Link Binary With Libraries**
+section of the **Build Phases** tab in the project settings:
+
+ * `QuartzCore.framework`
+
 Next, add `-ObjC` as an *Other Linker Flags* build setting.
 
 Finally, you'll need to add the path to the directory containing the
@@ -71,8 +91,14 @@ own project. The **BRScrollerDemo** project is set up this way.
 To do this, drag the **BRScroller.xcodeproj** onto your project in the
 Project Navigator. Then go to the **Build Phases** tab of your project's
 settings. Expand the **Target Dependencies** section and click the **+**
-button. You should see the **BRScroller** static library target as an
+button. You should see the `BRScroller` static library target as an
 available option. Select that and click the **Add** button.
+
+You must also add the following linker build dependencies, which you can
+do by clicking the **+** button in the **Link Binary With Libraries**
+section of the **Build Phases** tab in the project settings:
+
+ * `QuartzCore.framework`
 
 Next, add `-ObjC` as an *Other Linker Flags* build setting.
 
@@ -80,4 +106,9 @@ Finally, you'll need to add the path to the directory containing the
 *BRScroller.xcodeproj* file as a **Header Search Paths** value in the
 **Build Settings** tab of the project settings. If you have added
 BRFullTextSearch as a git submodule to your own project, then the path
-might be something like **"$(PROJECT_DIR)/../BRScroller"**.
+might be something like `"$(PROJECT_DIR)/../BRScroller"`.
+
+More detailed information on Xcode dependent projects can be found
+online, for example
+[here](http://www.cocoanetics.com/2011/12/sub-projects-in-xcode/) or
+[here](https://www.google.com/search?q=xcode+dependent+projects).
