@@ -40,6 +40,7 @@
 		C9775D7B1795F84F006E3C1E /* MultiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9775D791795F84E006E3C1E /* MultiViewController.xib */; };
 		C98BF8501793A91300026093 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98BF84F1793A91300026093 /* QuartzCore.framework */; };
 		C98BF8521793C01E00026093 /* 10.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C98BF8511793C01E00026093 /* 10.jpeg */; };
+		C994A8D9179F3751008204CE /* InfiniteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C994A8D8179F3751008204CE /* InfiniteViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,8 @@
 		C9775D791795F84E006E3C1E /* MultiViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiViewController.xib; sourceTree = "<group>"; };
 		C98BF84F1793A91300026093 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C98BF8511793C01E00026093 /* 10.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 10.jpeg; sourceTree = "<group>"; };
+		C994A8D7179F3751008204CE /* InfiniteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfiniteViewController.h; sourceTree = "<group>"; };
+		C994A8D8179F3751008204CE /* InfiniteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfiniteViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +171,8 @@
 				C9775D711795D441006E3C1E /* DemoTiledViewController.xib */,
 				C9775D741795D500006E3C1E /* DemoZoomingTiledView.h */,
 				C9775D751795D500006E3C1E /* DemoZoomingTiledView.m */,
+				C994A8D7179F3751008204CE /* InfiniteViewController.h */,
+				C994A8D8179F3751008204CE /* InfiniteViewController.m */,
 				C9775D771795F84E006E3C1E /* MultiViewController.h */,
 				C9775D781795F84E006E3C1E /* MultiViewController.m */,
 				C9775D791795F84E006E3C1E /* MultiViewController.xib */,
@@ -326,6 +331,7 @@
 				C9775D721795D441006E3C1E /* DemoTiledViewController.m in Sources */,
 				C9775D761795D501006E3C1E /* DemoZoomingTiledView.m in Sources */,
 				C9775D7A1795F84F006E3C1E /* MultiViewController.m in Sources */,
+				C994A8D9179F3751008204CE /* InfiniteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,10 @@
 //  to the UI displaying the scroll view, for example to update labels or buttons to reflect
 //  the state of the scroller.
 //
+//  NOTE when BRScrollerView is configured in "infinite" mode (i.e. the infinite property == YES)
+//  then all page index values must be translated to an offset by calling infinitePageOffsetForIndex:
+//  to obtain a relative page offset from a "middle" reference point in the infinite page index space.
+//
 //  Created by Matt on 7/11/13.
 //  Copyright (c) 2013 Blue Rocket. Distributable under the terms of the Apache License, Version 2.0.
 //

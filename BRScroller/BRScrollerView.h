@@ -24,6 +24,10 @@
 // if YES, display pages left-to-right in descending order, if NO then left-to-right in ascending order
 @property (nonatomic, getter=isReverseLayoutOrder) BOOL reverseLayoutOrder;
 
+// if YES, operate in "infinite" mode, where an approximate of infinite pages are supported;
+// setting to YES automatically hides the scroll bars
+@property (nonatomic, getter = isInfinite) BOOL infinite;
+
 // return YES if pages have been loaded and are currently cached
 @property (nonatomic, readonly, getter=isLoaded) BOOL loaded;
 
@@ -59,5 +63,9 @@
 // jump to the "previous" page, which depending on the reverseLayoutOrder property will
 // cause the scroll view to move right or left a single page
 - (void)gotoPreviousPage;
+
+// translate between "infinite" page offsets and page index values
+- (NSInteger)infinitePageOffsetForIndex:(NSUInteger)index;
+- (NSUInteger)pageIndexForInfiniteOffset:(NSInteger)offset;
 
 @end

@@ -21,6 +21,7 @@
 	BOOL centeringReload;
 	BOOL scrolling;
 	BOOL adjustingContent;
+	BOOL infinite;
 	
 	int lastScrollDirection;
 	CGFloat lastScrollOffset;
@@ -30,6 +31,7 @@
 }
 
 @synthesize scrollerDelegate, loaded, reverseLayoutOrder;
+@synthesize infinite;
 
 - (id)initWithFrame:(CGRect)frame {
 	if ( (self = [super initWithFrame:frame]) ) {
@@ -38,7 +40,8 @@
 		self.scrollEnabled = YES;
 		self.userInteractionEnabled = YES;
 		self.multipleTouchEnabled = YES;
-		self.opaque = NO;
+		self.showsVerticalScrollIndicator = NO;
+		self.opaque = NO; // FIXME: this should be YES, shouldn't it?
 		self.backgroundColor = [UIColor clearColor];
 	}
 	return self;
@@ -65,6 +68,14 @@
 - (void)setDelegate:(id<UIScrollViewDelegate>)delegate {
 	if ( delegate != nil ) {
 		NSAssert(NO, @"You may not set a scroll view delegate on a %@", NSStringFromClass([self class]));
+	}
+}
+
+- (void)setInfinite:(BOOL)value {
+	infinite = value;
+	if ( value == YES ) {
+		self.showsHorizontalScrollIndicator = NO;
+		self.showsVerticalScrollIndicator = NO;
 	}
 }
 

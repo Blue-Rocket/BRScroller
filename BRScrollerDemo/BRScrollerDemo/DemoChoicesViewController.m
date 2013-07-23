@@ -16,7 +16,7 @@
 
 - (id)initWithStyle:(UITableViewStyle)style {
 	if ( (self = [super initWithStyle:style]) ) {
-		classes = @[@"SimpleViewController", @"AsyncPhotoViewController", @"DemoTiledViewController", @"MultiViewController"];
+		classes = @[@"SimpleViewController", @"AsyncPhotoViewController", @"DemoTiledViewController", @"MultiViewController", @"InfiniteViewController"];
 	}
 	return self;
 }
@@ -58,6 +58,10 @@
 			
 		case 3:
 			cell.detailTextLabel.text = @"A full-screen paging scroller with a small thumbnail navigation scroller.";
+			break;
+			
+		case 4:
+			cell.detailTextLabel.text = @"Shows a lot of pages. Almost infinitely many!";
 			break;
 			
 		default:
