@@ -23,6 +23,7 @@
 	BOOL adjustingContent;
 	BOOL infinite;
 	
+	CGFloat pageWidth;
 	int lastScrollDirection;
 	CGFloat lastScrollOffset;
 	NSUInteger head;
@@ -79,10 +80,17 @@
 	}
 }
 
+- (void)cachePageWidth {
+	pageWidth = ([scrollerDelegate respondsToSelector:@selector(uniformPageWidthForScroller:)]
+				 ? [scrollerDelegate uniformPageWidthForScroller:self]
+				 : self.bounds.size.width);
+}
+
 #pragma mark Public API
 
 - (void)reloadDataCenteredOnPage:(NSUInteger)index {
 	// disable implicit animation here, so we avoid a "stretching" effect
+	[self cachePageWidth];
 	[CATransaction begin]; {
 		[CATransaction setDisableActions:YES];
 		CGFloat xOffset = [self scrollOffsetForPageIndex:index];
@@ -178,6 +186,7 @@
 	[super setFrame:frame];
 	if ( loaded ) {
 		// automatically go back to former page index
+		[self cachePageWidth];
 		[self gotoPage:currIndex animated:NO];
 		[self setNeedsLayout];
 	}
@@ -189,6 +198,7 @@
 	[super setBounds:bounds];
 	if ( loaded && !BRFloatsAreEqual(bounds.size.width, oldBounds.size.width) ) {
 		// automatically go back to former page index
+		[self cachePageWidth];
 		[self gotoPage:currIndex animated:NO];
 		[self setNeedsLayout];
 	}
@@ -202,11 +212,7 @@
 	// based on the current view bounds... if it doesn't match the epxected size, we re-lay out the pages.
 	
 	CGFloat height = self.bounds.size.height;
-	CGFloat pageWidth = self.bounds.size.width;
-	if ( [scrollerDelegate respondsToSelector:@selector(uniformPageWidthForScroller:)] ) {
-		pageWidth = [scrollerDelegate uniformPageWidthForScroller:self];
-	} // TODO: implement individual page length layout
-	
+	[self cachePageWidth];
 	NSUInteger numPages = [scrollerDelegate numberOfPagesInScroller:self];
 	CGFloat width = numPages * pageWidth;
 	
@@ -232,24 +238,18 @@
 	}
 }
 
-- (CGFloat)scrollOffsetForPageIndex:(NSUInteger)index {
-    CGFloat pageWidth = 0;
-	if ( [scrollerDelegate respondsToSelector:@selector(uniformPageWidthForScroller:)] ) {
-		pageWidth = [scrollerDelegate uniformPageWidthForScroller:self];
-	} else {
-		pageWidth = self.bounds.size.width;
-	} // TODO: implement individual page length layout
+- (CGFloat)scrollOffsetForPageIndex:(const NSUInteger)index {
 	return [self scrollOffsetForPageIndex:index pageWidth:pageWidth pageCount:[scrollerDelegate numberOfPagesInScroller:self]];
 }
 
-- (CGFloat)scrollOffsetForPageIndex:(NSUInteger)index pageWidth:(CGFloat)pageWidth pageCount:(NSUInteger)pageCount {
+- (CGFloat)scrollOffsetForPageIndex:(NSUInteger)index pageWidth:(const CGFloat)thePageWidth pageCount:(const NSUInteger)pageCount {
 	if ( index >= pageCount ) {
 		index = 0; // force to page 1
 	}
-	CGFloat width = pageCount * pageWidth;
+	CGFloat width = pageCount * thePageWidth;
 	return (reverseLayoutOrder
-			? (width - ((CGFloat)(index + 1) * pageWidth))
-			: (CGFloat)index * pageWidth);
+			? (width - ((CGFloat)(index + 1) * thePageWidth))
+			: (CGFloat)index * thePageWidth);
 }
 
 - (void)releaseAllContainers {
@@ -291,17 +291,12 @@
 		reloadDataRange.length = pages.count;
 	}
 	
-	CGFloat pageLength = 0;
-	if ( [scrollerDelegate respondsToSelector:@selector(uniformPageWidthForScroller:)] ) {
-		pageLength = [scrollerDelegate uniformPageWidthForScroller:self];
-	}
-	
 	for ( NSUInteger i = reloadDataRange.location; i < (reloadDataRange.location + reloadDataRange.length); i++ ) {
 		UIView *container = (UIView *)[pages objectAtIndex:i];
 		CGFloat xOffset = (reverseLayoutOrder
-						   ? (self.contentSize.width - ((newHead + i + 1) * pageLength))
-						   : ((newHead + i) * pageLength));
-		CGRect newFrame = CGRectMake(xOffset, 0, pageLength, self.bounds.size.height);
+						   ? (self.contentSize.width - ((newHead + i + 1) * pageWidth))
+						   : ((newHead + i) * pageWidth));
+		CGRect newFrame = CGRectMake(xOffset, 0, pageWidth, self.bounds.size.height);
 		log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)(newHead + i),
 				  NSStringFromCGRect(container.frame), NSStringFromCGRect(newFrame));
 		container.frame = newFrame;
@@ -311,13 +306,13 @@
 	head = newHead;
 }
 
-- (NSUInteger)calculateHeadForPageWidth:(CGFloat)pageWidth numPages:(NSUInteger)pageCount {
+- (NSUInteger)calculateHeadForPageWidth:(const CGFloat)thePageWidth numPages:(const NSUInteger)pageCount {
 	// we change head pointer when scrolling past half-way width of pages, so swapping them around
 	// does not affect visible pages
 	CGFloat scrollOffset = (reverseLayoutOrder
 							? self.contentSize.width - self.contentOffset.x - self.bounds.size.width
 							: self.contentOffset.x);
-	CGFloat pageOffset = (scrollOffset - (pageWidth / 2.0)) / pageWidth;
+	CGFloat pageOffset = (scrollOffset - (thePageWidth / 2.0)) / thePageWidth;
 	NSUInteger h = MIN([scrollerDelegate numberOfPagesInScroller:self] - pageCount,
 					   MAX(0, floorf(pageOffset)));
 	log4Trace(@"offset %f, pageOffset = %f, pageCount = %lu, head = %lu, newHead = %lu", scrollOffset, pageOffset,
@@ -325,58 +320,49 @@
 	return h;
 }
 
-- (NSUInteger)calculateCenterForPageWidth:(CGFloat)pageWidth
-								  numPages:(NSUInteger)pageCount {
+- (NSUInteger)calculateCenterForPageWidth:(const CGFloat)thePageWidth
+								  numPages:(const NSUInteger)pageCount {
 	// calculate "center" visible page, and report that. this really designed
 	// for "paging" mode, where pages are full width of this view's bounds
 	CGFloat xOffset = (reverseLayoutOrder
 					   ? (self.contentSize.width - self.contentOffset.x - (self.bounds.size.width / 2.0))
 					   : (self.contentOffset.x + (self.bounds.size.width / 2.0)));
 	NSUInteger c = MIN([scrollerDelegate numberOfPagesInScroller:self],
-					   MAX(0, floorf(xOffset / pageWidth)));
+					   MAX(0, floorf(xOffset / thePageWidth)));
 	log4Trace(@"offset %f, pageCount = %lu, center = %lu, newCenter = %lu", self.contentOffset.x,
 			  (unsigned long)pageCount, (unsigned long)centerIndex, (unsigned long)c);
 	return c;
 }
 
-- (void)recalculateScrollIndexesForNumberOfPages:(NSUInteger)pageCount {
-	CGFloat pageLength = 0;
-	if ( [scrollerDelegate respondsToSelector:@selector(uniformPageWidthForScroller:)] ) {
-		pageLength = [scrollerDelegate uniformPageWidthForScroller:self];
-	}
+- (void)recalculateScrollIndexesForNumberOfPages:(const NSUInteger)pageCount {
+	head = [self calculateHeadForPageWidth:pageWidth numPages:pageCount];
 	
-	head = [self calculateHeadForPageWidth:pageLength numPages:pageCount];
-	
-	centerIndex = [self calculateCenterForPageWidth:pageLength
-										   numPages:pageCount];
+	centerIndex = [self calculateCenterForPageWidth:pageWidth numPages:pageCount];
 }
 
 - (void)handleDidSettle {
 	scrolling = NO;
 	if ( self.pagingEnabled && [scrollerDelegate respondsToSelector:@selector(scroller:didSettleOnPage:)] ) {
-		CGFloat pageLength = 0;
-		if ( [scrollerDelegate respondsToSelector:@selector(uniformPageWidthForScroller:)] ) {
-			pageLength = [scrollerDelegate uniformPageWidthForScroller:self];
-		}
-		NSUInteger currCenter = [self calculateCenterForPageWidth:pageLength
-														 numPages:pages.count];
+		NSUInteger currCenter = [self calculateCenterForPageWidth:pageWidth numPages:pages.count];
 		[scrollerDelegate scroller:self didSettleOnPage:currCenter];
 	}
 }
 
+- (NSUInteger)pageCountForPageWidth:(const CGFloat)thePageWidth viewWidth:(const CGFloat)viewWidth {
+	return (infinite
+			? (NSUInteger)ceilf(viewWidth / thePageWidth) + 4 // + 2 for adjacent to view + 2 extra for smooth scrolling
+			: [scrollerDelegate numberOfPagesInScroller:self]);
+}
+
 - (void)reloadDataInternal {
+	const CGRect viewBounds = self.bounds;
 	log4Debug(@"Frame %@, scroller bounds %@, center %@, offset %f", NSStringFromCGRect(self.frame),
-			  NSStringFromCGRect(self.bounds), NSStringFromCGPoint(self.center), self.contentOffset.x);
-	NSUInteger numPages = [scrollerDelegate numberOfPagesInScroller:self];
-	CGFloat pageWidth = 0;
-	if ( [scrollerDelegate respondsToSelector:@selector(uniformPageWidthForScroller:)] ) {
-		pageWidth = [scrollerDelegate uniformPageWidthForScroller:self];
-	} // TODO: implement individual page length layout
-	CGFloat width = numPages * pageWidth;
-	CGSize currSize = self.bounds.size;
+			  NSStringFromCGRect(viewBounds), NSStringFromCGPoint(self.center), self.contentOffset.x);
+	const NSUInteger numPages = [self pageCountForPageWidth:pageWidth viewWidth:viewBounds.size.width];
+	const CGFloat width = numPages * pageWidth;
 	
 	// determine number of pages to hold in memory (viewable + 2 for extra left and right)
-	NSUInteger len = MIN(numPages, (NSUInteger)ceilf(currSize.width / pageWidth) + 2);
+	const NSUInteger len = MIN(numPages, (NSUInteger)ceilf(viewBounds.size.width / pageWidth) + 2);
 	NSUInteger idx = 0;
 	BOOL reverse = reverseLayoutOrder;
 	
@@ -390,12 +376,12 @@
 	}
 	[self recalculateScrollIndexesForNumberOfPages:len];
 	if ( !(BRFloatsAreEqual(self.contentSize.width, width)
-		   && BRFloatsAreEqual(self.contentSize.height, currSize.height)) ) {
-		self.contentSize = CGSizeMake(width, currSize.height);
+		   && BRFloatsAreEqual(self.contentSize.height, viewBounds.size.height)) ) {
+		self.contentSize = CGSizeMake(width, viewBounds.size.height);
 		
 		// in reverse mode, make sure if content width smaller than view width that content starts from right edge
-		if ( reverse && width < currSize.width ) {
-			self.contentInset = UIEdgeInsetsMake(0, (currSize.width - width), 0, 0);
+		if ( reverse && width < viewBounds.size.width ) {
+			self.contentInset = UIEdgeInsetsMake(0, (viewBounds.size.width - width), 0, 0);
 		} else {
 			self.contentInset = UIEdgeInsetsZero;
 		}
@@ -404,7 +390,7 @@
 		CGFloat xOffset = (reverse
 						   ? (width - ((CGFloat)(i + 1) * pageWidth))
 						   : (CGFloat)i * pageWidth);
-		CGRect pageRect = CGRectMake(xOffset, 0.0, pageWidth, self.bounds.size.height);
+		CGRect pageRect = CGRectMake(xOffset, 0.0, pageWidth, viewBounds.size.height);
 		UIView *container;
 		UIView *page;
 		if ( idx < pages.count ) {
@@ -436,19 +422,13 @@
 }
 
 - (void)layoutForCurrentScrollOffset {
-	CGFloat pageLength = 0;
-	if ( [scrollerDelegate respondsToSelector:@selector(uniformPageWidthForScroller:)] ) {
-		pageLength = [scrollerDelegate uniformPageWidthForScroller:self];
-	}
-	
 	// calculate current "head" index
-	NSUInteger currHead = [self calculateHeadForPageWidth:pageLength numPages:pages.count];
+	NSUInteger currHead = [self calculateHeadForPageWidth:pageWidth numPages:pages.count];
 	if ( currHead != head ) {
 		[self layoutContainersForHead:currHead];
 	}
 	
-	NSUInteger currCenter = [self calculateCenterForPageWidth:pageLength
-													 numPages:pages.count];
+	NSUInteger currCenter = [self calculateCenterForPageWidth:pageWidth numPages:pages.count];
 	if ( currCenter != centerIndex && currCenter < [scrollerDelegate numberOfPagesInScroller:self] ) {
 		if ( [scrollerDelegate respondsToSelector:@selector(scroller:willLeavePage:)] ) {
 			[scrollerDelegate scroller:self willLeavePage:centerIndex];
