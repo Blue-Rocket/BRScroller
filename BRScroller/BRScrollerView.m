@@ -126,7 +126,7 @@
 		if ( !animated ) {
 			scrolling = NO;
 			centeringReload = NO;
-			[self layoutForScrollView:self];
+			[self layoutForCurrentScrollOffset];
 			[CATransaction commit];
 			if ( centerIndex < [scrollerDelegate numberOfPagesInScroller:self]
 				&& [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
@@ -435,7 +435,7 @@
 	[self flashScrollIndicators];
 }
 
-- (void)layoutForScrollView:(UIScrollView *)scrollView {
+- (void)layoutForCurrentScrollOffset {
 	CGFloat pageLength = 0;
 	if ( [scrollerDelegate respondsToSelector:@selector(uniformPageWidthForScroller:)] ) {
 		pageLength = [scrollerDelegate uniformPageWidthForScroller:self];
@@ -471,7 +471,7 @@
 		lastScrollOffset = scrollView.contentOffset.x;
 	}
 	NSUInteger oldCenter = centerIndex;
-	[self layoutForScrollView:scrollView];
+	[self layoutForCurrentScrollOffset];
 	if ( oldCenter != centerIndex && centerIndex < [scrollerDelegate numberOfPagesInScroller:self] ) {
 		if ( [scrollerDelegate respondsToSelector:@selector(scroller:didLeavePage:)] ) {
 			[scrollerDelegate scroller:self didLeavePage:oldCenter];
