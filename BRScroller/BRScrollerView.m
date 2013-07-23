@@ -41,7 +41,7 @@
 		self.userInteractionEnabled = YES;
 		self.multipleTouchEnabled = YES;
 		self.showsVerticalScrollIndicator = NO;
-		self.opaque = NO; // FIXME: this should be YES, shouldn't it?
+		self.opaque = YES;
 		self.backgroundColor = [UIColor clearColor];
 	}
 	return self;
