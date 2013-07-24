@@ -391,9 +391,11 @@ static const NSUInteger kInfiniteOrigin = 256;
 		if ( offset != 0 ) {
 			infiniteOffset += offset;
 			const CGRect viewBounds = self.bounds;
+			CGFloat centerOffset = [self scrollOffsetForPageIndex:centerIndexInternal];
+			CGFloat perfectOffsetDiff = self.contentOffset.x - centerOffset;
 			[CATransaction begin]; {
 				[CATransaction setDisableActions:YES];
-				CGFloat xOffset = [self scrollOffsetForPageIndex:kInfiniteOrigin];
+				CGFloat xOffset = [self scrollOffsetForPageIndex:kInfiniteOrigin] + perfectOffsetDiff;
 				centeringReload = YES;
 				[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
 				centeringReload = NO;
