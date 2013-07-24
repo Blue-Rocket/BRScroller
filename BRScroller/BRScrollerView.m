@@ -137,13 +137,21 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 }
 
 - (void)gotoPage:(const NSUInteger)index animated:(BOOL)animated {
+	const BOOL crossingInfiniteBounds = (infinite == NO ? NO : ((index > centerIndex && (index - centerIndex) > kInfiniteOrigin / 2) || (index < centerIndex && (centerIndex - index) > kInfiniteOrigin / 2)));
+	if ( crossingInfiniteBounds ) {
+		// cannot animate easily because we cross infinite bounds :-(
+		log4Info(@"Crossing infinite boundary; animation disabled implicitly.");
+		infiniteOffset = index;
+		[self reloadDataCenteredOnPage:index];
+		return;
+	}
 	const NSUInteger internalIndex = [self internalPageIndexForExternalPageIndex:index];
     CGFloat xOffset = [self scrollOffsetForPageIndex:internalIndex];
 	if ( !BRFloatsAreEqual(xOffset, self.contentOffset.x) ) {
 		if ( !animated ) {
 			centeringReload = YES;
 			[CATransaction begin];
-			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+			[CATransaction setDisableActions:YES];
 		}
 		[self setContentOffset:CGPointMake(xOffset, 0) animated:animated];
 		if ( !animated ) {
@@ -379,53 +387,57 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 	centerIndex = [self calculateCenterForPageWidth:pageWidth numContainers:containerCount];
 }
 
+- (void)handleInfiniteShuffle {
+	const NSUInteger centerIndexInternal = [self internalPageIndexForExternalPageIndex:centerIndex];
+	const NSInteger offset = (centerIndexInternal == kInfiniteOrigin ? 0 : (centerIndexInternal > kInfiniteOrigin
+																			? (NSInteger)(centerIndexInternal - kInfiniteOrigin)
+																			: -(NSInteger)(kInfiniteOrigin - centerIndexInternal)));
+	if ( offset != 0 ) {
+		infiniteOffset = (infiniteOffset + offset);
+		const CGRect viewBounds = self.bounds;
+		const CGFloat oldScrollOffset = self.contentOffset.x;
+		const CGFloat perfectOffsetDiff = oldScrollOffset - [self scrollOffsetForPageIndex:centerIndexInternal];
+		const NSUInteger oldHead = head;
+		const BOOL reloadLeft = oldHead == 0;
+		const BOOL reloadRight = oldHead == (pageCount - [pages count]);
+		[CATransaction begin]; {
+			[CATransaction setDisableActions:YES];
+			CGFloat xOffset = [self scrollOffsetForPageIndex:kInfiniteOrigin] + perfectOffsetDiff;
+			centeringReload = YES;
+			[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
+			centeringReload = NO;
+			NSUInteger newHead = [self calculateHeadForPageWidth:pageWidth numContainers:pages.count];
+			if ( reloadLeft || reloadRight ) {
+				// we've scrolled to the end of our current scroll bounds, so we need to shift the views over 1
+				// so we don't reload views we've already configured. To do that, we trick
+				// layoutContainersForHead: by setting head, so it shifts appropriately.
+				head = newHead + (reloadLeft ? 1 : -1);
+				[self layoutContainersForHead:newHead];
+			} else {
+				head = newHead;
+			}
+			for ( NSUInteger i = 0; i < [pages count]; i++ ) {
+				const NSUInteger pageIndex = head + i;
+				UIView *container = (UIView *)[pages objectAtIndex:i];
+				CGFloat xOffset = (reverseLayoutOrder
+								   ? ((pageCount * pageWidth) - ((pageIndex + 1) * pageWidth))
+								   : (pageIndex * pageWidth));
+				CGPoint newCenter = CGPointMake(xOffset + pageWidth * 0.5, viewBounds.size.height * 0.5);
+				log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)pageIndex,
+						  NSStringFromCGPoint(container.center), NSStringFromCGPoint(newCenter));
+				container.center = newCenter;
+			}
+		} [CATransaction commit];
+	}
+}
+
 - (void)handleDidSettle {
 	scrolling = NO;
 	if ( self.pagingEnabled && [scrollerDelegate respondsToSelector:@selector(scroller:didSettleOnPage:)] ) {
 		[scrollerDelegate scroller:self didSettleOnPage:centerIndex];
 	}
 	if ( infinite == YES ) {
-		const NSUInteger centerIndexInternal = [self internalPageIndexForExternalPageIndex:centerIndex];
-		const NSInteger offset = (centerIndexInternal == kInfiniteOrigin ? 0 : (centerIndexInternal > kInfiniteOrigin
-																				? (NSInteger)(centerIndexInternal - kInfiniteOrigin)
-																				: -(NSInteger)(kInfiniteOrigin - centerIndexInternal)));
-		if ( offset != 0 ) {
-			infiniteOffset += offset;
-			const CGRect viewBounds = self.bounds;
-			const CGFloat oldScrollOffset = self.contentOffset.x;
-			const CGFloat perfectOffsetDiff = oldScrollOffset - [self scrollOffsetForPageIndex:centerIndexInternal];
-			const NSUInteger oldHead = head;
-			const BOOL reloadLeft = oldHead == 0;
-			const BOOL reloadRight = oldHead == (pageCount - [pages count]);
-			[CATransaction begin]; {
-				[CATransaction setDisableActions:YES];
-				CGFloat xOffset = [self scrollOffsetForPageIndex:kInfiniteOrigin] + perfectOffsetDiff;
-				centeringReload = YES;
-				[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
-				centeringReload = NO;
-				NSUInteger newHead = [self calculateHeadForPageWidth:pageWidth numContainers:pages.count];
-				if ( reloadLeft || reloadRight ) {
-					// we've scrolled to the end of our current scroll bounds, so we need to shift the views over 1
-					// so we don't reload views we've already configured. To do that, we trick
-					// layoutContainersForHead: by setting head, so it shifts appropriately.
-					head = newHead + (reloadLeft ? 1 : -1);
-					[self layoutContainersForHead:newHead];
-				} else {
-					head = newHead;
-				}
-				for ( NSUInteger i = 0; i < [pages count]; i++ ) {
-					const NSUInteger pageIndex = head + i;
-					UIView *container = (UIView *)[pages objectAtIndex:i];
-					CGFloat xOffset = (reverseLayoutOrder
-									   ? ((pageCount * pageWidth) - ((pageIndex + 1) * pageWidth))
-									   : (pageIndex * pageWidth));
-					CGPoint newCenter = CGPointMake(xOffset + pageWidth * 0.5, viewBounds.size.height * 0.5);
-					log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)pageIndex,
-							  NSStringFromCGPoint(container.center), NSStringFromCGPoint(newCenter));
-					container.center = newCenter;
-				}
-			} [CATransaction commit];
-		}
+		[self handleInfiniteShuffle];
 	}
 }
 
