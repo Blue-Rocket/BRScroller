@@ -8,7 +8,7 @@
 //  the state of the scroller.
 //
 //  NOTE when BRScrollerView is configured in "infinite" mode (i.e. the infinite property == YES)
-//  then all page index values must be translated to an offset by calling infinitePageOffsetForIndex:
+//  then all page index values can be translated to signed offsets by calling infinitePageOffsetForIndex:
 //  to obtain a relative page offset from a "middle" reference point in the infinite page index space.
 //
 //  Created by Matt on 7/11/13.

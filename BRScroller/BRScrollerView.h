@@ -24,8 +24,13 @@
 // if YES, display pages left-to-right in descending order, if NO then left-to-right in ascending order
 @property (nonatomic, getter=isReverseLayoutOrder) BOOL reverseLayoutOrder;
 
-// if YES, operate in "infinite" mode, where an approximate of infinite pages are supported;
-// setting to YES automatically hides the scroll bars
+// If YES, operate in "infinite" mode, where an approximation of infinite pages are supported;
+// there are of course at most NSUIntegerMax pages supported, but in this mode the scroll view
+// starts at an "origin" and you can scroll left or right, resulting in "offset" page values,
+// for example page offset -1 (left of origin) or page offset 1 (right of origin). Use the
+// infiniteOffsetForPageIndex: and pageIndexForInfiniteOffset: methods to translate the page
+// index values passed to delegate methods (which are unsigned integers) to signed offset values.
+// Setting to YES automatically hides the scroll bars.
 @property (nonatomic, getter = isInfinite) BOOL infinite;
 
 // return YES if pages have been loaded and are currently cached
