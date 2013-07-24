@@ -10,12 +10,14 @@
 
 #import <BRScroller/BRScroller.h>
 
-@interface InfiniteViewController () <BRScrollerDelegate>
+static const CGFloat kThumbWidth = 120;
 
+@interface InfiniteViewController () <BRScrollerDelegate>
 @end
 
 @implementation InfiniteViewController {
 	BRScrollerView *scrollView;
+	BRScrollerView *thumbView;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -33,6 +35,12 @@
 	scrollView.infinite = YES;
 	[self.view addSubview:scrollView];
 
+	thumbView = [[BRScrollerView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 120, self.view.bounds.size.width, 120)];
+	thumbView.scrollerDelegate = self;
+	thumbView.infinite = YES;
+	thumbView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+	[self.view addSubview:thumbView];
+	
 	self.navigationItem.title = NSStringFromClass([self class]);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																						   target:self
@@ -48,6 +56,7 @@
 	[super viewWillAppear:animated];
 	if ( scrollView.loaded == NO ) {
 		[scrollView reloadData];
+		[thumbView reloadData];
 	}
 }
 
@@ -59,10 +68,21 @@
 	[self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (IBAction)gotoPage:(UIGestureRecognizer *)sender {
+	NSUInteger destPage = sender.view.tag;
+	[scrollView gotoPage:destPage animated:YES];
+}
+
 #pragma mark - BRScrollerDelegate
 
 - (CGFloat)uniformPageWidthForScroller:(BRScrollerView *)scroller {
-	return scroller.bounds.size.width;
+	CGFloat result;
+	if ( scroller == scrollView ) {
+		result = scroller.bounds.size.width;
+	} else {
+		result = kThumbWidth;
+	}
+	return result;
 }
 
 - (NSUInteger)numberOfPagesInScroller:(BRScrollerView *)scroller {
@@ -71,9 +91,7 @@
 
 - (UIView *)createReusablePageViewForScroller:(BRScrollerView *)scroller {
 	UIView *pageView = [[UIView alloc] initWithFrame:scroller.bounds];
-	pageView.backgroundColor = [UIColor darkGrayColor];
-	pageView.layer.borderColor = [UIColor yellowColor].CGColor;
-	pageView.layer.borderWidth = 1.0;
+	pageView.backgroundColor = (scroller == scrollView ? [UIColor whiteColor] : [UIColor clearColor]);
 	UILabel *pageNumber = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
 	[pageView addSubview:pageNumber];
 	pageNumber.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin
@@ -85,6 +103,12 @@
 	pageNumber.textAlignment = NSTextAlignmentCenter;
 	pageNumber.backgroundColor = [UIColor grayColor];
 	pageNumber.center = CGPointMake(pageView.bounds.size.width * 0.5, pageView.bounds.size.height * 0.5);
+
+	// add a tap recognizer, so tapping on "thumb" navigates full scroller to associated page
+	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoPage:)];
+	tap.numberOfTapsRequired = 1;
+	[pageView addGestureRecognizer:tap];
+	
 	return pageView;
 }
 
@@ -93,6 +117,7 @@
 			view:(UIView *)reusablePageView {
 	UILabel *label = reusablePageView.subviews[0];
 	label.text = [NSString stringWithFormat:@"%ld", (long)[scroller infiniteOffsetForPageIndex:index]];
+	reusablePageView.tag = index; // simple way to know index in gotoPage:
 }
 
 - (void)scroller:(BRScrollerView *)scroller didSettleOnPage:(NSUInteger)index {
