@@ -180,7 +180,7 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 }
 
 - (NSRange)loadedReusablePageRange {
-	return NSMakeRange(head, pages.count);
+	return NSMakeRange(head, [pages count]);
 }
 
 - (NSUInteger)centerPageIndex {
@@ -247,7 +247,7 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 		self.contentSize = newSize;
 		adjustingContent = NO;
 		log4Debug(@"Laying out scroller pages at %dx%d", (int)pageWidth, (int)height);
-		for ( NSUInteger idx = 0, i = head, end = pages.count; idx < end; i++, idx++ ) {
+		for ( NSUInteger idx = 0, i = head, end = [pages count]; idx < end; i++, idx++ ) {
 			CGFloat xOffset = [self scrollOffsetForPageIndex:i pageWidth:pageWidth pageCount:pageCount];
 			CGRect pageRect = CGRectMake(xOffset, 0.0, pageWidth, height);
 			UIView *container = [pages objectAtIndex:idx];
@@ -306,7 +306,7 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 }
 
 - (UIView *)containerViewForIndex:(NSUInteger)index {
-	if ( index < head || (head + pages.count) <= index ) {
+	if ( index < head || (head + [pages count]) <= index ) {
 		// page not currently loaded
 		return nil;
 	}
@@ -317,16 +317,16 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 - (void)layoutContainersForHead:(NSUInteger)newHead {
 	// check if we can shift any curent containers
 	NSRange reloadDataRange = NSMakeRange(0, 0);
-	if ( newHead > head && newHead < (head + pages.count)  ) {
+	if ( newHead > head && newHead < (head + [pages count])  ) {
 		// scrolling right, shift
 		NSUInteger shiftLen = newHead - head;
-		reloadDataRange.location = pages.count - shiftLen;
+		reloadDataRange.location = [pages count] - shiftLen;
 		reloadDataRange.length = shiftLen;
 		for ( NSUInteger i = shiftLen; i < [pages count]; i++ ) {
 			log4Trace(@"Swapping page %lu and %lu", (unsigned long)i, (unsigned long)(i - shiftLen));
 			[pages exchangeObjectAtIndex:i withObjectAtIndex:(i - shiftLen)];
 		}
-	} else if ( newHead < head && (head - newHead) < pages.count ) {
+	} else if ( newHead < head && (head - newHead) < [pages count] ) {
 		// scrolling left, shift
 		NSUInteger shiftLen = head - newHead;
 		reloadDataRange.length = shiftLen;
@@ -406,7 +406,7 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 			centeringReload = YES;
 			[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
 			centeringReload = NO;
-			NSUInteger newHead = [self calculateHeadForPageWidth:pageWidth numContainers:pages.count];
+			NSUInteger newHead = [self calculateHeadForPageWidth:pageWidth numContainers:[pages count]];
 			if ( reloadLeft || reloadRight ) {
 				// we've scrolled to the end of our current scroll bounds, so we need to shift the views over 1
 				// so we don't reload views we've already configured. To do that, we trick
@@ -455,9 +455,9 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 	const NSUInteger len = MIN(pageCount, [self containerCountForViewWidth:viewBounds.size.width]);
 	NSUInteger idx = 0;
 	
-	if ( pages.count > len ) {
-		log4Debug(@"Discarding %d pages for reload", pages.count - len);
-		for ( idx = (pages.count - len); idx > 0; idx-- ) {
+	if ( [pages count] > len ) {
+		log4Debug(@"Discarding %d pages for reload", [pages count] - len);
+		for ( idx = ([pages count] - len); idx > 0; idx-- ) {
 			UIView *container = [pages lastObject];
 			[container removeFromSuperview];
 			[pages removeLastObject];
@@ -483,7 +483,7 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 		CGRect pageRect = CGRectMake(xOffset, 0.0, pageWidth, viewBounds.size.height);
 		UIView *container;
 		UIView *page;
-		if ( idx < pages.count ) {
+		if ( idx < [pages count] ) {
 			// reuse existing container
 			container = [pages objectAtIndex:idx];
 			container.bounds = pageFrame;
@@ -517,12 +517,12 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 
 - (void)layoutForCurrentScrollOffset {
 	// calculate current "head" index
-	NSUInteger currHead = [self calculateHeadForPageWidth:pageWidth numContainers:pages.count];
+	NSUInteger currHead = [self calculateHeadForPageWidth:pageWidth numContainers:[pages count]];
 	if ( currHead != head ) {
 		[self layoutContainersForHead:currHead];
 	}
 	
-	NSUInteger currCenter = [self calculateCenterForPageWidth:pageWidth numContainers:pages.count];
+	NSUInteger currCenter = [self calculateCenterForPageWidth:pageWidth numContainers:[pages count]];
 	if ( currCenter != centerIndex && (infinite == YES || currCenter < pageCount) ) {
 		if ( [scrollerDelegate respondsToSelector:@selector(scroller:willLeavePage:)] ) {
 			[scrollerDelegate scroller:self willLeavePage:centerIndex];
