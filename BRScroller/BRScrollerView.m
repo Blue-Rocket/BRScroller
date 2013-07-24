@@ -30,7 +30,7 @@ static const NSUInteger kInfiniteOrigin = 256;
 	int lastScrollDirection;
 	CGFloat lastScrollOffset;
 	NSUInteger head;
-	NSUInteger centerIndex;
+	NSUInteger centerIndex; // NOTE: this is an EXTERNAL index value
 	NSInteger infiniteOffset;
 	NSMutableArray *pages;
 }
@@ -129,14 +129,16 @@ static const NSUInteger kInfiniteOrigin = 256;
 	return [self reusablePageViewAtIndex:centerIndex];
 }
 
-- (UIView *)reusablePageViewAtIndex:(NSUInteger)viewIndex {
-	UIView *container = [self containerViewForIndex:viewIndex];
+- (UIView *)reusablePageViewAtIndex:(const NSUInteger)viewIndex {
+	const NSUInteger internalIndex = [self internalPageIndexForExternalPageIndex:viewIndex];
+	UIView *container = [self containerViewForIndex:internalIndex];
 	NSArray *sv = [container subviews];
 	return ([sv count] < 1 ? nil : [sv objectAtIndex:0]);
 }
 
-- (void)gotoPage:(NSUInteger)index animated:(BOOL)animated {
-    CGFloat xOffset = [self scrollOffsetForPageIndex:index];
+- (void)gotoPage:(const NSUInteger)index animated:(BOOL)animated {
+	const NSUInteger internalIndex = [self internalPageIndexForExternalPageIndex:index];
+    CGFloat xOffset = [self scrollOffsetForPageIndex:internalIndex];
 	if ( !BRFloatsAreEqual(xOffset, self.contentOffset.x) ) {
 		if ( !animated ) {
 			centeringReload = YES;
