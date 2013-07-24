@@ -10,3 +10,5 @@
 "next.label" = "➡";
 "show.thumbs" = "";
 "hide.thumbs" = "";
+"infiniti.minus.label" = "-∞";
+"infiniti.plus.label" = "+∞";

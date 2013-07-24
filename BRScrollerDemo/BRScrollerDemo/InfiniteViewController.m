@@ -47,6 +47,12 @@ static const CGFloat kThumbWidth = 120;
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																						   target:self
 																						   action:@selector(done:)];
+	UIBarButtonItem *prevButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"infiniti.minus.label", nil) style:UIBarButtonItemStylePlain target:self action:@selector(goInfinitiMinus:)];
+	UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"infiniti.plus.label", nil) style:UIBarButtonItemStylePlain target:self action:@selector(goInfinitiPlus:)];
+	NSDictionary *textAttr = @{ UITextAttributeFont : [UIFont boldSystemFontOfSize:18] };
+	[prevButton setTitleTextAttributes:textAttr forState:UIControlStateNormal];
+	[nextButton setTitleTextAttributes:textAttr forState:UIControlStateNormal];
+	self.navigationItem.leftBarButtonItems = @[prevButton, nextButton];
 }
 
 - (void)viewDidUnload {
@@ -68,6 +74,16 @@ static const CGFloat kThumbWidth = 120;
 
 - (IBAction)done:(id)sender {
 	[self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (IBAction)goInfinitiMinus:(id)sender {
+	[scrollView gotoPage:0 animated:YES];
+	[thumbView gotoPage:0 animated:YES];
+}
+
+- (IBAction)goInfinitiPlus:(id)sender {
+	[scrollView gotoPage:NSUIntegerMax animated:YES];
+	[thumbView gotoPage:NSUIntegerMax animated:YES];
 }
 
 - (IBAction)gotoPage:(UIGestureRecognizer *)sender {
