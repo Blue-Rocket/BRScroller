@@ -33,12 +33,14 @@ static const CGFloat kThumbWidth = 120;
 	scrollView.scrollerDelegate = self;
 	scrollView.pagingEnabled = YES;
 	scrollView.infinite = YES;
+	scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	[self.view addSubview:scrollView];
 
 	thumbView = [[BRScrollerView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 120, self.view.bounds.size.width, 120)];
 	thumbView.scrollerDelegate = self;
 	thumbView.infinite = YES;
 	thumbView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+	thumbView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 	[self.view addSubview:thumbView];
 	
 	self.navigationItem.title = NSStringFromClass([self class]);
