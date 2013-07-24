@@ -65,7 +65,7 @@
 - (void)gotoPreviousPage;
 
 // translate between "infinite" page offsets and page index values
-- (NSInteger)infinitePageOffsetForIndex:(NSUInteger)index;
+- (NSInteger)infiniteOffsetForPageIndex:(NSUInteger)index;
 - (NSUInteger)pageIndexForInfiniteOffset:(NSInteger)offset;
 
 @end

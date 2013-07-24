@@ -11,6 +11,8 @@
 #import "BRScrollerDelegate.h"
 #import "BRScrollerUtilities.h"
 
+static const NSUInteger kInfiniteOrigin = 256;
+
 @interface BRScrollerView () <UIScrollViewDelegate>
 @end
 
@@ -83,6 +85,18 @@
 
 #pragma mark Public API
 
+- (NSUInteger)pageIndexForInfiniteOffset:(NSInteger)offset {
+	return (NSUInteger)(kInfiniteOrigin + offset);
+}
+
+- (NSInteger)infiniteOffsetForPageIndex:(NSUInteger)index {
+	return (index == kInfiniteOrigin
+			? 0
+			: (index > kInfiniteOrigin
+			   ? (NSInteger)(index - kInfiniteOrigin)
+			   : -(NSInteger)(kInfiniteOrigin - index)));
+}
+
 - (void)reloadDataCenteredOnPage:(NSUInteger)index {
 	// disable implicit animation here, so we avoid a "stretching" effect
 	[self cachePageWidth];
@@ -101,7 +115,7 @@
 }
 
 - (void) reloadData {
-	[self reloadDataCenteredOnPage:0];
+	[self reloadDataCenteredOnPage:(infinite ? [self pageIndexForInfiniteOffset:0] : 0)];
 }
 
 - (void)releaseAllReusablePages {
@@ -243,8 +257,12 @@
 
 - (void)cachePageCount {
 	pageCount = (infinite
-				 ? (NSUInteger)ceilf(self.bounds.size.width / pageWidth) + 4 // + 2 for adjacent to view + 2 extra for smooth scrolling
+				 ? (kInfiniteOrigin * 2)
 				 : [scrollerDelegate numberOfPagesInScroller:self]);
+}
+
+- (NSUInteger)containerCountForViewWidth:(const CGFloat)viewWidth {
+	return (ceil(viewWidth / pageWidth) + 2); // +2 for adjacent containers (left + right)
 }
 
 - (CGFloat)scrollOffsetForPageIndex:(const NSUInteger)index {
@@ -252,12 +270,11 @@
 }
 
 - (CGFloat)scrollOffsetForPageIndex:(NSUInteger)index pageWidth:(const CGFloat)thePageWidth pageCount:(const NSUInteger)thePageCount {
-	if ( index >= thePageCount ) {
+	if ( infinite == NO && index >= thePageCount ) {
 		index = 0; // force to page 1
 	}
-	CGFloat width = thePageCount * thePageWidth;
 	return (reverseLayoutOrder
-			? (width - ((CGFloat)(index + 1) * thePageWidth))
+			? ((thePageCount * thePageWidth) - ((CGFloat)(index + 1) * thePageWidth))
 			: (CGFloat)index * thePageWidth);
 }
 
@@ -303,7 +320,7 @@
 	for ( NSUInteger i = reloadDataRange.location; i < (reloadDataRange.location + reloadDataRange.length); i++ ) {
 		UIView *container = (UIView *)[pages objectAtIndex:i];
 		CGFloat xOffset = (reverseLayoutOrder
-						   ? (self.contentSize.width - ((newHead + i + 1) * pageWidth))
+						   ? ((pageCount * pageWidth) - ((newHead + i + 1) * pageWidth))
 						   : ((newHead + i) * pageWidth));
 		CGRect newFrame = CGRectMake(xOffset, 0, pageWidth, self.bounds.size.height);
 		log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)(newHead + i),
@@ -318,11 +335,11 @@
 - (NSUInteger)calculateHeadForPageWidth:(const CGFloat)thePageWidth numContainers:(const NSUInteger)containerCount {
 	// we change head pointer when scrolling past half-way width of pages, so swapping them around
 	// does not affect visible pages
-	CGFloat scrollOffset = (reverseLayoutOrder
-							? self.contentSize.width - self.contentOffset.x - self.bounds.size.width
+	const CGFloat scrollOffset = (reverseLayoutOrder
+							? (CGFloat)(pageCount * pageWidth) - self.contentOffset.x - self.bounds.size.width
 							: self.contentOffset.x);
-	CGFloat pageOffset = (scrollOffset - (thePageWidth / 2.0)) / thePageWidth;
-	NSUInteger h = MIN(pageCount - containerCount, MAX(0, floorf(pageOffset)));
+	const CGFloat pageOffset = (scrollOffset - (thePageWidth / 2.0)) / thePageWidth;
+	const NSUInteger h = MIN(pageCount - containerCount, MAX((NSUInteger)0, (NSUInteger)floor(pageOffset)));
 	log4Trace(@"offset %f, pageOffset = %f, pageCount = %lu, head = %lu, newHead = %lu", scrollOffset, pageOffset,
 			  (unsigned long)containerCount, (unsigned long)head, (unsigned long)h);
 	return h;
@@ -332,9 +349,9 @@
 	// calculate "center" visible page, and report that. this really designed
 	// for "paging" mode, where pages are full width of this view's bounds
 	CGFloat xOffset = (reverseLayoutOrder
-					   ? (self.contentSize.width - self.contentOffset.x - (self.bounds.size.width / 2.0))
+					   ? ((pageCount * pageWidth) - self.contentOffset.x - (self.bounds.size.width / 2.0))
 					   : (self.contentOffset.x + (self.bounds.size.width / 2.0)));
-	NSUInteger c = MIN(pageCount, MAX(0, floorf(xOffset / thePageWidth)));
+	NSUInteger c = MIN(pageCount, MAX((NSUInteger)0, (NSUInteger)floor(xOffset / thePageWidth)));
 	log4Trace(@"offset %f, pageCount = %lu, center = %lu, newCenter = %lu", self.contentOffset.x,
 			  (unsigned long)containerCount, (unsigned long)centerIndex, (unsigned long)c);
 	return c;
@@ -359,10 +376,9 @@
 			  NSStringFromCGRect(viewBounds), NSStringFromCGPoint(self.center), self.contentOffset.x);
 	const CGFloat width = pageCount * pageWidth;
 	
-	// determine number of pages to hold in memory (viewable + 2 for extra left and right)
-	const NSUInteger len = MIN(pageCount, (NSUInteger)ceilf(viewBounds.size.width / pageWidth) + 2);
+	// determine number of pages to hold in memory
+	const NSUInteger len = MIN(pageCount, [self containerCountForViewWidth:viewBounds.size.width]);
 	NSUInteger idx = 0;
-	BOOL reverse = reverseLayoutOrder;
 	
 	if ( pages.count > len ) {
 		log4Debug(@"Discarding %d pages for reload", pages.count - len);
@@ -378,14 +394,14 @@
 		self.contentSize = CGSizeMake(width, viewBounds.size.height);
 		
 		// in reverse mode, make sure if content width smaller than view width that content starts from right edge
-		if ( reverse && width < viewBounds.size.width ) {
+		if ( reverseLayoutOrder && width < viewBounds.size.width ) {
 			self.contentInset = UIEdgeInsetsMake(0, (viewBounds.size.width - width), 0, 0);
 		} else {
 			self.contentInset = UIEdgeInsetsZero;
 		}
 	}
 	for ( NSUInteger i = head, end = head + len, idx = 0; i < pageCount && i < end; i++, idx++ ) {
-		CGFloat xOffset = (reverse
+		CGFloat xOffset = (reverseLayoutOrder
 						   ? (width - ((CGFloat)(i + 1) * pageWidth))
 						   : (CGFloat)i * pageWidth);
 		CGRect pageRect = CGRectMake(xOffset, 0.0, pageWidth, viewBounds.size.height);
