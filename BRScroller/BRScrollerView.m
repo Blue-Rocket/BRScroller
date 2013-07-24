@@ -11,7 +11,7 @@
 #import "BRScrollerDelegate.h"
 #import "BRScrollerUtilities.h"
 
-static const NSUInteger kInfiniteOrigin = 256;
+static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bugs fixed
 
 @interface BRScrollerView () <UIScrollViewDelegate>
 @end
@@ -117,7 +117,7 @@ static const NSUInteger kInfiniteOrigin = 256;
 	[self handleDidSettle];
 }
 
-- (void) reloadData {
+- (void)reloadData {
 	[self reloadDataCenteredOnPage:(infinite ? [self pageIndexForInfiniteOffset:0] : 0)];
 }
 
@@ -286,9 +286,10 @@ static const NSUInteger kInfiniteOrigin = 256;
 	if ( infinite == NO && index >= thePageCount ) {
 		index = 0; // force to page 1
 	}
+	CGFloat centerOffset = floor((self.bounds.size.width - thePageWidth) * 0.5);
 	return (reverseLayoutOrder
-			? ((thePageCount * thePageWidth) - ((CGFloat)(index + 1) * thePageWidth))
-			: (CGFloat)index * thePageWidth);
+			? ((thePageCount * thePageWidth) - ((CGFloat)(index + 1) * thePageWidth) + centerOffset)
+			: (CGFloat)index * thePageWidth) - centerOffset;
 }
 
 - (void)releaseAllContainers {
