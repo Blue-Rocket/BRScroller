@@ -31,6 +31,7 @@ static const NSUInteger kInfiniteOrigin = 256;
 	CGFloat lastScrollOffset;
 	NSUInteger head;
 	NSUInteger centerIndex;
+	NSInteger infiniteOffset;
 	NSMutableArray *pages;
 }
 
@@ -64,6 +65,7 @@ static const NSUInteger kInfiniteOrigin = 256;
 	centerIndex = 0;
 	lastScrollDirection = 0;
 	lastScrollOffset = 0;
+	infiniteOffset = 0;
 	pages = [[NSMutableArray alloc] init];
 }
 
@@ -91,10 +93,10 @@ static const NSUInteger kInfiniteOrigin = 256;
 
 - (NSInteger)infiniteOffsetForPageIndex:(NSUInteger)index {
 	return (index == kInfiniteOrigin
-			? 0
+			? infiniteOffset
 			: (index > kInfiniteOrigin
-			   ? (NSInteger)(index - kInfiniteOrigin)
-			   : -(NSInteger)(kInfiniteOrigin - index)));
+			   ? (NSInteger)(index - kInfiniteOrigin) + infiniteOffset
+			   : infiniteOffset - (NSInteger)(kInfiniteOrigin - index)));
 }
 
 - (void)reloadDataCenteredOnPage:(NSUInteger)index {
