@@ -496,7 +496,7 @@ static const NSUInteger kInfiniteOrigin = 256;
 	}
 	
 	NSUInteger currCenter = [self calculateCenterForPageWidth:pageWidth numContainers:pages.count];
-	if ( currCenter != centerIndex && currCenter < pageCount ) {
+	if ( currCenter != centerIndex && (infinite == YES || currCenter < pageCount) ) {
 		if ( [scrollerDelegate respondsToSelector:@selector(scroller:willLeavePage:)] ) {
 			[scrollerDelegate scroller:self willLeavePage:centerIndex];
 		}
@@ -520,7 +520,7 @@ static const NSUInteger kInfiniteOrigin = 256;
 	NSUInteger oldCenterExternal = centerIndex;
 	[self layoutForCurrentScrollOffset];
 	NSUInteger newCenterExternal = centerIndex;
-	if ( oldCenterExternal != newCenterExternal && centerIndex < pageCount ) {
+	if ( oldCenterExternal != newCenterExternal && (infinite == YES || centerIndex < pageCount) ) {
 		if ( [scrollerDelegate respondsToSelector:@selector(scroller:didLeavePage:)] ) {
 			[scrollerDelegate scroller:self didLeavePage:oldCenterExternal];
 		}
