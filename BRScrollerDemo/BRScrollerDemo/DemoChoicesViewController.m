@@ -25,6 +25,10 @@
 	[super viewDidLoad];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+	return YES;
+}
+
 #pragma mark - Table view support
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
