@@ -74,7 +74,7 @@
 	pageView.backgroundColor = [UIColor darkGrayColor];
 	pageView.layer.borderColor = [UIColor yellowColor].CGColor;
 	pageView.layer.borderWidth = 1.0;
-	UILabel *pageNumber = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+	UILabel *pageNumber = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
 	[pageView addSubview:pageNumber];
 	pageNumber.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin
 								   | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
@@ -92,7 +92,7 @@
  willDisplayPage:(NSUInteger)index
 			view:(UIView *)reusablePageView {
 	UILabel *label = reusablePageView.subviews[0];
-	label.text = [NSString stringWithFormat:@"%lu", (unsigned long)(index + 1)];
+	label.text = [NSString stringWithFormat:@"%ld", (long)([scroller infiniteOffsetForPageIndex:index])];
 }
 
 @end
