@@ -11,7 +11,8 @@
 #import "BRScrollerDelegate.h"
 #import "BRScrollerUtilities.h"
 
-static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bugs fixed
+static const NSUInteger kInfiniteScrollOrigin = 8; // TODO: bump this up after all bugs fixed
+static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 
 @interface BRScrollerView () <UIScrollViewDelegate>
 @end
@@ -88,16 +89,15 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 #pragma mark Public API
 
 - (NSUInteger)pageIndexForInfiniteOffset:(NSInteger)offset {
-	return [self externalPageIndexForInternalPageIndex:(kInfiniteOrigin + offset)];
+	return kInfiniteOrigin + offset;
 }
 
 - (NSInteger)infiniteOffsetForPageIndex:(NSUInteger)index {
-	NSUInteger internalIndex = [self internalPageIndexForExternalPageIndex:index];
-	return (internalIndex == kInfiniteOrigin
-			? infiniteOffset
-			: (internalIndex > kInfiniteOrigin
-			   ? (NSInteger)(internalIndex - kInfiniteOrigin) + infiniteOffset
-			   : infiniteOffset - (NSInteger)(kInfiniteOrigin - internalIndex)));
+	return (index == kInfiniteOrigin
+			? (NSInteger)0
+			: (index > kInfiniteOrigin
+			   ? (NSInteger)(index - kInfiniteOrigin)
+			   : -(NSInteger)(kInfiniteOrigin - index)));
 }
 
 - (void)reloadDataCenteredOnPage:(NSUInteger)index {
@@ -137,8 +137,8 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 }
 
 - (void)gotoPage:(const NSUInteger)index animated:(BOOL)animated {
-	const BOOL crossingInfiniteBounds = (infinite == NO ? NO : ((index > centerIndex && (index - centerIndex) > kInfiniteOrigin / 2)
-																|| (index < centerIndex && (centerIndex - index) > kInfiniteOrigin / 2)));
+	const BOOL crossingInfiniteBounds = (infinite == NO ? NO : ((index > centerIndex && (index - centerIndex) > kInfiniteScrollOrigin / 2)
+																|| (index < centerIndex && (centerIndex - index) > kInfiniteScrollOrigin / 2)));
 	if ( crossingInfiniteBounds ) {
 		// cannot animate easily because we cross infinite bounds :-(
 		log4Info(@"Crossing infinite boundary; animation disabled implicitly.");
@@ -271,16 +271,20 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 
 - (void)cachePageCount {
 	pageCount = (infinite
-				 ? (kInfiniteOrigin * 2 + 1) // + 1 so we have an actual center origin
+				 ? (kInfiniteScrollOrigin * 2 + 1) // + 1 so we have an actual center origin
 				 : [scrollerDelegate numberOfPagesInScroller:self]);
 }
 
 - (NSUInteger)internalPageIndexForExternalPageIndex:(NSUInteger)externalPageIndex {
-	return (infinite == NO ? externalPageIndex : (externalPageIndex - infiniteOffset));
+	return (infinite == NO
+			? externalPageIndex
+			: (externalPageIndex - kInfiniteOrigin - infiniteOffset));
 }
 
 - (NSUInteger)externalPageIndexForInternalPageIndex:(NSUInteger)internalPageIndex {
-	return (infinite == NO ? internalPageIndex : (internalPageIndex + infiniteOffset));
+	return (infinite == NO
+			? internalPageIndex
+			: (internalPageIndex + kInfiniteOrigin + infiniteOffset));
 }
 
 - (NSUInteger)containerCountForViewWidth:(const CGFloat)viewWidth {
@@ -376,7 +380,7 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 					   : (self.contentOffset.x + (self.bounds.size.width / 2.0)));
 	NSUInteger c = MIN(pageCount, (NSUInteger)MAX(0.0, floor(xOffset / thePageWidth)));
 	if ( infinite == YES ) {
-		c += infiniteOffset;
+		c += kInfiniteOrigin + infiniteOffset;
 	}
 	log4Trace(@"offset %f, pageCount = %lu, center = %lu, newCenter = %lu", self.contentOffset.x,
 			  (unsigned long)containerCount, (unsigned long)centerIndex, (unsigned long)c);
@@ -390,9 +394,9 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 
 - (void)handleInfiniteShuffle {
 	const NSUInteger centerIndexInternal = [self internalPageIndexForExternalPageIndex:centerIndex];
-	const NSInteger offset = (centerIndexInternal == kInfiniteOrigin ? 0 : (centerIndexInternal > kInfiniteOrigin
-																			? (NSInteger)(centerIndexInternal - kInfiniteOrigin)
-																			: -(NSInteger)(kInfiniteOrigin - centerIndexInternal)));
+	const NSInteger offset = (centerIndexInternal == kInfiniteScrollOrigin ? 0 : (centerIndexInternal > kInfiniteScrollOrigin
+																			? (NSInteger)(centerIndexInternal - kInfiniteScrollOrigin)
+																			: -(NSInteger)(kInfiniteScrollOrigin - centerIndexInternal)));
 	if ( offset != 0 ) {
 		infiniteOffset = (infiniteOffset + offset);
 		const CGRect viewBounds = self.bounds;
@@ -403,7 +407,7 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 		const BOOL reloadRight = oldHead == (pageCount - [pages count]);
 		[CATransaction begin]; {
 			[CATransaction setDisableActions:YES];
-			CGFloat xOffset = [self scrollOffsetForPageIndex:kInfiniteOrigin] + perfectOffsetDiff;
+			CGFloat xOffset = [self scrollOffsetForPageIndex:kInfiniteScrollOrigin] + perfectOffsetDiff;
 			centeringReload = YES;
 			[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
 			centeringReload = NO;
