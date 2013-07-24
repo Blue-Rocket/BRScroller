@@ -137,7 +137,8 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 }
 
 - (void)gotoPage:(const NSUInteger)index animated:(BOOL)animated {
-	const BOOL crossingInfiniteBounds = (infinite == NO ? NO : ((index > centerIndex && (index - centerIndex) > kInfiniteOrigin / 2) || (index < centerIndex && (centerIndex - index) > kInfiniteOrigin / 2)));
+	const BOOL crossingInfiniteBounds = (infinite == NO ? NO : ((index > centerIndex && (index - centerIndex) > kInfiniteOrigin / 2)
+																|| (index < centerIndex && (centerIndex - index) > kInfiniteOrigin / 2)));
 	if ( crossingInfiniteBounds ) {
 		// cannot animate easily because we cross infinite bounds :-(
 		log4Info(@"Crossing infinite boundary; animation disabled implicitly.");
