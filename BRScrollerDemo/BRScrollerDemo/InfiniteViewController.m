@@ -92,7 +92,11 @@
  willDisplayPage:(NSUInteger)index
 			view:(UIView *)reusablePageView {
 	UILabel *label = reusablePageView.subviews[0];
-	label.text = [NSString stringWithFormat:@"%ld", (long)([scroller infiniteOffsetForPageIndex:index])];
+	label.text = [NSString stringWithFormat:@"%ld", (long)[scroller infiniteOffsetForPageIndex:index]];
+}
+
+- (void)scroller:(BRScrollerView *)scroller didSettleOnPage:(NSUInteger)index {
+	log4Debug(@"Settled on page %ld", (long)[scroller infiniteOffsetForPageIndex:index]);
 }
 
 @end

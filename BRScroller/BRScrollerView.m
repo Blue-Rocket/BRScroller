@@ -367,8 +367,7 @@ static const NSUInteger kInfiniteOrigin = 256;
 - (void)handleDidSettle {
 	scrolling = NO;
 	if ( self.pagingEnabled && [scrollerDelegate respondsToSelector:@selector(scroller:didSettleOnPage:)] ) {
-		NSUInteger currCenter = [self calculateCenterForPageWidth:pageWidth numContainers:pages.count];
-		[scrollerDelegate scroller:self didSettleOnPage:currCenter];
+		[scrollerDelegate scroller:self didSettleOnPage:centerIndex];
 	}
 }
 
