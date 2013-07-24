@@ -262,7 +262,7 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 
 - (void)cachePageCount {
 	pageCount = (infinite
-				 ? (kInfiniteOrigin * 2)
+				 ? (kInfiniteOrigin * 2 + 1) // + 1 so we have an actual center origin
 				 : [scrollerDelegate numberOfPagesInScroller:self]);
 }
 
@@ -314,7 +314,7 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 		NSUInteger shiftLen = newHead - head;
 		reloadDataRange.location = pages.count - shiftLen;
 		reloadDataRange.length = shiftLen;
-		for ( NSUInteger i = shiftLen; i < pages.count; i++ ) {
+		for ( NSUInteger i = shiftLen; i < [pages count]; i++ ) {
 			log4Trace(@"Swapping page %lu and %lu", (unsigned long)i, (unsigned long)(i - shiftLen));
 			[pages exchangeObjectAtIndex:i withObjectAtIndex:(i - shiftLen)];
 		}
@@ -322,13 +322,13 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 		// scrolling left, shift
 		NSUInteger shiftLen = head - newHead;
 		reloadDataRange.length = shiftLen;
-		for ( NSInteger i = (pages.count - shiftLen - 1); i >= 0; i-- ) {
+		for ( NSInteger i = ([pages count] - shiftLen - 1); i >= 0; i-- ) {
 			log4Trace(@"Swapping page %lu and %lu", (unsigned long)i, (unsigned long)(i+shiftLen));
 			[pages exchangeObjectAtIndex:i withObjectAtIndex:(i+shiftLen)];
 		}
 	} else {
 		// reload everything, no shifing
-		reloadDataRange.length = pages.count;
+		reloadDataRange.length = [pages count];
 	}
 	
 	for ( NSUInteger i = reloadDataRange.location; i < (reloadDataRange.location + reloadDataRange.length); i++ ) {
@@ -392,21 +392,35 @@ static const NSUInteger kInfiniteOrigin = 8; // TODO: bump this up after all bug
 		if ( offset != 0 ) {
 			infiniteOffset += offset;
 			const CGRect viewBounds = self.bounds;
-			const CGFloat perfectOffsetDiff = self.contentOffset.x - [self scrollOffsetForPageIndex:centerIndexInternal];
+			const CGFloat oldScrollOffset = self.contentOffset.x;
+			const CGFloat perfectOffsetDiff = oldScrollOffset - [self scrollOffsetForPageIndex:centerIndexInternal];
+			const NSUInteger oldHead = head;
+			const BOOL reloadLeft = oldHead == 0;
+			const BOOL reloadRight = oldHead == (pageCount - [pages count]);
 			[CATransaction begin]; {
 				[CATransaction setDisableActions:YES];
 				CGFloat xOffset = [self scrollOffsetForPageIndex:kInfiniteOrigin] + perfectOffsetDiff;
 				centeringReload = YES;
 				[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
 				centeringReload = NO;
-				head = [self calculateHeadForPageWidth:pageWidth numContainers:pages.count];
+				NSUInteger newHead = [self calculateHeadForPageWidth:pageWidth numContainers:pages.count];
+				if ( reloadLeft || reloadRight ) {
+					// we've scrolled to the end of our current scroll bounds, so we need to shift the views over 1
+					// so we don't reload views we've already configured. To do that, we trick
+					// layoutContainersForHead: by setting head, so it shifts appropriately.
+					head = newHead + (reloadLeft ? 1 : -1);
+					[self layoutContainersForHead:newHead];
+				} else {
+					head = newHead;
+				}
 				for ( NSUInteger i = 0; i < [pages count]; i++ ) {
+					const NSUInteger pageIndex = head + i;
 					UIView *container = (UIView *)[pages objectAtIndex:i];
 					CGFloat xOffset = (reverseLayoutOrder
-									   ? ((pageCount * pageWidth) - ((head + i + 1) * pageWidth))
-									   : ((head + i) * pageWidth));
+									   ? ((pageCount * pageWidth) - ((pageIndex + 1) * pageWidth))
+									   : (pageIndex * pageWidth));
 					CGPoint newCenter = CGPointMake(xOffset + pageWidth * 0.5, viewBounds.size.height * 0.5);
-					log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)(head + i),
+					log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)pageIndex,
 							  NSStringFromCGPoint(container.center), NSStringFromCGPoint(newCenter));
 					container.center = newCenter;
 				}
