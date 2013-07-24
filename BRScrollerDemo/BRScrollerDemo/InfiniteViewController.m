@@ -120,6 +120,12 @@ static const CGFloat kThumbWidth = 120;
 	reusablePageView.tag = index; // simple way to know index in gotoPage:
 }
 
+- (void)scroller:(BRScrollerView *)scroller didDisplayPage:(NSUInteger)index {
+	if ( scroller == scrollView ) {
+		self.navigationItem.title = [NSString stringWithFormat:@"Page %ld", (long)[scroller infiniteOffsetForPageIndex:index]];
+	}
+}
+
 - (void)scroller:(BRScrollerView *)scroller didSettleOnPage:(NSUInteger)index {
 	log4Debug(@"Settled on page %ld", (long)[scroller infiniteOffsetForPageIndex:index]);
 }
