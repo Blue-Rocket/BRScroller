@@ -341,7 +341,7 @@ static const NSUInteger kInfiniteOrigin = 256;
 							? (CGFloat)(pageCount * pageWidth) - self.contentOffset.x - self.bounds.size.width
 							: self.contentOffset.x);
 	const CGFloat pageOffset = (scrollOffset - (thePageWidth / 2.0)) / thePageWidth;
-	const NSUInteger h = MIN(pageCount - containerCount, MAX((NSUInteger)0, (NSUInteger)floor(pageOffset)));
+	const NSUInteger h = MIN(pageCount - containerCount, (NSUInteger)MAX(0.0, floor(pageOffset)));
 	log4Trace(@"offset %f, pageOffset = %f, pageCount = %lu, head = %lu, newHead = %lu", scrollOffset, pageOffset,
 			  (unsigned long)containerCount, (unsigned long)head, (unsigned long)h);
 	return h;
@@ -353,7 +353,7 @@ static const NSUInteger kInfiniteOrigin = 256;
 	CGFloat xOffset = (reverseLayoutOrder
 					   ? ((pageCount * pageWidth) - self.contentOffset.x - (self.bounds.size.width / 2.0))
 					   : (self.contentOffset.x + (self.bounds.size.width / 2.0)));
-	NSUInteger c = MIN(pageCount, MAX((NSUInteger)0, (NSUInteger)floor(xOffset / thePageWidth)));
+	NSUInteger c = MIN(pageCount, (NSUInteger)MAX(0.0, floor(xOffset / thePageWidth)));
 	log4Trace(@"offset %f, pageCount = %lu, center = %lu, newCenter = %lu", self.contentOffset.x,
 			  (unsigned long)containerCount, (unsigned long)centerIndex, (unsigned long)c);
 	return c;
