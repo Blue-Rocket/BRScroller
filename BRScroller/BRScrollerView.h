@@ -14,6 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+// the maximum allowable page index when infinite == YES
+extern const NSUInteger kBRScrollerViewInfiniteMaximumPageIndex;
+
 @protocol BRScrollerDelegate;
 
 @interface BRScrollerView : UIScrollView

@@ -11,8 +11,10 @@
 #import "BRScrollerDelegate.h"
 #import "BRScrollerUtilities.h"
 
+const NSUInteger kBRScrollerViewInfiniteMaximumPageIndex = NSUIntegerMax - 1; // to account for translating to NSInteger for maximum page
+
 static const NSUInteger kInfiniteScrollOrigin = 8; // TODO: bump this up after all bugs fixed
-static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
+static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 
 @interface BRScrollerView () <UIScrollViewDelegate>
 @end
@@ -107,13 +109,16 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 	if ( index < kInfiniteScrollOrigin ) {
 		return 0;
 	}
-	if ( index >= (NSUIntegerMax - kInfiniteScrollOrigin) ) {
-		return (NSUIntegerMax - kInfiniteScrollOrigin);
+	if ( index >= (kBRScrollerViewInfiniteMaximumPageIndex - kInfiniteScrollOrigin * 2) ) {
+		return (kBRScrollerViewInfiniteMaximumPageIndex - kInfiniteScrollOrigin * 2);
 	}
 	return (index - kInfiniteScrollOrigin);
 }
 
 - (void)reloadDataCenteredOnPage:(NSUInteger)index {
+	if ( infinite == YES && index > kBRScrollerViewInfiniteMaximumPageIndex ) {
+		index = kBRScrollerViewInfiniteMaximumPageIndex;
+	}
 	// disable implicit animation here, so we avoid a "stretching" effect
 	[self cachePageWidth];
 	[self cachePageCount];
