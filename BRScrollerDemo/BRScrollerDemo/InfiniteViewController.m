@@ -119,6 +119,7 @@ static const CGFloat kThumbWidth = 120;
 	pageNumber.layer.borderColor = [UIColor orangeColor].CGColor;
 	pageNumber.layer.borderWidth = 2.0;
 	pageNumber.textAlignment = NSTextAlignmentCenter;
+	pageNumber.adjustsFontSizeToFitWidth = YES;
 	pageNumber.backgroundColor = [UIColor grayColor];
 	pageNumber.center = CGPointMake(pageView.bounds.size.width * 0.5, pageView.bounds.size.height * 0.5);
 
