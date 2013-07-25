@@ -17,7 +17,8 @@
 
 - (id)initWithStyle:(UITableViewStyle)style {
 	if ( (self = [super initWithStyle:style]) ) {
-		classes = @[@"SimpleViewController", @"AsyncPhotoViewController", @"DemoTiledViewController", @"MultiViewController", @"InfiniteViewController"];
+		classes = @[@"SimpleViewController", @"AsyncPhotoViewController", @"DemoTiledViewController",
+			  @"MultiViewController", @"InfiniteViewController", @"ReverseViewController"];
 	}
 	return self;
 }

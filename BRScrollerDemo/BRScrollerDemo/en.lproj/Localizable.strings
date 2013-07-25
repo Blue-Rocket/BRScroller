@@ -18,3 +18,4 @@
 "desc.DemoTiledViewController" = "Zoomable CATiledLayer demonstration.";
 "desc.MultiViewController" = "A full-screen paging scroller with a small thumbnail navigation scroller.";
 "desc.InfiniteViewController" = "Shows an infinite number of pages! OK… %@ to be precise.";
+"desc.ReverseViewController" = "Basic BRScrollerView with reverse (right-to-left) layout.";

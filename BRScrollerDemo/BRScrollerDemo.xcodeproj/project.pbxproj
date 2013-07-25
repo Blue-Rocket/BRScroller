@@ -28,6 +28,7 @@
 		C94938C4178E682A000B1D4E /* 7.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938BB178E682A000B1D4E /* 7.jpeg */; };
 		C94938C5178E682A000B1D4E /* 8.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938BC178E682A000B1D4E /* 8.jpeg */; };
 		C94938C6178E682A000B1D4E /* 9.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938BD178E682A000B1D4E /* 9.jpeg */; };
+		C9610C6717A0DA5C00382E4D /* ReverseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9610C6617A0DA5C00382E4D /* ReverseViewController.m */; };
 		C965CC9D17947CA40024DFF4 /* DemoChoicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C965CC9C17947CA40024DFF4 /* DemoChoicesViewController.m */; };
 		C965CCA11794817B0024DFF4 /* SimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C965CC9F1794817B0024DFF4 /* SimpleViewController.m */; };
 		C965CCA21794817B0024DFF4 /* SimpleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C965CCA01794817B0024DFF4 /* SimpleViewController.xib */; };
@@ -87,6 +88,8 @@
 		C94938BB178E682A000B1D4E /* 7.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 7.jpeg; sourceTree = "<group>"; };
 		C94938BC178E682A000B1D4E /* 8.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpeg; sourceTree = "<group>"; };
 		C94938BD178E682A000B1D4E /* 9.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpeg; sourceTree = "<group>"; };
+		C9610C6517A0DA5C00382E4D /* ReverseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReverseViewController.h; sourceTree = "<group>"; };
+		C9610C6617A0DA5C00382E4D /* ReverseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReverseViewController.m; sourceTree = "<group>"; };
 		C965CC9B17947CA40024DFF4 /* DemoChoicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoChoicesViewController.h; sourceTree = "<group>"; };
 		C965CC9C17947CA40024DFF4 /* DemoChoicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoChoicesViewController.m; sourceTree = "<group>"; };
 		C965CC9E1794817B0024DFF4 /* SimpleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleViewController.h; sourceTree = "<group>"; };
@@ -157,28 +160,11 @@
 		C949387D178E33D7000B1D4E /* BRScrollerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				C9610C6917A0DB5A00382E4D /* Examples */,
 				C9493886178E33D7000B1D4E /* AppDelegate.h */,
 				C9493887178E33D7000B1D4E /* AppDelegate.m */,
-				C949388F178E33D7000B1D4E /* AsyncPhotoViewController.h */,
-				C9493890178E33D7000B1D4E /* AsyncPhotoViewController.m */,
-				C9493892178E33D7000B1D4E /* AsyncPhotoViewController.xib */,
 				C965CC9B17947CA40024DFF4 /* DemoChoicesViewController.h */,
 				C965CC9C17947CA40024DFF4 /* DemoChoicesViewController.m */,
-				C9775D6B1795CFED006E3C1E /* DemoTiledView.h */,
-				C9775D6C1795CFED006E3C1E /* DemoTiledView.m */,
-				C9775D6F1795D440006E3C1E /* DemoTiledViewController.h */,
-				C9775D701795D441006E3C1E /* DemoTiledViewController.m */,
-				C9775D711795D441006E3C1E /* DemoTiledViewController.xib */,
-				C9775D741795D500006E3C1E /* DemoZoomingTiledView.h */,
-				C9775D751795D500006E3C1E /* DemoZoomingTiledView.m */,
-				C994A8D7179F3751008204CE /* InfiniteViewController.h */,
-				C994A8D8179F3751008204CE /* InfiniteViewController.m */,
-				C9775D771795F84E006E3C1E /* MultiViewController.h */,
-				C9775D781795F84E006E3C1E /* MultiViewController.m */,
-				C9775D791795F84E006E3C1E /* MultiViewController.xib */,
-				C965CC9E1794817B0024DFF4 /* SimpleViewController.h */,
-				C965CC9F1794817B0024DFF4 /* SimpleViewController.m */,
-				C965CCA01794817B0024DFF4 /* SimpleViewController.xib */,
 				C965CCB0179526A20024DFF4 /* Localizable.strings */,
 				C94938B4178E682A000B1D4E /* Images */,
 				C949387E178E33D7000B1D4E /* Supporting Files */,
@@ -224,6 +210,33 @@
 			);
 			path = Images;
 			sourceTree = SOURCE_ROOT;
+		};
+		C9610C6917A0DB5A00382E4D /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				C949388F178E33D7000B1D4E /* AsyncPhotoViewController.h */,
+				C9493890178E33D7000B1D4E /* AsyncPhotoViewController.m */,
+				C9493892178E33D7000B1D4E /* AsyncPhotoViewController.xib */,
+				C9775D6B1795CFED006E3C1E /* DemoTiledView.h */,
+				C9775D6C1795CFED006E3C1E /* DemoTiledView.m */,
+				C9775D6F1795D440006E3C1E /* DemoTiledViewController.h */,
+				C9775D701795D441006E3C1E /* DemoTiledViewController.m */,
+				C9775D711795D441006E3C1E /* DemoTiledViewController.xib */,
+				C9775D741795D500006E3C1E /* DemoZoomingTiledView.h */,
+				C9775D751795D500006E3C1E /* DemoZoomingTiledView.m */,
+				C994A8D7179F3751008204CE /* InfiniteViewController.h */,
+				C994A8D8179F3751008204CE /* InfiniteViewController.m */,
+				C9775D771795F84E006E3C1E /* MultiViewController.h */,
+				C9775D781795F84E006E3C1E /* MultiViewController.m */,
+				C9775D791795F84E006E3C1E /* MultiViewController.xib */,
+				C9610C6517A0DA5C00382E4D /* ReverseViewController.h */,
+				C9610C6617A0DA5C00382E4D /* ReverseViewController.m */,
+				C965CC9E1794817B0024DFF4 /* SimpleViewController.h */,
+				C965CC9F1794817B0024DFF4 /* SimpleViewController.m */,
+				C965CCA01794817B0024DFF4 /* SimpleViewController.xib */,
+			);
+			name = Examples;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -332,6 +345,7 @@
 				C9775D761795D501006E3C1E /* DemoZoomingTiledView.m in Sources */,
 				C9775D7A1795F84F006E3C1E /* MultiViewController.m in Sources */,
 				C994A8D9179F3751008204CE /* InfiniteViewController.m in Sources */,
+				C9610C6717A0DA5C00382E4D /* ReverseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

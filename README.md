@@ -65,6 +65,12 @@ of the demos available in that project:
   relative to that origin (e.g. **-1** for immediately left or **1** for
   immediately right.
 
+* **ReverseViewController**
+
+  BRScroller sports a _reverse layout_ mode, in which the pages are
+  positioned in right-to-left order, rather than the default 
+  left-to-right order.
+
 Static Framework Project Integration
 ------------------------------------
 
