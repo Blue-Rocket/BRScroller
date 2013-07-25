@@ -57,6 +57,14 @@ of the demos available in that project:
   pages. Tapping on a thumbnail causes the full-detail page to animate
   into view.
 
+* **InfiniteViewController**
+
+  BRScroller sports an _infinite_ mode, in which the number of pages are
+  not necessarily known in advance (or there are just a lot of pages!).
+  This mode works by defining an origin page, and all other pages are
+  relative to that origin (e.g. **-1** for immediately left or **1** for
+  immediately right.
+
 Static Framework Project Integration
 ------------------------------------
 
