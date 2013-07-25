@@ -155,7 +155,6 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 	if ( crossingInfiniteBounds ) {
 		// cannot animate easily because we cross infinite bounds :-(
 		log4Info(@"Crossing infinite boundary; animation disabled implicitly.");
-		infinitePageOffset = index - [self centerContainerIndex];
 		[self reloadDataCenteredOnPage:index];
 		return;
 	}
