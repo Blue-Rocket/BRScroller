@@ -13,7 +13,7 @@
 
 const NSUInteger kBRScrollerViewInfiniteMaximumPageIndex = NSUIntegerMax - 1; // to account for translating to NSInteger for maximum page
 
-static const NSUInteger kInfiniteScrollOrigin = 8; // TODO: bump this up after all bugs fixed
+static const NSUInteger kInfiniteScrollOrigin = 256;
 static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 
 @interface BRScrollerView () <UIScrollViewDelegate>

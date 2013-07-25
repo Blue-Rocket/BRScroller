@@ -8,6 +8,10 @@
 //  configures the page view content when asked. Page views are recycled and reused as needed
 //  so that only as many as necessary are kept in memory at one time.
 //
+//  It also supports an "infinite" scrolling mode. In this mode the delegate will not be asked
+//  to provide a page count and instead the scroll view will simply scroll as far as it can,
+//  up to a maximum page index kBRScrollerViewInfiniteMaximumPageIndex.
+//
 //  Created by Matt on 7/11/13.
 //  Copyright (c) 2013 Blue Rocket. Distributable under the terms of the Apache License, Version 2.0.
 //
@@ -28,13 +32,21 @@ extern const NSUInteger kBRScrollerViewInfiniteMaximumPageIndex;
 @property (nonatomic, getter=isReverseLayoutOrder) BOOL reverseLayoutOrder;
 
 // If YES, operate in "infinite" mode, where an approximation of infinite pages are supported;
-// there are of course at most NSUIntegerMax pages supported, but in this mode the scroll view
-// starts at an "origin" and you can scroll left or right, resulting in "offset" page values,
+// there are kBRScrollerViewInfiniteMaximumPageIndex pages supported, but in this mode the scroll view
+// starts at a middle "origin" and you can scroll left or right, resulting in "offset" page values,
 // for example page offset -1 (left of origin) or page offset 1 (right of origin). Use the
 // infiniteOffsetForPageIndex: and pageIndexForInfiniteOffset: methods to translate the page
 // index values passed to delegate methods (which are unsigned integers) to signed offset values.
-// Setting to YES automatically hides the scroll bars.
+// Scrolling left will stop at page index 0; scrolling right will stop at page index
+// kBRScrollerViewInfiniteMaximumPageIndex. Setting to YES automatically hides the scroll bars.
 @property (nonatomic, getter = isInfinite) BOOL infinite;
+
+// when infinite == YES, this controls the maximum number of pages you can scroll continuously for
+// before the scroll view stops. After stopping, the scroll view will reset its page space and
+// scrolling can continue. The scroll view will reset its page space any time scrolling stops,
+// so under most situations where users scroll they'll never have the scroll view stop scrolling
+// on them.
+@property (nonatomic, assign) UInt16 infiniteSpacePageRadius;
 
 // return YES if pages have been loaded and are currently cached
 @property (nonatomic, readonly, getter=isLoaded) BOOL loaded;
