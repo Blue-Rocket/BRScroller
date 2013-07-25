@@ -9,6 +9,7 @@
 #import "DemoChoicesViewController.h"
 
 #import "AsyncPhotoViewController.h"
+#import <BRScroller/BRScrollerView.h>
 
 @implementation DemoChoicesViewController {
 	NSArray *classes;
@@ -47,29 +48,18 @@
 	}
 	cell.textLabel.text = classes[indexPath.row];
 	cell.detailTextLabel.font = [UIFont systemFontOfSize:9];
-	switch ( indexPath.row ) {
-		case 0:
-			cell.detailTextLabel.text = @"Basic BRScrollerView with simple page views.";
-			break;
-			
-		case 1:
-			cell.detailTextLabel.text = @"Zoomable photo browser using BRPreviewLayerView, BRAsyncImageView, and friends.";
-			break;
-			
-		case 2:
-			cell.detailTextLabel.text = @"Zoomable CATiledLayer demonstration.";
-			break;
-			
-		case 3:
-			cell.detailTextLabel.text = @"A full-screen paging scroller with a small thumbnail navigation scroller.";
-			break;
-			
-		case 4:
-			cell.detailTextLabel.text = @"Shows a lot of pages. Almost infinitely many!";
-			break;
-			
-		default:
-			cell.detailTextLabel.text = nil;
+	NSString *descKey = [@"desc." stringByAppendingString:classes[indexPath.row]];
+	cell.detailTextLabel.text = NSLocalizedString(descKey, nil);
+	
+	if ( indexPath.row == 4 ) {
+		static NSNumberFormatter *friendlyNumber;
+		if ( friendlyNumber == nil ) {
+			friendlyNumber = [[NSNumberFormatter alloc] init];
+			[friendlyNumber setNumberStyle:NSNumberFormatterDecimalStyle];
+			[friendlyNumber setMaximumFractionDigits:0];
+		}
+		cell.detailTextLabel.text = [NSString stringWithFormat:cell.detailTextLabel.text,
+									 [friendlyNumber stringFromNumber:[NSNumber numberWithUnsignedInteger:kBRScrollerViewInfiniteMaximumPageIndex]]];
 	}
 	return cell;
 }
