@@ -31,8 +31,8 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 	int lastScrollDirection;
 	CGFloat lastScrollOffset;
 	NSUInteger head;
-	NSUInteger centerIndex; // NOTE: this is an EXTERNAL index value
-	NSInteger infiniteOffset;
+	NSUInteger centerIndex;
+	NSUInteger infinitePageOffset;
 	NSMutableArray *pages;
 }
 
@@ -66,7 +66,7 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 	centerIndex = 0;
 	lastScrollDirection = 0;
 	lastScrollOffset = 0;
-	infiniteOffset = 0;
+	infinitePageOffset = 0;
 	pages = [[NSMutableArray alloc] init];
 }
 
@@ -100,13 +100,27 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 			   : -(NSInteger)(kInfiniteOrigin - index)));
 }
 
+- (NSUInteger)calculateInfinitePageOffsetForCenterIndex:(NSUInteger)index {
+	if ( infinite == NO ) {
+		return 0;
+	}
+	if ( index < kInfiniteScrollOrigin ) {
+		return 0;
+	}
+	if ( index >= (NSUIntegerMax - kInfiniteScrollOrigin) ) {
+		return (NSUIntegerMax - kInfiniteScrollOrigin);
+	}
+	return (index - kInfiniteScrollOrigin);
+}
+
 - (void)reloadDataCenteredOnPage:(NSUInteger)index {
 	// disable implicit animation here, so we avoid a "stretching" effect
 	[self cachePageWidth];
 	[self cachePageCount];
 	[CATransaction begin]; {
 		[CATransaction setDisableActions:YES];
-		CGFloat xOffset = [self scrollOffsetForPageIndex:[self internalPageIndexForExternalPageIndex:index]];
+		infinitePageOffset = [self calculateInfinitePageOffsetForCenterIndex:index];
+		CGFloat xOffset = [self scrollOffsetForPageIndex:index];
 		loaded = NO;
 		centeringReload = YES;
 		[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
@@ -130,24 +144,22 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 }
 
 - (UIView *)reusablePageViewAtIndex:(const NSUInteger)viewIndex {
-	const NSUInteger internalIndex = [self internalPageIndexForExternalPageIndex:viewIndex];
+	const NSUInteger internalIndex = viewIndex;
 	UIView *container = [self containerViewForIndex:internalIndex];
 	NSArray *sv = [container subviews];
 	return ([sv count] < 1 ? nil : [sv objectAtIndex:0]);
 }
 
 - (void)gotoPage:(const NSUInteger)index animated:(BOOL)animated {
-	const BOOL crossingInfiniteBounds = (infinite == NO ? NO : ((index > centerIndex && (index - centerIndex) > kInfiniteScrollOrigin / 2)
-																|| (index < centerIndex && (centerIndex - index) > kInfiniteScrollOrigin / 2)));
+	const BOOL crossingInfiniteBounds = (infinite == NO ? NO : (index < infinitePageOffset || index > (infinitePageOffset + pageCount)));
 	if ( crossingInfiniteBounds ) {
 		// cannot animate easily because we cross infinite bounds :-(
 		log4Info(@"Crossing infinite boundary; animation disabled implicitly.");
-		infiniteOffset = index;
+		infinitePageOffset = index - [self centerContainerIndex];
 		[self reloadDataCenteredOnPage:index];
 		return;
 	}
-	const NSUInteger internalIndex = [self internalPageIndexForExternalPageIndex:index];
-    CGFloat xOffset = [self scrollOffsetForPageIndex:internalIndex];
+    CGFloat xOffset = [self scrollOffsetForPageIndex:index];
 	if ( !BRFloatsAreEqual(xOffset, self.contentOffset.x) ) {
 		if ( !animated ) {
 			centeringReload = YES;
@@ -275,20 +287,8 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 				 : [scrollerDelegate numberOfPagesInScroller:self]);
 }
 
-- (NSUInteger)internalPageIndexForExternalPageIndex:(NSUInteger)externalPageIndex {
-	return (infinite == NO
-			? externalPageIndex
-			: (externalPageIndex - kInfiniteOrigin - infiniteOffset));
-}
-
-- (NSUInteger)externalPageIndexForInternalPageIndex:(NSUInteger)internalPageIndex {
-	return (infinite == NO
-			? internalPageIndex
-			: (internalPageIndex + kInfiniteOrigin + infiniteOffset));
-}
-
 - (NSUInteger)containerCountForViewWidth:(const CGFloat)viewWidth {
-	return (ceil(viewWidth / pageWidth) + 2); // +2 for adjacent containers (left + right)
+	return MIN(pageCount, (ceil(viewWidth / pageWidth) + 2)); // +2 for adjacent containers (left + right)
 }
 
 - (CGFloat)scrollOffsetForPageIndex:(const NSUInteger)index {
@@ -298,6 +298,11 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 - (CGFloat)scrollOffsetForPageIndex:(NSUInteger)index pageWidth:(const CGFloat)thePageWidth pageCount:(const NSUInteger)thePageCount {
 	if ( infinite == NO && index >= thePageCount ) {
 		index = 0; // force to page 1
+	}
+	if ( infinite == YES ) {
+		index -= infinitePageOffset;
+		//NSInteger pageOffset = [self infiniteOffsetForPageIndex:index];
+		//index = kInfiniteScrollOrigin / 2 + pageOffset;
 	}
 	CGFloat centerOffset = floor((self.bounds.size.width - thePageWidth) * 0.5);
 	return (reverseLayoutOrder
@@ -350,10 +355,10 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 						   ? ((pageCount * pageWidth) - ((newHead + i + 1) * pageWidth))
 						   : ((newHead + i) * pageWidth));
 		CGRect newFrame = CGRectMake(xOffset, 0, pageWidth, self.bounds.size.height);
-		log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)(newHead + i),
+		log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)(newHead + i + infinitePageOffset),
 				  NSStringFromCGRect(container.frame), NSStringFromCGRect(newFrame));
 		container.frame = newFrame;
-		[scrollerDelegate scroller:self willDisplayPage:[self pageIndexForInternalPageIndex:(newHead + i)] view:[container.subviews objectAtIndex:0]];
+		[scrollerDelegate scroller:self willDisplayPage:(newHead + i + infinitePageOffset) view:[container.subviews objectAtIndex:0]];
 	}
 	
 	head = newHead;
@@ -380,7 +385,7 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 					   : (self.contentOffset.x + (self.bounds.size.width / 2.0)));
 	NSUInteger c = MIN(pageCount, (NSUInteger)MAX(0.0, floor(xOffset / thePageWidth)));
 	if ( infinite == YES ) {
-		c += kInfiniteOrigin + infiniteOffset;
+		c += infinitePageOffset;
 	}
 	log4Trace(@"offset %f, pageCount = %lu, center = %lu, newCenter = %lu", self.contentOffset.x,
 			  (unsigned long)containerCount, (unsigned long)centerIndex, (unsigned long)c);
@@ -393,21 +398,19 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 }
 
 - (void)handleInfiniteShuffle {
-	const NSUInteger centerIndexInternal = [self internalPageIndexForExternalPageIndex:centerIndex];
-	const NSInteger offset = (centerIndexInternal == kInfiniteScrollOrigin ? 0 : (centerIndexInternal > kInfiniteScrollOrigin
-																			? (NSInteger)(centerIndexInternal - kInfiniteScrollOrigin)
-																			: -(NSInteger)(kInfiniteScrollOrigin - centerIndexInternal)));
-	if ( offset != 0 ) {
-		infiniteOffset = (infiniteOffset + offset);
+	/*
+	const NSUInteger infiniteCenterIndex = infiniteOffset + kInfiniteScrollOrigin;
+	if ( centerIndex != infiniteCenterIndex ) {
+		infiniteOffset = (infiniteOffset + (infiniteCenterIndex - centerIndex));
 		const CGRect viewBounds = self.bounds;
 		const CGFloat oldScrollOffset = self.contentOffset.x;
-		const CGFloat perfectOffsetDiff = oldScrollOffset - [self scrollOffsetForPageIndex:centerIndexInternal];
+		const CGFloat perfectOffsetDiff = oldScrollOffset - [self scrollOffsetForPageIndex:centerIndex];
 		const NSUInteger oldHead = head;
 		const BOOL reloadLeft = oldHead == 0;
 		const BOOL reloadRight = oldHead == (pageCount - [pages count]);
 		[CATransaction begin]; {
 			[CATransaction setDisableActions:YES];
-			CGFloat xOffset = [self scrollOffsetForPageIndex:kInfiniteScrollOrigin] + perfectOffsetDiff;
+			CGFloat xOffset = [self scrollOffsetForPageIndex:centerIndex] + perfectOffsetDiff;
 			centeringReload = YES;
 			[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
 			centeringReload = NO;
@@ -434,6 +437,7 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 			}
 		} [CATransaction commit];
 	}
+	*/
 }
 
 - (void)handleDidSettle {
@@ -446,9 +450,15 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 	}
 }
 
-- (NSUInteger)pageIndexForInternalPageIndex:(NSUInteger)index {
-	return (infinite == NO ? index : index + infiniteOffset);
+- (NSUInteger)centerContainerIndex {
+	return floorf([pages count] / 2.0);
 }
+
+/*
+- (NSUInteger)pageIndexForContainerIndex:(NSUInteger)index {
+	return (infinite == NO ? index : (infiniteHeadOffset + index));
+}
+*/
 
 - (void)reloadDataInternal {
 	const CGRect viewBounds = self.bounds;
@@ -457,7 +467,7 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 	const CGFloat width = pageCount * pageWidth;
 	
 	// determine number of pages to hold in memory
-	const NSUInteger len = MIN(pageCount, [self containerCountForViewWidth:viewBounds.size.width]);
+	const NSUInteger len = [self containerCountForViewWidth:viewBounds.size.width];
 	NSUInteger idx = 0;
 	
 	if ( [pages count] > len ) {
@@ -512,7 +522,7 @@ static const NSUInteger kInfiniteOrigin = NSUIntegerMax / 2;
 			[self addSubview:container];
 		}
 		
-		[scrollerDelegate scroller:self willDisplayPage:[self pageIndexForInternalPageIndex:i] view:page];
+		[scrollerDelegate scroller:self willDisplayPage:(i + infinitePageOffset) view:page];
 	}
 	if ( [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
 		[scrollerDelegate scroller:self didDisplayPage:centerIndex];
