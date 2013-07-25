@@ -20,13 +20,6 @@ static const CGFloat kThumbWidth = 120;
 	BRScrollerView *thumbView;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ( (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) ) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 	scrollView = [[BRScrollerView alloc] initWithFrame:self.view.bounds];
