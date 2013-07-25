@@ -51,6 +51,7 @@ static const CGFloat kThumbWidth = 120;
 - (void)viewDidUnload {
 	[super viewDidUnload];
 	scrollView = nil;
+	thumbView = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
