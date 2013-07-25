@@ -135,6 +135,10 @@ static const CGFloat kThumbWidth = 120;
 
 - (void)scroller:(BRScrollerView *)scroller didDisplayPage:(NSUInteger)index {
 	if ( scroller == scrollView ) {
+		UIView *view = [scroller reusablePageViewAtIndex:index];
+		log4Debug(@"Did display page %ld at %@", (long)[scroller reusablePageViewAtIndex:index], NSStringFromCGRect(view.frame));
+	}
+	if ( scroller == scrollView ) {
 		self.navigationItem.title = [NSString stringWithFormat:@"Page %ld", (long)[scroller infiniteOffsetForPageIndex:index]];
 	}
 }

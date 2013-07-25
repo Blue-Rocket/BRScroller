@@ -149,8 +149,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 }
 
 - (UIView *)reusablePageViewAtIndex:(const NSUInteger)viewIndex {
-	const NSUInteger internalIndex = viewIndex;
-	UIView *container = [self containerViewForIndex:internalIndex];
+	UIView *container = [self containerViewForIndex:viewIndex];
 	NSArray *sv = [container subviews];
 	return ([sv count] < 1 ? nil : [sv objectAtIndex:0]);
 }
@@ -320,6 +319,9 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 }
 
 - (UIView *)containerViewForIndex:(NSUInteger)index {
+	if ( infinite == YES ) {
+		index -= infinitePageOffset;
+	}
 	if ( index < head || (head + [pages count]) <= index ) {
 		// page not currently loaded
 		return nil;
