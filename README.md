@@ -63,7 +63,7 @@ of the demos available in that project:
   not necessarily known in advance (or there are just a lot of pages!).
   This mode works by defining an origin page, and all other pages are
   relative to that origin (e.g. **-1** for immediately left or **1** for
-  immediately right.
+  immediately right).
 
 * **ReverseViewController**
 
@@ -119,8 +119,8 @@ Next, add `-ObjC` as an **Other Linker Flags** build setting.
 Finally, you'll need to add the path to the directory containing the
 *BRScroller.xcodeproj* file as a **Header Search Paths** value in the
 **Build Settings** tab of the project settings. If you have added
-BRFullTextSearch as a git submodule to your own project, then the path
-might be something like `"$(PROJECT_DIR)/../BRScroller"`.
+BRScroller as a git submodule to your own project, then the path might
+be something like `"$(PROJECT_DIR)/../BRScroller"`.
 
 More detailed information on Xcode dependent projects can be found
 online, for example
