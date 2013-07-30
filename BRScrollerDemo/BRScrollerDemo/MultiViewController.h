@@ -12,11 +12,11 @@
 //  Copyright (c) 2013 Blue Rocket. Distributable under the terms of the Apache License, Version 2.0.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseDemoViewController.h"
 
 @class BRScrollerView;
 
-@interface MultiViewController : UIViewController
+@interface MultiViewController : BaseDemoViewController
 
 @property (nonatomic, strong) IBOutlet BRScrollerView *scrollView;
 @property (nonatomic, strong) IBOutlet BRScrollerView *thumbView;

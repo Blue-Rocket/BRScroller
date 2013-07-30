@@ -28,10 +28,6 @@ static const CGFloat kThumbWidth = 180;
 	scrollView.scrollerDelegate = self;
 	scrollView.pagingEnabled = YES;
 	thumbView.scrollerDelegate = self;
-	self.navigationItem.title = NSStringFromClass([self class]);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-																						   target:self
-																						   action:@selector(done:)];
 	UIBarButtonItem *toggle = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"hide.thumbs", nil)
 																			 style:UIBarButtonItemStylePlain
 																			target:self
@@ -47,14 +43,6 @@ static const CGFloat kThumbWidth = 180;
 		[scrollView reloadData];
 		[thumbView reloadData];
 	}
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	return YES;
-}
-
-- (IBAction)done:(id)sender {
-	[self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (IBAction)gotoPage:(UIGestureRecognizer *)sender {

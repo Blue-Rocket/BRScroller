@@ -36,10 +36,6 @@ static const CGFloat kThumbWidth = 120;
 	thumbView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 	[self.view addSubview:thumbView];
 	
-	self.navigationItem.title = NSStringFromClass([self class]);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-																						   target:self
-																						   action:@selector(done:)];
 	UIBarButtonItem *prevButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"infiniti.minus.label", nil) style:UIBarButtonItemStylePlain target:self action:@selector(goInfinitiMinus:)];
 	UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"infiniti.plus.label", nil) style:UIBarButtonItemStylePlain target:self action:@selector(goInfinitiPlus:)];
 	NSDictionary *textAttr = @{ UITextAttributeFont : [UIFont boldSystemFontOfSize:18] };
@@ -60,14 +56,6 @@ static const CGFloat kThumbWidth = 120;
 		[scrollView reloadData];
 		[thumbView reloadData];
 	}
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	return YES;
-}
-
-- (IBAction)done:(id)sender {
-	[self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (IBAction)goInfinitiMinus:(id)sender {

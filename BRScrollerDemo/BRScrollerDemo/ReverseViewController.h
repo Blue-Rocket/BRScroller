@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Blue Rocket. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseDemoViewController.h"
 
-@interface ReverseViewController : UIViewController
+@interface ReverseViewController : BaseDemoViewController
 
 @end

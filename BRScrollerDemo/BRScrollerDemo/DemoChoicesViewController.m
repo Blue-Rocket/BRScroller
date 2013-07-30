@@ -25,6 +25,14 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+#ifdef __IPHONE_7_0
+	// on iOS 7, don't extend the scroll view under the navigation bar / status bar
+	if ( [self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)] ) {
+		//self.edgesForExtendedLayout = UIRectEdgeNone;
+		self.automaticallyAdjustsScrollViewInsets = YES;
+		self.tableView.contentInset = UIEdgeInsetsMake(22, 0, 0, 0);
+	}
+#endif
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {

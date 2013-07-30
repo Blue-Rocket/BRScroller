@@ -25,11 +25,6 @@
 	scrollView.reverseLayoutOrder = YES;
 	scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	[self.view addSubview:scrollView];
-	
-	self.navigationItem.title = NSStringFromClass([self class]);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-																						   target:self
-																						   action:@selector(done:)];
 }
 
 - (void)viewDidUnload {
@@ -42,14 +37,6 @@
 	if ( scrollView.loaded == NO ) {
 		[scrollView reloadData];
 	}
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	return YES;
-}
-
-- (IBAction)done:(id)sender {
-	[self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - BRScrollerDelegate

@@ -21,21 +21,10 @@ static const NSUInteger kNumPages = 10;
 
 @synthesize scrollView;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ( (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) ) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 	scrollView.scrollerDelegate = self;
 	scrollView.pagingEnabled = YES;
-	self.navigationItem.title = NSStringFromClass([self class]);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-																						   target:self
-																						   action:@selector(done:)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -43,14 +32,6 @@ static const NSUInteger kNumPages = 10;
 	if ( scrollView.loaded == NO ) {
 		[scrollView reloadData];
 	}
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	return YES;
-}
-
-- (IBAction)done:(id)sender {
-	[self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - BRScrollerDelegate

@@ -39,10 +39,6 @@ static const int kNumImages = 10;
     [super viewDidLoad];
 	scrollView.scrollerDelegate = self;
 	scrollView.pagingEnabled = YES;
-	self.navigationItem.title = NSStringFromClass([self class]);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-																						   target:self
-																						   action:@selector(done:)];
 	prevButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"prev.label", nil) style:UIBarButtonItemStylePlain target:self action:@selector(goPrevious:)];
 	nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"next.label", nil) style:UIBarButtonItemStylePlain target:self action:@selector(goNext:)];
 	NSDictionary *textAttr = @{ UITextAttributeFont : [UIFont boldSystemFontOfSize:27] };
@@ -56,14 +52,6 @@ static const int kNumImages = 10;
 	if ( scrollView.loaded == NO ) {
 		[scrollView reloadData];
 	}
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	return YES;
-}
-
-- (IBAction)done:(id)sender {
-	[self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (IBAction)goPrevious:(id)sender {

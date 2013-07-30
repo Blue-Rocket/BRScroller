@@ -42,6 +42,7 @@
 		C98BF8501793A91300026093 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98BF84F1793A91300026093 /* QuartzCore.framework */; };
 		C98BF8521793C01E00026093 /* 10.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C98BF8511793C01E00026093 /* 10.jpeg */; };
 		C994A8D9179F3751008204CE /* InfiniteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C994A8D8179F3751008204CE /* InfiniteViewController.m */; };
+		C9B090E617A8632000DD6327 /* BaseDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B090E517A8632000DD6327 /* BaseDemoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +111,8 @@
 		C98BF8511793C01E00026093 /* 10.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 10.jpeg; sourceTree = "<group>"; };
 		C994A8D7179F3751008204CE /* InfiniteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfiniteViewController.h; sourceTree = "<group>"; };
 		C994A8D8179F3751008204CE /* InfiniteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfiniteViewController.m; sourceTree = "<group>"; };
+		C9B090E417A8632000DD6327 /* BaseDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDemoViewController.h; sourceTree = "<group>"; };
+		C9B090E517A8632000DD6327 /* BaseDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseDemoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +220,8 @@
 				C949388F178E33D7000B1D4E /* AsyncPhotoViewController.h */,
 				C9493890178E33D7000B1D4E /* AsyncPhotoViewController.m */,
 				C9493892178E33D7000B1D4E /* AsyncPhotoViewController.xib */,
+				C9B090E417A8632000DD6327 /* BaseDemoViewController.h */,
+				C9B090E517A8632000DD6327 /* BaseDemoViewController.m */,
 				C9775D6B1795CFED006E3C1E /* DemoTiledView.h */,
 				C9775D6C1795CFED006E3C1E /* DemoTiledView.m */,
 				C9775D6F1795D440006E3C1E /* DemoTiledViewController.h */,
@@ -341,6 +346,7 @@
 				C965CC9D17947CA40024DFF4 /* DemoChoicesViewController.m in Sources */,
 				C965CCA11794817B0024DFF4 /* SimpleViewController.m in Sources */,
 				C9775D6D1795CFED006E3C1E /* DemoTiledView.m in Sources */,
+				C9B090E617A8632000DD6327 /* BaseDemoViewController.m in Sources */,
 				C9775D721795D441006E3C1E /* DemoTiledViewController.m in Sources */,
 				C9775D761795D501006E3C1E /* DemoZoomingTiledView.m in Sources */,
 				C9775D7A1795F84F006E3C1E /* MultiViewController.m in Sources */,
