@@ -8,20 +8,26 @@
 
 #import "BRCenteringScrollView.h"
 
-@interface BRCenteringScrollView () <UIScrollViewDelegate>
+@interface BRCenteringScrollView () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 @end
 
 @implementation BRCenteringScrollView {
 	__weak id<BRScrollViewDelegate> scrollDelegate;
+	UITapGestureRecognizer *doubleTapRecognizer;
+	CGFloat doubleTapZoomIncrement;
+	CGFloat doubleTapMaxZoomLevel;
 }
 
 @synthesize scrollDelegate;
+@synthesize doubleTapZoomIncrement, doubleTapMaxZoomLevel, doubleTapRecognizer;
 
 - (id)initWithFrame:(CGRect)theFrame {
 	if ( (self = [super initWithFrame:theFrame]) ) {
 		self.minimumZoomScale = 1.0;
 		self.maximumZoomScale = 8.0;
 		self.scrollEnabled = YES;
+		doubleTapZoomIncrement = 2;
+		doubleTapMaxZoomLevel = 8;
 		[super setDelegate:self];
 	}
 	return self;
@@ -38,6 +44,57 @@
 	if ( delegate != nil ) {
 		NSAssert(NO, @"You may not set a scroll view delegate on a %@", NSStringFromClass([self class]));
 	}
+}
+
+- (void)setDoubleTapToZoom:(BOOL)value {
+	if ( value == NO ) {
+		if ( doubleTapRecognizer != nil ) {
+			[self removeGestureRecognizer:doubleTapRecognizer];
+			doubleTapRecognizer = nil;
+		}
+	} else {
+		doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapZoom:)];
+		doubleTapRecognizer.numberOfTapsRequired = 2;
+		doubleTapRecognizer.delegate = self;
+		[self addGestureRecognizer:doubleTapRecognizer];
+	}
+}
+
+- (void)doubleTapZoom:(UITapGestureRecognizer *)recognizer {
+	const CGPoint contentOffset = self.contentOffset;
+	UIView *managedView = [self viewForZoomingInScrollView:self];
+	CGPoint boundsPoint = [recognizer locationInView:self];
+	boundsPoint.x -= contentOffset.x;
+	boundsPoint.y -= contentOffset.y;
+	CGPoint contentPoint = [recognizer locationInView:managedView];
+	if ( self.zoomScale < doubleTapMaxZoomLevel ) {
+		const CGFloat destZoomScale = floorf((self.zoomScale * doubleTapZoomIncrement) / doubleTapZoomIncrement) * doubleTapZoomIncrement;
+		// zoom to 2x
+		CGSize bounds = self.bounds.size;
+		CGSize zoomBounds = bounds;
+		zoomBounds.width /= destZoomScale;
+		zoomBounds.height /= destZoomScale;
+		CGFloat xPercent = boundsPoint.x / bounds.width;
+		CGFloat yPercent = boundsPoint.y / bounds.height;
+		CGRect zoomToRect = CGRectMake(contentPoint.x - (zoomBounds.width * xPercent),
+									   contentPoint.y - (zoomBounds.height * yPercent),
+									   zoomBounds.width, zoomBounds.height);
+		log4Debug(@"Zoom scale %f %@ from %@ to %@",
+				  self.zoomScale, NSStringFromCGPoint(self.contentOffset),
+				  NSStringFromCGRect(CGRectMake(self.contentOffset.x, self.contentOffset.y, self.bounds.size.width, self.bounds.size.height)),
+				  NSStringFromCGRect(zoomToRect));
+		[self zoomToRect:zoomToRect animated:YES];
+	} else {
+		[self setZoomScale:1.0 animated:YES];
+	}
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+	// only detect double taps on the managed view itself, not in any borders outside the view bounds
+	UIView *managedView = [self viewForZoomingInScrollView:self];
+	return (managedView == nil
+			? NO
+			: CGRectContainsPoint(managedView.bounds, [touch locationInView:managedView]));
 }
 
 #pragma mark Layout
@@ -96,12 +153,9 @@
 - (void)layoutSubviews {
 	[super layoutSubviews];
 	
-	// This method is called after view bounds changes as well as during scrolling/zooming gestures. That means
-	// we need to let the managed view relayout as well, so it can display pages correctly. We also have to check
-	// if the contentSize needs adjusting to fit our current view bounds.
-	
+	// This method is called after view bounds changes as well as during scrolling/zooming gestures.
 	UIView *managedView = [self viewForZoomingInScrollView:self];
-	if ( !self.zooming ) {
+	if ( self.zooming == NO ) {
 		log4Trace(@"Layout size %@; center = %@", NSStringFromCGSize(managedView.bounds.size), NSStringFromCGPoint(managedView.center));
 		
 		// Here we check for size adjustment of our bounds, and adjust managed size accordingly. Adjusting the view size
@@ -129,9 +183,6 @@
 			managedView.center = CGPointApplyAffineTransform(CGPointMake(size.width / 2.0, size.height / 2.0), contentScale);
 			self.contentSize = contentSize;
 			[self setContentOffset:contentOffset animated:NO];
-		/*} else {
-			// during scrolling, re-layout managed content
-			[managedView setNeedsLayout];*/
 		}
 	}
 }

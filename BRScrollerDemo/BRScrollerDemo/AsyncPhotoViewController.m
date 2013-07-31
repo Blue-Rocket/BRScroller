@@ -125,6 +125,7 @@ static const int kNumImages = 10;
 	zoomer.imageView.delegate = self;
 	zoomer.scrollDelegate = self;
 	zoomer.imageView.imageContentView.delegate = self;
+	zoomer.doubleTapToZoom = YES;
 	return zoomer;
 }
 
