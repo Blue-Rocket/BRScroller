@@ -175,7 +175,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 			centeringReload = NO;
 			[self layoutForCurrentScrollOffset];
 			[CATransaction commit];
-			if ( centerIndex < pageCount
+			if ( (centerIndex < pageCount || infinite == YES)
 				&& [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
 				[scrollerDelegate scroller:self didDisplayPage:centerIndex];
 			}
