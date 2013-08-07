@@ -264,7 +264,9 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		adjustingContent = NO;
 		log4Debug(@"Laying out scroller pages at %dx%d", (int)pageWidth, (int)height);
 		for ( NSUInteger idx = 0, i = head, end = [pages count]; idx < end; i++, idx++ ) {
-			CGFloat xOffset = [self scrollOffsetForPageIndex:i pageWidth:pageWidth pageCount:pageCount];
+			CGFloat xOffset = [self scrollOffsetForPageIndex:(infinite == NO ? i : (infinitePageOffset + i))
+												   pageWidth:pageWidth
+												   pageCount:pageCount];
 			CGRect pageRect = CGRectMake(xOffset, 0.0, pageWidth, height);
 			UIView *container = [pages objectAtIndex:idx];
 			container.bounds = CGRectMake(0, 0, pageRect.size.width, pageRect.size.height);
