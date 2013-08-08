@@ -2,4 +2,4 @@
 /BRScroller.framework
 .DS_Store
 xcuserdata
-
+*.xccheckout
