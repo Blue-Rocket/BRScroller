@@ -524,7 +524,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		
 		[scrollerDelegate scroller:self willDisplayPage:(i + infinitePageOffset) view:page];
 	}
-	if ( [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
+	if ( pageCount > 0 && [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
 		[scrollerDelegate scroller:self didDisplayPage:centerIndex];
 	}
 	[self flashScrollIndicators];
