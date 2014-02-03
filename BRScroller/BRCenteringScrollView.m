@@ -208,7 +208,7 @@
 	}
 }
 
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale {
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
 	if ( [scrollDelegate respondsToSelector:@selector(scrollViewDidEndZooming:withView:atScale:)] ) {
 		[scrollDelegate scrollViewDidEndZooming:self withView:view atScale:scale];
 	}
