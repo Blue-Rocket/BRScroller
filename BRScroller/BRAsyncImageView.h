@@ -29,8 +29,10 @@
 
 @interface BRAsyncImageView : UIView
 
-@property (nonatomic) dispatch_queue_t queue;
 @property (nonatomic, strong) NSURL *imageURL;
+@property (nonatomic, strong) UIImage *image; //wjt
+
+@property (nonatomic) dispatch_queue_t queue;
 @property (nonatomic, weak) id<BRAsyncImageViewDelegate> delegate;
 
 @property (nonatomic, readonly, getter = isLoaded) BOOL loaded;
