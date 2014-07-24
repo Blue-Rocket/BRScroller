@@ -106,26 +106,17 @@ static NSString * const kImageURLKey = @"BR.imageURL";
 		[imageLayer setValue:theURL forKey:kImageURLKey];
 	}
 	dispatch_async(queue, ^{
-// ----- start wjt
 		NSError *error = nil;
-        NSData *data = nil;
-        UIImage *img = nil;
-        
-        if (_image == nil) {
-            data = [NSData dataWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:&error];
-            if ( error != nil ) {
-                log4Error(@"Error reading image URL %@: %@", theURL, [error description]);
-                return;
-            }
-            img = [[UIImage alloc] initWithData:data];
-            if ( img == nil ) {
-                return;
-            }
-        } else {
-            img = _image;
-        }
-// ----- end wjt
-        
+		NSData *data = [NSData dataWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:&error];
+		if ( error != nil ) {
+			log4Error(@"Error reading image URL %@: %@", theURL, [error description]);
+			return;
+		}
+		UIImage *img = [[UIImage alloc] initWithData:data];
+		if ( img == nil ) {
+			return;
+		}
+		
 		// decode and load image into memory, while still on background thread
 		UIGraphicsBeginImageContext(img.size);
 		[img drawAtPoint:CGPointZero];
