@@ -9,6 +9,8 @@
 #import "BRPreviewLayerView.h"
 
 #import <QuartzCore/QuartzCore.h>
+
+#import "BRScrollerLogging.h"
 #import "BRScrollerUtilities.h"
 
 static NSString * const kPreviewKey = @"BR.imageKey";

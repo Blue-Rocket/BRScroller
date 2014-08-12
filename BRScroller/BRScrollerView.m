@@ -9,6 +9,7 @@
 #import "BRScrollerView.h"
 
 #import "BRScrollerDelegate.h"
+#import "BRScrollerLogging.h"
 #import "BRScrollerUtilities.h"
 
 const NSUInteger kBRScrollerViewInfiniteMaximumPageIndex = NSUIntegerMax - 1; // to account for translating to NSInteger for maximum page
