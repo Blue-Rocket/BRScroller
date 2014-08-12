@@ -23,7 +23,8 @@ Pod::Spec.new do |s|
   s.default_subspec = 'Core'
   
   s.subspec 'Core' do |as|
-  	as.source_files = "BRScroller/BRScroller*.{c,h,m}"
+  	as.source_files = "BRScroller/BRScroller*.{c,h,m}",
+  						"BRScroller/BRScrollViewDelegate.h"
   end
   
   s.subspec 'View-Support' do |as|
