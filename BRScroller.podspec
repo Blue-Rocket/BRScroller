@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'View-Support' do |as|
   	as.source_files = "BRScroller/BRPreviewLayerView.{h,m}",
-  						"BRScroller/BRCenteringZoomView.{h,m}"
+  						"BRScroller/BRCenteringScrollView.{h,m}"
   	as.dependency 'BRScroller/Core'
   end
   
