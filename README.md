@@ -71,8 +71,41 @@ of the demos available in that project:
   positioned in right-to-left order, rather than the default 
   left-to-right order.
 
-Static Framework Project Integration
-------------------------------------
+Project Integration
+-------------------
+
+You can integrate BRScroller via [CocoaPods](http://cocoapods.org/), or
+manually as either a dependent project or static framework.
+
+via CocoaPods
+=============
+
+Install CocoaPods if not already available:
+
+```bash
+$ [sudo] gem install cocoapods
+$ pod setup
+```
+
+Change to the directory of your Xcode project, and create a file named `Podfile` with
+contents similar to this:
+
+	platform :ios, '5.0' 
+	pod 'BRScroller', '~> 1.0'
+
+Install into your project:
+
+``` bash
+$ pod install
+```
+Open your project in Xcode using the **.xcworkspace** file CocoaPods generated.
+There are two pod submodules available:
+
+ 1. `BRScroller/View-Support` - for some `UIView` support for scroller page views.
+ 2. `BRScroller/Image-Support` - for some `UIView` support for asynchronous `UIImage` loading.
+
+via static framework
+====================
 
 You can integrate BRScroller into your project in a couple of ways.
 First, the BRScroller Xcode project includes a target called
@@ -93,8 +126,8 @@ Finally, you'll need to add the path to the directory containing the
 `BRScroller.framework` bundle as a **Framework Search Paths** value in
 the **Build Settings** tab of the project settings.
 
-Dependent Project Integration
------------------------------
+via dependent project
+=====================
 
 The other way you can integrate BRScroller into your project is to add
 the BRScroller Xcode project as a dependent project of your project. The
