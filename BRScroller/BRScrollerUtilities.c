@@ -8,9 +8,8 @@
 
 #include "BRScrollerUtilities.h"
 
-#if !defined(MIN)
-	#define MIN(A,B)	((A) < (B) ? (A) : (B))
-#endif
+#include <math.h>
+#include <sys/param.h>
 
 inline bool BRFloatsAreEqual(CGFloat a, CGFloat b) {
 	const CGFloat d = a - b;
