@@ -9,8 +9,7 @@
 #ifndef BRScroller_BRScrollerUtilities_h
 #define BRScroller_BRScrollerUtilities_h
 
-#include <CoreFoundation/CoreFoundation.h>
-#include <QuartzCore/QuartzCore.h>
+#include <CoreGraphics/CoreGraphics.h>
 
 bool BRFloatsAreEqual(CGFloat a, CGFloat b);
 
