@@ -47,11 +47,23 @@
 	[self updatedContent];
 }
 
+- (NSData *)imageData {
+	return ((BRAsyncImageView *)self.contentView).imageData;
+}
+
+- (void)setImageData:(NSData *)imageData {
+	BRAsyncImageView *imageView = (BRAsyncImageView *)self.contentView;
+	imageView.imageData = imageData;
+	[self updatedContent];
+}
+
 - (void)setContentView:(UIView *)contentView {
 	// allow users to specify a custom subclass if needed, as long as it provides an imageURL property
-	NSAssert([contentView respondsToSelector:@selector(setImageURL:)]
-			 && [contentView respondsToSelector:@selector(imageURL)],
-			 @"contentView must provide imageURL readwrite property");
+	NSAssert(([contentView respondsToSelector:@selector(setImageURL:)]
+			  && [contentView respondsToSelector:@selector(imageURL)])
+			 || ([contentView respondsToSelector:@selector(setImageData:)]
+				 && [contentView respondsToSelector:@selector(imageData)]),
+			 @"contentView must provide either a imageURL or imageData readwrite property");
 	[super setContentView:contentView];
 }
 
