@@ -34,7 +34,8 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'Image-Support' do |as|
-  	as.source_files = "BRScroller/*Image*.{h,m}"
+  	as.source_files = "BRScroller/*Image*.{h,m}",
+  						"BRScroller/BRScrollerImageSupport.h"
   	as.dependency 'BRScroller/View-Support'
   end
   
