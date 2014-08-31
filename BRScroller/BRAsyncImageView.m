@@ -20,12 +20,14 @@ static NSString * const kImageURLKey = @"BR.imageURL";
 
 @implementation BRAsyncImageView {
 	NSURL *imageURL;
+	NSData *imageData;
 	CALayer *imageLayer;
 	CGSize imageSize;
 	dispatch_queue_t queue;
 }
 
 @synthesize imageURL, queue;
+@synthesize imageData;
 
 - (id)initWithFrame:(CGRect)frame {
     if ( (self = [super initWithFrame:frame]) ) {
@@ -108,10 +110,13 @@ static NSString * const kImageURLKey = @"BR.imageURL";
 	}
 	dispatch_async(queue, ^{
 		NSError *error = nil;
-		NSData *data = [NSData dataWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:&error];
-		if ( error != nil ) {
-			log4Error(@"Error reading image URL %@: %@", theURL, [error description]);
-			return;
+		NSData *data = imageData;
+		if ( data == nil ) {
+			data = [NSData dataWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:&error];
+			if ( error != nil ) {
+				log4Error(@"Error reading image URL %@: %@", theURL, [error description]);
+				return;
+			}
 		}
 		UIImage *img = [[UIImage alloc] initWithData:data];
 		if ( img == nil ) {
