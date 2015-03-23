@@ -26,7 +26,7 @@ extern const NSUInteger kBRScrollerViewInfiniteMaximumPageIndex;
 @interface BRScrollerView : UIScrollView
 
 // the (required) delegate for providing page content
-@property (nonatomic, weak) id<BRScrollerDelegate> scrollerDelegate;
+@property (nonatomic, weak) IBOutlet id<BRScrollerDelegate> scrollerDelegate;
 
 // if YES, display pages left-to-right in descending order, if NO then left-to-right in ascending order
 @property (nonatomic, getter=isReverseLayoutOrder) BOOL reverseLayoutOrder;
