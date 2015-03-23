@@ -9,6 +9,7 @@
 #import "AsyncPhotoViewController.h"
 
 #import <BRScroller/BRScroller.h>
+#import <BRScroller/BRScrollerImageSupport.h>
 
 static const int kNumImages = 10;
 
