@@ -7,6 +7,10 @@
 //  single serial queue is used for loading all images. You can provide your own
 //  queue by setting the queue property.
 //
+//  Instead of setting the `imageURL` property, the `imageData` property can be set
+//  to image data, and that data will be loaded into a UIImage object. The data will
+//  still be decoded in the background.
+//
 //  Created by Matt on 7/15/13.
 //  Copyright (c) 2013 Blue Rocket. Distributable under the terms of the Apache License, Version 2.0.
 //
@@ -31,6 +35,7 @@
 
 @property (nonatomic) dispatch_queue_t queue;
 @property (nonatomic, strong) NSURL *imageURL;
+@property (nonatomic, strong) NSData *imageData;
 @property (nonatomic, weak) id<BRAsyncImageViewDelegate> delegate;
 
 @property (nonatomic, readonly, getter = isLoaded) BOOL loaded;

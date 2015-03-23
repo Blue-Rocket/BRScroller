@@ -66,9 +66,11 @@
 		C94938B2178E6216000B1D4E /* BRImagePreviewLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRImagePreviewLayerView.m; sourceTree = "<group>"; };
 		C94938C7178E6AA9000B1D4E /* BRZoomingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRZoomingImageView.h; sourceTree = "<group>"; };
 		C94938C8178E6AA9000B1D4E /* BRZoomingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRZoomingImageView.m; sourceTree = "<group>"; };
+		C97C128A1ABFB21A00278B25 /* BRScroller.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = BRScroller.podspec; sourceTree = SOURCE_ROOT; };
 		C98BF84C17939EC400026093 /* BRAsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAsyncImageView.h; sourceTree = "<group>"; };
 		C98BF84D17939EC400026093 /* BRAsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAsyncImageView.m; sourceTree = "<group>"; };
 		C999121B1999A2ED00E0271C /* BRScrollerLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScrollerLogging.h; sourceTree = "<group>"; };
+		C9C1F49419B3DC5400063B80 /* BRScrollerImageSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScrollerImageSupport.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				C9493836178E2EC1000B1D4E /* BRScroller.h */,
+				C9C1F49419B3DC5400063B80 /* BRScrollerImageSupport.h */,
 				C949386A178E305C000B1D4E /* BRScrollerDelegate.h */,
 				C999121B1999A2ED00E0271C /* BRScrollerLogging.h */,
 				C9493867178E2FCA000B1D4E /* BRScrollerView.h */,
@@ -131,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				C9493835178E2EC1000B1D4E /* BRScroller-Prefix.pch */,
+				C97C128A1ABFB21A00278B25 /* BRScroller.podspec */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

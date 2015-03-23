@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "BRScroller"
-  s.version      = "1.0.0"
+  s.version      = "1.1.0"
   s.summary      = "Memory-friendly iOS horizontally scrolling view."
   s.description  = <<-DESC
                    BRScroller provides a `UIScrollView` subclass that efficiently manages
@@ -34,7 +34,8 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'Image-Support' do |as|
-  	as.source_files = "BRScroller/*Image*.{h,m}"
+  	as.source_files = "BRScroller/*Image*.{h,m}",
+  						"BRScroller/BRScrollerImageSupport.h"
   	as.dependency 'BRScroller/View-Support'
   end
   
