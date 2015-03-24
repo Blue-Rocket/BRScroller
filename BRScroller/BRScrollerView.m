@@ -224,6 +224,24 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	}
 }
 
+- (void)setContentOffset:(CGPoint)contentOffset {
+	log4Debug(@"Adjusting contentOffset from %@ to %@", NSStringFromCGPoint(self.contentOffset), NSStringFromCGPoint(contentOffset));
+	[super setContentOffset:contentOffset];
+}
+
+- (BOOL)adjustContentSize {
+	const CGFloat height = self.bounds.size.height;
+	const CGFloat width = pageCount * pageWidth;
+	const CGSize expectedContentSize = CGSizeMake(width, height);
+	if ( !CGSizeEqualToSize(self.contentSize, expectedContentSize) ) {
+		ignoreScroll = YES;
+		self.contentSize = expectedContentSize;
+		ignoreScroll = NO;
+		return YES;
+	}
+	return NO;
+}
+
 - (void)layoutSubviews {
 	[super layoutSubviews];
 	
@@ -232,26 +250,18 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		lastScrollOffset = self.contentOffset.x;
 	}
 	
-	const CGFloat height = self.bounds.size.height;
-	const CGFloat width = pageCount * pageWidth;
-	const CGSize expectedContentSize = CGSizeMake(width, height);
 	const NSUInteger oldCenterIndex = centerIndex;
-	const BOOL resize = (CGSizeEqualToSize(expectedContentSize, self.contentSize) == NO);
+	const BOOL resize = [self adjustContentSize];
+	const BOOL animationsEnabled = [UIView areAnimationsEnabled];
 	
 	if ( resize ) {
-		log4Debug(@"Adjusting content size from %@ to %@", NSStringFromCGSize(self.contentSize), NSStringFromCGSize(expectedContentSize));
 		ignoreScroll = YES;
-		self.contentSize = expectedContentSize;
+		if ( animationsEnabled ) {
+			[UIView setAnimationsEnabled:NO];
+		}
 		CGFloat expectedOffset = [self scrollOffsetForPageIndex:oldCenterIndex];
 		if ( BRFloatsAreEqual(self.contentOffset.x, expectedOffset) == NO ) {
-			const BOOL animationsEnabled = [UIView areAnimationsEnabled];
-			if ( animationsEnabled ) {
-				[UIView setAnimationsEnabled:NO];
-			}
 			self.contentOffset = CGPointMake(expectedOffset, 0);
-			if ( animationsEnabled ) {
-				[UIView setAnimationsEnabled:YES];
-			}
 		}
 	}
 	
@@ -259,6 +269,9 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	
 	if ( resize ) {
 		ignoreScroll = NO;
+		if ( animationsEnabled ) {
+			[UIView setAnimationsEnabled:YES];
+		}
 	}
 	
 	NSUInteger newCenterIndex = centerIndex;
