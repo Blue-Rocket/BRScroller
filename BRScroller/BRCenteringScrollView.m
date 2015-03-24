@@ -121,8 +121,34 @@
 		[self layoutIfNeeded]; // calling this might adjust the contentSize to fit new view bounds
 		const CGSize newContentSize = self.contentSize;
 		const CGPoint newCenterPoint = CGPointMake(centerCoordinate.x * newContentSize.width, centerCoordinate.y * newContentSize.height);
-		const CGPoint newOffset = CGPointMake(newCenterPoint.x - frame.size.width * 0.5, newCenterPoint.y - frame.size.height * 0.5);
-		[self setContentOffset:newOffset animated:NO];
+		const CGPoint newOffset = CGPointMake(MAX(0.0, newCenterPoint.x - frame.size.width * 0.5), MAX(0.0, newCenterPoint.y - frame.size.height * 0.5));
+		[self setContentOffsetWithoutAnimation:newOffset];
+	}
+}
+
+- (void)setBounds:(CGRect)bounds {
+	// UIScrollView will automatically choose a new contentOffset value when the frame changes,
+	// but this can lead to the wrong desired offset in the case of rotation, where we will
+	// be changing the contentSize to adjust to the new frame size. What we want is for the
+	// visual center of the managed content area (our own view bounds) to remain unchanged, so
+	// the content appears to rotate about the center point.
+	//
+	// So we calculate that visual center before the frame changes, then re-calculate it
+	// after setting the frame to achieve the desired effect.
+	
+	const CGSize oldViewSize = self.bounds.size;
+	const CGPoint oldContentOffset = self.contentOffset;
+	const CGSize oldContentSize = self.contentSize;
+	const CGPoint centerCoordinate = CGPointMake((oldContentOffset.x + oldViewSize.width * 0.5) / oldContentSize.width,
+												 (oldContentOffset.y + oldViewSize.height * 0.5) / oldContentSize.height);
+
+	[super setBounds:bounds];
+	if ( CGSizeEqualToSize(oldViewSize, bounds.size) == NO ) {
+		[self layoutIfNeeded]; // calling this might adjust the contentSize to fit new view bounds
+		const CGSize newContentSize = self.contentSize;
+		const CGPoint newCenterPoint = CGPointMake(centerCoordinate.x * newContentSize.width, centerCoordinate.y * newContentSize.height);
+		const CGPoint newOffset = CGPointMake(MAX(0.0, newCenterPoint.x - bounds.size.width * 0.5), MAX(0.0, newCenterPoint.y - bounds.size.height * 0.5));
+		[self setContentOffsetWithoutAnimation:newOffset];
 	}
 }
 
@@ -150,6 +176,17 @@
 	log4Trace(@"Changing contentOffset (requested %@) from %@ to %@", NSStringFromCGPoint(offset),
 			  NSStringFromCGPoint(self.contentOffset), NSStringFromCGPoint(newOffset));
 	[super setContentOffset:newOffset];
+}
+
+- (void)setContentOffsetWithoutAnimation:(const CGPoint)offset {
+	const BOOL animationEnabled = [UIView areAnimationsEnabled];
+	if ( animationEnabled ) {
+		[UIView setAnimationsEnabled:NO];
+	}
+	[self setContentOffset:offset];
+	if ( animationEnabled ) {
+		[UIView setAnimationsEnabled:YES];
+	}
 }
 
 - (void)layoutSubviews {
@@ -184,7 +221,7 @@
 			managedView.bounds = CGRectMake(0, 0, size.width, size.height);
 			managedView.center = CGPointApplyAffineTransform(CGPointMake(size.width / 2.0, size.height / 2.0), contentScale);
 			self.contentSize = contentSize;
-			[self setContentOffset:contentOffset animated:NO];
+			[self setContentOffsetWithoutAnimation:contentOffset];
 		}
 	}
 }
