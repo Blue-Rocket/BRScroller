@@ -153,9 +153,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 }
 
 - (UIView *)reusablePageViewAtIndex:(const NSUInteger)viewIndex {
-	UIView *container = [self containerViewForIndex:viewIndex];
-	NSArray *sv = [container subviews];
-	return ([sv count] < 1 ? nil : [sv objectAtIndex:0]);
+	return [self containerViewForIndex:viewIndex];
 }
 
 - (void)gotoPage:(const NSUInteger)index animated:(BOOL)animated {
@@ -188,15 +186,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 }
 
 - (NSArray *)loadedReusablePages {
-	NSMutableArray *result = [NSMutableArray arrayWithCapacity:[pages count]];
-	for ( UIView *container in pages ) {
-		NSArray *sv = [container subviews];
-		if ( [sv count] > 0 ) {
-			[result addObject:[sv objectAtIndex:0]];
-		}
-	}
-	return result;
-	
+	return [pages copy];
 }
 
 - (NSRange)loadedReusablePageRange {
@@ -351,21 +341,17 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	}
 	const CGFloat pageHeight = self.bounds.size.height;
 	for ( NSUInteger i = reloadDataRange.location; i < (reloadDataRange.location + reloadDataRange.length); i++ ) {
-		UIView *container = (UIView *)[pages objectAtIndex:i];
+		UIView *page = [pages objectAtIndex:i];
 		CGFloat xOffset = (reverseLayoutOrder
 						   ? ((pageCount * pageWidth) - ((newHead + i + 1) * pageWidth))
 						   : ((newHead + i) * pageWidth));
 		log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)(newHead + i + infinitePageOffset),
 				  NSStringFromCGRect(container.frame), NSStringFromCGRect(CGRectMake(xOffset, 0, pageWidth, pageHeight)));
-		container.center = CGPointMake(xOffset + (pageWidth / 2.0), (pageHeight / 2.0));
+		page.center = CGPointMake(xOffset + (pageWidth / 2.0), (pageHeight / 2.0));
 		if ( adjustingFrame ) {
-			container.bounds = CGRectMake(0, 0, pageWidth, pageHeight);
-			UIView *page = [container.subviews objectAtIndex:0];
-			if ( !CGSizeEqualToSize(page.bounds.size, container.bounds.size) ) {
-				page.frame = CGRectMake(0, 0, pageWidth, pageHeight);
-			}
+			page.bounds = CGRectMake(0, 0, pageWidth, pageHeight);
 		} else {
-			[scrollerDelegate scroller:self willDisplayPage:(newHead + i + infinitePageOffset) view:[container.subviews objectAtIndex:0]];
+			[scrollerDelegate scroller:self willDisplayPage:(newHead + i + infinitePageOffset) view:page];
 		}
 	}
 	
@@ -473,8 +459,8 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	if ( [pages count] > len ) {
 		log4Debug(@"Discarding %d pages for reload", [pages count] - len);
 		for ( idx = ([pages count] - len); idx > 0; idx-- ) {
-			UIView *container = [pages lastObject];
-			[container removeFromSuperview];
+			UIView *page = [pages lastObject];
+			[page removeFromSuperview];
 			[pages removeLastObject];
 		}
 	}
@@ -490,36 +476,30 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 			self.contentInset = UIEdgeInsetsZero;
 		}
 	}
-	const CGRect pageFrame = CGRectMake(0, 0, pageWidth, viewBounds.size.height);
+	const CGRect pageBounds = CGRectMake(0, 0, pageWidth, viewBounds.size.height);
 	for ( NSUInteger i = head, end = head + len, idx = 0; i < pageCount && i < end; i++, idx++ ) {
 		CGFloat xOffset = (reverseLayoutOrder
 						   ? (width - ((CGFloat)(i + 1) * pageWidth))
 						   : (CGFloat)i * pageWidth);
-		CGRect pageRect = CGRectMake(xOffset, 0.0, pageWidth, viewBounds.size.height);
-		UIView *container;
+		CGPoint pageCenter = CGPointMake(xOffset + (pageWidth / 2.0), (pageBounds.size.height / 2.0));
 		UIView *page;
 		if ( idx < [pages count] ) {
 			// reuse existing container
-			container = [pages objectAtIndex:idx];
-			container.bounds = pageFrame;
-			container.center = CGPointMake(pageRect.origin.x + (pageRect.size.width / 2.0),
-										   pageRect.origin.y + (pageRect.size.height / 2.0));
-			page = [container.subviews objectAtIndex:0];
-			if ( !CGRectEqualToRect(pageFrame, page.frame) ) {
-				page.frame = pageFrame;
+			page = [pages objectAtIndex:idx];
+			page.center = pageCenter;
+			if ( CGRectEqualToRect(page.bounds, pageBounds) ) {
+				page.bounds = pageBounds;
 			}
 		} else {
 			// create new container
-			log4Debug(@"Creating container %lu at %@", (unsigned long)i, NSStringFromCGRect(pageRect));
-			container = [[UIView alloc] initWithFrame:pageRect];
-			container.opaque = YES;
+			log4Debug(@"Creating page %lu", (unsigned long)i);
 			page = [scrollerDelegate createReusablePageViewForScroller:self];
-			if ( !CGRectEqualToRect(pageFrame, page.frame) ) {
-				page.frame = pageFrame;
+			page.center = pageCenter;
+			if ( CGRectEqualToRect(page.bounds, pageBounds) ) {
+				page.bounds = pageBounds;
 			}
-			[container addSubview:page];
-			[pages addObject:container];
-			[self addSubview:container];
+			[pages addObject:page];
+			[self addSubview:page];
 		}
 		
 		[scrollerDelegate scroller:self willDisplayPage:(i + infinitePageOffset) view:page];
