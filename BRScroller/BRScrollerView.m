@@ -24,12 +24,10 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	__weak id<BRScrollerDelegate> scrollerDelegate;
 	BOOL loaded;
 	BOOL reverseLayoutOrder;
-	BOOL centeringReload;
-	BOOL adjustingFrame;
-	BOOL scrolling;
-	BOOL adjustingContent;
 	BOOL infinite;
-	NSUInteger layoutGotoPage;
+
+	BOOL ignoreScroll;
+	BOOL scrolling;
 	
 	CGFloat pageWidth;
 	NSUInteger pageCount;
@@ -73,7 +71,6 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	lastScrollOffset = 0;
 	infinitePageOffset = 0;
 	pages = [[NSMutableArray alloc] init];
-	layoutGotoPage = NSNotFound;
 }
 
 #pragma mark - Accessors
@@ -126,17 +123,21 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	// disable implicit animation here, so we avoid a "stretching" effect
 	[self cachePageWidth];
 	[self cachePageCount];
-	[CATransaction begin]; {
-		[CATransaction setDisableActions:YES];
-		infinitePageOffset = [self calculateInfinitePageOffsetForCenterIndex:index];
-		CGFloat xOffset = [self scrollOffsetForPageIndex:index];
-		loaded = NO;
-		centeringReload = YES;
-		[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
-		centeringReload = NO;
-		[self reloadDataInternal];
-		loaded = YES;
-	} [CATransaction commit];
+	const BOOL animationsEnabled = [UIView areAnimationsEnabled];
+	if ( animationsEnabled ) {
+		[UIView setAnimationsEnabled:NO];
+	}
+	infinitePageOffset = [self calculateInfinitePageOffsetForCenterIndex:index];
+	CGFloat xOffset = [self scrollOffsetForPageIndex:index];
+	loaded = NO;
+	ignoreScroll = YES;
+	[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
+	ignoreScroll = NO;
+	[self reloadDataInternal];
+	loaded = YES;
+	if ( animationsEnabled ) {
+		[UIView setAnimationsEnabled:YES];
+	}
 	[self handleDidSettle];
 }
 
@@ -156,7 +157,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	return [self containerViewForIndex:viewIndex];
 }
 
-- (void)gotoPage:(const NSUInteger)index animated:(BOOL)animated {
+- (void)gotoPage:(const NSUInteger)index animated:(const BOOL)animated {
 	const BOOL crossingInfiniteBounds = (infinite == NO ? NO : (index < infinitePageOffset || index > (infinitePageOffset + pageCount)));
 	if ( crossingInfiniteBounds ) {
 		// cannot animate easily because we cross infinite bounds :-(
@@ -166,21 +167,13 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	}
     CGFloat xOffset = [self scrollOffsetForPageIndex:index];
 	if ( !BRFloatsAreEqual(xOffset, self.contentOffset.x) ) {
-		if ( !animated ) {
-			centeringReload = YES;
-			[CATransaction begin];
-			[CATransaction setDisableActions:YES];
+		const BOOL animationsEnabled = [UIView areAnimationsEnabled];
+		if ( animationsEnabled && animated == NO ) {
+			[UIView setAnimationsEnabled:NO];
 		}
 		[self setContentOffset:CGPointMake(xOffset, 0) animated:animated];
-		if ( !animated ) {
-			scrolling = NO;
-			centeringReload = NO;
-			[self layoutForCurrentScrollOffset];
-			[CATransaction commit];
-			if ( adjustingFrame == NO && (centerIndex < pageCount || infinite == YES)
-				&& [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
-				[scrollerDelegate scroller:self didDisplayPage:centerIndex];
-			}
+		if ( animationsEnabled && animated == NO  ) {
+			[UIView setAnimationsEnabled:YES];
 		}
 	}
 }
@@ -213,53 +206,69 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 
 #pragma mark - Layout
 
-- (void)adjustContentSizeForViewSize:(CGSize)size atPageIndex:(NSUInteger)currIndex {
-	layoutGotoPage = currIndex;
-	[self setNeedsLayout];
-}
-
 - (void)setFrame:(CGRect)frame {
-	const CGRect oldFrame = self.frame;
-	const NSUInteger currIndex = [self centerPageIndex];
+	const CGRect oldBounds = self.bounds;
 	[super setFrame:frame];
-	if ( loaded && layoutGotoPage == NSNotFound && CGSizeEqualToSize(oldFrame.size, frame.size) == NO ) {
-		// automatically go back to former page index
-		[self adjustContentSizeForViewSize:frame.size atPageIndex:currIndex];
+	if ( CGSizeEqualToSize(oldBounds.size, frame.size) == NO ) {
+		[self cachePageWidth];
+		[self cachePageCount];
 	}
 }
 
 - (void)setBounds:(CGRect)bounds {
 	const CGRect oldBounds = self.bounds;
-	const NSUInteger currIndex = [self centerPageIndex];
 	[super setBounds:bounds];
-	if ( loaded && layoutGotoPage == NSNotFound && CGSizeEqualToSize(oldBounds.size, bounds.size) == NO ) {
-		// automatically go back to former page index
-		[self adjustContentSizeForViewSize:bounds.size atPageIndex:currIndex];
+	if ( CGSizeEqualToSize(oldBounds.size, bounds.size) == NO ) {
+		[self cachePageWidth];
+		[self cachePageCount];
 	}
 }
 
 - (void)layoutSubviews {
 	[super layoutSubviews];
 	
-	// During rotation, here is where we'll re-layout our pages for the new dimensions of the scroll 
-	// We do this by checking if the contentSize differs from what we calculate *should* be the contentSize
-	// based on the current view bounds... if it doesn't match the epxected size, we re-lay out the pages.
+	if ( !BRFloatsAreEqual(lastScrollOffset, self.contentOffset.x) ) {
+		lastScrollDirection = self.contentOffset.x < lastScrollOffset ? -1 : 1;
+		lastScrollOffset = self.contentOffset.x;
+	}
 	
-	if ( layoutGotoPage != NSNotFound ) {
-		adjustingFrame = YES;
-		CGFloat height = self.bounds.size.height;
-		[self cachePageWidth];
-		[self cachePageCount];
-		CGFloat width = pageCount * pageWidth;
-		CGSize expectedContentSize = CGSizeMake(width, height);
-		adjustingContent = YES;
+	const CGFloat height = self.bounds.size.height;
+	const CGFloat width = pageCount * pageWidth;
+	const CGSize expectedContentSize = CGSizeMake(width, height);
+	const NSUInteger oldCenterIndex = centerIndex;
+	const BOOL resize = (CGSizeEqualToSize(expectedContentSize, self.contentSize) == NO);
+	
+	if ( resize ) {
 		log4Debug(@"Adjusting content size from %@ to %@", NSStringFromCGSize(self.contentSize), NSStringFromCGSize(expectedContentSize));
+		ignoreScroll = YES;
 		self.contentSize = expectedContentSize;
-		adjustingContent = NO;
-		[self gotoPage:layoutGotoPage animated:NO];
-		[self layoutContainersForHead:head];
-		layoutGotoPage = NSNotFound;
-		adjustingFrame = NO;
+		CGFloat expectedOffset = [self scrollOffsetForPageIndex:oldCenterIndex];
+		if ( BRFloatsAreEqual(self.contentOffset.x, expectedOffset) == NO ) {
+			const BOOL animationsEnabled = [UIView areAnimationsEnabled];
+			if ( animationsEnabled ) {
+				[UIView setAnimationsEnabled:NO];
+			}
+			self.contentOffset = CGPointMake(expectedOffset, 0);
+			if ( animationsEnabled ) {
+				[UIView setAnimationsEnabled:YES];
+			}
+		}
+	}
+	
+	[self layoutForCurrentScrollOffset];
+	
+	if ( resize ) {
+		ignoreScroll = NO;
+	}
+	
+	NSUInteger newCenterIndex = centerIndex;
+	if ( resize == NO && oldCenterIndex != newCenterIndex && (infinite == YES || centerIndex < pageCount) ) {
+		if ( [scrollerDelegate respondsToSelector:@selector(scroller:didLeavePage:)] ) {
+			[scrollerDelegate scroller:self didLeavePage:newCenterIndex];
+		}
+		if ( [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
+			[scrollerDelegate scroller:self didDisplayPage:newCenterIndex];
+		}
 	}
 }
 
@@ -346,11 +355,16 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 						   ? ((pageCount * pageWidth) - ((newHead + i + 1) * pageWidth))
 						   : ((newHead + i) * pageWidth));
 		log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)(newHead + i + infinitePageOffset),
-				  NSStringFromCGRect(container.frame), NSStringFromCGRect(CGRectMake(xOffset, 0, pageWidth, pageHeight)));
-		page.center = CGPointMake(xOffset + (pageWidth / 2.0), (pageHeight / 2.0));
-		if ( adjustingFrame ) {
-			page.bounds = CGRectMake(0, 0, pageWidth, pageHeight);
-		} else {
+				  NSStringFromCGRect(page.frame), NSStringFromCGRect(CGRectMake(xOffset, 0, pageWidth, pageHeight)));
+		CGPoint pageCenter = CGPointMake(xOffset + (pageWidth / 2.0), (pageHeight / 2.0));
+		CGRect pageBounds = CGRectMake(0, 0, pageWidth, pageHeight);
+		if ( !CGPointEqualToPoint(page.center, pageCenter) ) {
+			page.center = pageCenter;
+		}
+		if ( !CGRectEqualToRect(page.bounds, pageBounds) ) {
+			page.bounds = pageBounds;
+		}
+		if ( ignoreScroll == NO ) {
 			[scrollerDelegate scroller:self willDisplayPage:(newHead + i + infinitePageOffset) view:page];
 		}
 	}
@@ -394,41 +408,33 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 - (void)handleInfiniteShuffle {
 	const NSUInteger newInfinitePageOffset = [self calculateInfinitePageOffsetForCenterIndex:centerIndex];
 	if ( newInfinitePageOffset != infinitePageOffset ) {
-		const CGRect viewBounds = self.bounds;
 		const CGFloat oldScrollOffset = self.contentOffset.x;
 		const CGFloat perfectOffsetDiff = oldScrollOffset - [self scrollOffsetForPageIndex:centerIndex];
 		const NSUInteger oldHead = head;
 		const BOOL reloadLeft = oldHead == 0;
 		const BOOL reloadRight = oldHead == (pageCount - [pages count]);
-		[CATransaction begin]; {
-			[CATransaction setDisableActions:YES];
-			infinitePageOffset = newInfinitePageOffset;
-			CGFloat xOffset = [self scrollOffsetForPageIndex:centerIndex] + perfectOffsetDiff;
-			centeringReload = YES;
-			[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
-			centeringReload = NO;
-			NSUInteger newHead = [self calculateHeadForPageWidth:pageWidth numContainers:[pages count]];
-			if ( reloadLeft || reloadRight ) {
-				// we've scrolled to the end of our current scroll bounds, so we need to shift the views over 1
-				// so we don't reload views we've already configured. To do that, we trick
-				// layoutContainersForHead: by setting head, so it shifts appropriately.
-				head = newHead + (reloadLeft ? 1 : -1);
-				[self layoutContainersForHead:newHead];
-			} else {
-				head = newHead;
-			}
-			for ( NSUInteger i = 0; i < [pages count]; i++ ) {
-				const NSUInteger pageIndex = head + i;
-				UIView *container = (UIView *)[pages objectAtIndex:i];
-				CGFloat xOffset = (reverseLayoutOrder
-								   ? ((pageCount * pageWidth) - ((pageIndex + 1) * pageWidth))
-								   : (pageIndex * pageWidth));
-				CGPoint newCenter = CGPointMake(xOffset + pageWidth * 0.5, viewBounds.size.height * 0.5);
-				log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)pageIndex,
-						  NSStringFromCGPoint(container.center), NSStringFromCGPoint(newCenter));
-				container.center = newCenter;
-			}
-		} [CATransaction commit];
+		const BOOL animationsEnabled = [UIView areAnimationsEnabled];
+		if ( animationsEnabled ) {
+			[UIView setAnimationsEnabled:NO];
+		}
+		infinitePageOffset = newInfinitePageOffset;
+		CGFloat xOffset = [self scrollOffsetForPageIndex:centerIndex] + perfectOffsetDiff;
+		ignoreScroll = YES;
+		[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
+		NSUInteger newHead = [self calculateHeadForPageWidth:pageWidth numContainers:[pages count]];
+		if ( reloadLeft || reloadRight ) {
+			// we've scrolled to the end of our current scroll bounds, so we need to shift the views over 1
+			// so we don't reload views we've already configured. To do that, we trick
+			// layoutContainersForHead: by setting head, so it shifts appropriately.
+			head = newHead + (reloadLeft ? 1 : -1);
+		} else {
+			head = newHead;
+		}
+		[self layoutContainersForHead:newHead];
+		ignoreScroll = NO;
+		if ( animationsEnabled ) {
+			[UIView setAnimationsEnabled:YES];
+		}
 	}
 }
 
@@ -513,7 +519,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 - (void)layoutForCurrentScrollOffset {
 	// calculate current "head" index
 	NSUInteger currHead = [self calculateHeadForPageWidth:pageWidth numContainers:[pages count]];
-	if ( currHead != head ) {
+	if ( currHead != head || ignoreScroll ) {
 		[self layoutContainersForHead:currHead];
 	}
 	
@@ -529,27 +535,12 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 #pragma mark UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-	if ( centeringReload || adjustingContent ) {
+	if ( ignoreScroll ) {
 		return;
 	}
 	log4Trace(@"scrollView.contentSize.width = %f, scrollView.contentOffset.x = %f",
 			  scrollView.contentSize.width, scrollView.contentOffset.x);
 	scrolling = YES;
-	if ( !BRFloatsAreEqual(lastScrollOffset, scrollView.contentOffset.x) ) {
-		lastScrollDirection = scrollView.contentOffset.x < lastScrollOffset ? -1 : 1;
-		lastScrollOffset = scrollView.contentOffset.x;
-	}
-	NSUInteger oldCenterExternal = centerIndex;
-	[self layoutForCurrentScrollOffset];
-	NSUInteger newCenterExternal = centerIndex;
-	if ( oldCenterExternal != newCenterExternal && (infinite == YES || centerIndex < pageCount) ) {
-		if ( [scrollerDelegate respondsToSelector:@selector(scroller:didLeavePage:)] ) {
-			[scrollerDelegate scroller:self didLeavePage:oldCenterExternal];
-		}
-		if ( [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
-			[scrollerDelegate scroller:self didDisplayPage:newCenterExternal];
-		}
-	}
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
