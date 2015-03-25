@@ -254,19 +254,12 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	
 	const NSUInteger oldCenterIndex = centerIndex;
 	const BOOL resize = [self adjustContentSize];
-	const BOOL animationsEnabled = [UIView areAnimationsEnabled];
 	
 	if ( resize ) {
 		ignoreScroll = YES;
-		if ( animationsEnabled ) {
-			[UIView setAnimationsEnabled:NO];
-		}
 		CGFloat expectedOffset = [self scrollOffsetForPageIndex:oldCenterIndex];
 		if ( BRFloatsAreEqual(self.contentOffset.x, expectedOffset) == NO ) {
 			self.contentOffset = CGPointMake(expectedOffset, 0);
-		}
-		if ( animationsEnabled ) {
-			[UIView setAnimationsEnabled:YES];
 		}
 	}
 	
@@ -374,18 +367,11 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		CGPoint pageCenter = CGPointMake(xOffset + (pageWidth / 2.0), (pageHeight / 2.0));
 		CGRect pageBounds = CGRectMake(0, 0, pageWidth, pageHeight);
 		BOOL centerMoved = (CGPointEqualToPoint(pageCenter, page.center) == NO);
-		BOOL animationEnabled = (ios8 && [UIView areAnimationsEnabled]);
-		if ( centerMoved && animationEnabled ) {
-			[UIView setAnimationsEnabled:NO];
-		}
 		if ( centerMoved ) {
 			page.center = pageCenter;
 		}
 		if ( !CGRectEqualToRect(page.bounds, pageBounds) ) {
 			page.bounds = pageBounds;
-		}
-		if ( centerMoved && animationEnabled ) {
-			[UIView setAnimationsEnabled:YES];
 		}
 		if ( ignoreScroll == NO ) {
 			[scrollerDelegate scroller:self willDisplayPage:(newHead + i + infinitePageOffset) view:page];
