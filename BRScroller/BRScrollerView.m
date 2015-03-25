@@ -28,7 +28,6 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 
 	BOOL ignoreScroll;
 	BOOL scrolling;
-	BOOL ios8;
 	
 	CGFloat pageWidth;
 	NSUInteger pageCount;
@@ -72,7 +71,6 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	lastScrollOffset = 0;
 	infinitePageOffset = 0;
 	pages = [[NSMutableArray alloc] init];
-	ios8 = [[UIView class] instancesRespondToSelector:@selector(maskView)];
 }
 
 #pragma mark - Accessors
