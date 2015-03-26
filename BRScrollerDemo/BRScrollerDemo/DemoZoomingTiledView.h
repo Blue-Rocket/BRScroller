@@ -7,6 +7,7 @@
 //
 
 #import <BRScroller/BRScroller.h>
+#import <BRScroller/BRCenteringScrollView.h>
 
 @class DemoTiledView;
 

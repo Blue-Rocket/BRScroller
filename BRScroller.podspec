@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "BRScroller"
-  s.version      = "1.1.0"
+  s.version      = "1.2.0"
   s.summary      = "Memory-friendly iOS horizontally scrolling view."
   s.description  = <<-DESC
                    BRScroller provides a `UIScrollView` subclass that efficiently manages
