@@ -30,7 +30,9 @@
 	BRAsyncImageView *imageView = [[BRAsyncImageView alloc] initWithFrame:self.bounds];
 	imageView.contentMode = UIViewContentModeScaleAspectFit;
 	if ( [imageView respondsToSelector:@selector(setTranslatesAutoresizingMaskIntoConstraints:)] ) {
+#pragma deploymate push "ignored-api-availability"
 		imageView.translatesAutoresizingMaskIntoConstraints = NO;
+#pragma deploymate pop
 	}
 	[super setContentView:imageView];
 }
