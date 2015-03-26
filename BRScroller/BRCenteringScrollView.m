@@ -10,7 +10,7 @@
 
 #import "BRScrollerLogging.h"
 
-@interface BRCenteringScrollView () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@interface BRCenteringScrollView () <UIGestureRecognizerDelegate>
 @end
 
 @implementation BRCenteringScrollView {
