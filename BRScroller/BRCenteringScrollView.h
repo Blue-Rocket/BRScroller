@@ -23,7 +23,7 @@
 
 #import "BRScrollViewDelegate.h"
 
-@interface BRCenteringScrollView : UIScrollView
+@interface BRCenteringScrollView : UIScrollView <UIScrollViewDelegate>
 
 @property (nonatomic, weak) id<BRScrollViewDelegate> scrollDelegate;
 
