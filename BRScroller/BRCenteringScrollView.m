@@ -112,33 +112,38 @@
 	// So we calculate that visual center before the frame changes, then re-calculate it
 	// after setting the frame to achieve the desired effect.
 	
+	log4Debug(@"Will set bounds from %@ to %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(bounds));
+	
 	const CGSize oldViewSize = self.bounds.size;
 	const CGPoint oldContentOffset = self.contentOffset;
 	const CGSize oldContentSize = self.contentSize;
-	const CGPoint centerCoordinate = CGPointMake((oldContentOffset.x + oldViewSize.width * 0.5) / oldContentSize.width,
-												 (oldContentOffset.y + oldViewSize.height * 0.5) / oldContentSize.height);
-	const BOOL resize = (CGSizeEqualToSize(oldViewSize, bounds.size) == NO);
+	const BOOL resize = (oldContentSize.width > 0.0 && oldContentSize.height > 0.0 && CGSizeEqualToSize(oldViewSize, bounds.size) == NO);
 	CGPoint newOffset;
 	CGSize newContentSize;
+	CGAffineTransform contentScale;
 	
 	UIView *managedView = [self viewForZoomingInScrollView:self];
 	if ( resize ) {
 		CGSize viewSize = bounds.size;
-		CGSize size = [managedView sizeThatFits:viewSize];
-		CGAffineTransform contentScale = CGAffineTransformMakeScale(self.zoomScale, self.zoomScale);
-		newContentSize = CGSizeApplyAffineTransform(size, contentScale);
-		const CGPoint newCenterPoint = CGPointMake(centerCoordinate.x * newContentSize.width - bounds.size.width * 0.5,
-												   centerCoordinate.y * newContentSize.height - bounds.size.height * 0.5);
-		newOffset = [self centeredOffsetForRequestedOffset:CGPointMake(MAX(0.0, newCenterPoint.x), MAX(0.0, newCenterPoint.y))
-											   contentSize:newContentSize
-												  viewSize:viewSize];
+		[self cacheManagedViewSize:managedView forViewSize:viewSize];
+		contentScale = CGAffineTransformMakeScale(self.zoomScale, self.zoomScale);
+		newContentSize = CGSizeApplyAffineTransform(managedViewSize, contentScale);
+		CGPoint centerCoordinate = CGPointMake((oldContentOffset.x + oldViewSize.width * 0.5) / oldContentSize.width,
+											   (oldContentOffset.y + oldViewSize.height * 0.5) / oldContentSize.height);
+		newOffset = CGPointMake(centerCoordinate.x * newContentSize.width - bounds.size.width * 0.5,
+								centerCoordinate.y * newContentSize.height - bounds.size.height * 0.5);
+		[UIView setAnimationsEnabled:NO];
+		self.contentSize = newContentSize;
+		[UIView setAnimationsEnabled:YES];
+		bounds.origin.x = newOffset.x;
+		bounds.origin.y = newOffset.y;
 	}
-
 	[super setBounds:bounds];
-	if ( resize ) {
-		[self layoutIfNeeded];
-		[self setContentOffset:newOffset animated:NO];
-	}
+	log4Debug(@"Did set bounds from %@ to %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(bounds));
+}
+
+- (void)cacheManagedViewSize:(UIView *)managedView forViewSize:(CGSize)viewSize {
+	managedViewSize = [managedView sizeThatFits:viewSize];
 }
 
 - (CGPoint)centeredOffsetForRequestedOffset:(CGPoint)offset contentSize:(CGSize)contentSize viewSize:(CGSize)viewSize {
@@ -170,50 +175,31 @@
 	[super setContentOffset:newOffset];
 }
 
-- (BOOL)adjustContentSize {
+- (void)didAddSubview:(UIView *)subview {
 	UIView *managedView = [self viewForZoomingInScrollView:self];
-	const CGSize viewSize = self.bounds.size;
-	const CGSize size = [managedView sizeThatFits:viewSize];
-	const CGAffineTransform contentScale = CGAffineTransformMakeScale(self.zoomScale, self.zoomScale);
-	const CGSize expectedContentSize = CGSizeApplyAffineTransform(size, contentScale);
-	if ( !CGSizeEqualToSize(self.contentSize, expectedContentSize) ) {
-		//ignoreScroll = YES;
-		managedViewSize = size;
-		self.contentSize = expectedContentSize;
-		//ignoreScroll = NO;
-		return YES;
+	if ( subview == managedView ) {
+		[self cacheManagedViewSize:managedView forViewSize:self.bounds.size];
 	}
-	return NO;
 }
-
 
 - (void)layoutSubviews {
 	[super layoutSubviews];
-	
-	// This method is called after view bounds changes as well as during scrolling/zooming gestures.
-	const BOOL resize = [self adjustContentSize];
-	
-	if ( resize ) {
-		UIView *managedView = [self viewForZoomingInScrollView:self];
-		CGSize viewSize = self.bounds.size;
+	UIView *managedView = [self viewForZoomingInScrollView:self];
+	[self cacheManagedViewSize:managedView forViewSize:self.bounds.size];
+	if ( managedView ) {
+		CGRect expectedBounds = CGRectMake(0, 0, managedViewSize.width, managedViewSize.height);
+		if ( CGRectEqualToRect(expectedBounds, managedView.bounds) == NO ) {
+			[UIView setAnimationsEnabled:NO];
+			managedView.bounds = expectedBounds;
+			[UIView setAnimationsEnabled:YES];
+		}
 		CGSize contentSize = self.contentSize;
-		CGFloat diffScale = managedViewSize.width / managedView.bounds.size.width;
-		
-		CGPoint contentOffset = self.contentOffset;
-		contentOffset = CGPointApplyAffineTransform(contentOffset, CGAffineTransformMakeScale(diffScale, diffScale));
-
-		// if contentOffset values < 0, we have adjusted them to be centered... but need to keep this centered at new size now
-		if ( contentOffset.x < 0 ) {
-			contentOffset.x = MAX(0.0, -(viewSize.width - contentSize.width) / 2.0);
+		CGPoint expectedCenter = CGPointMake(contentSize.width * 0.5, contentSize.height * 0.5);
+		if ( CGPointEqualToPoint(expectedCenter, managedView.center) == NO ) {
+			[UIView setAnimationsEnabled:NO];
+			managedView.center = expectedCenter;
+			[UIView setAnimationsEnabled:YES];
 		}
-		if ( contentOffset.y < 0 ) {
-			contentOffset.y = MAX(0.0, -(viewSize.height - contentSize.height) / 2.0);
-		}
-		
-		self.contentOffset = contentOffset;
-
-		managedView.bounds = CGRectMake(0, 0, managedViewSize.width, managedViewSize.height);
-		managedView.center = CGPointMake(contentSize.width / 2.0, contentSize.height / 2.0);
 	}
 }
 
