@@ -128,6 +128,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		[UIView setAnimationsEnabled:NO];
 	}
 	infinitePageOffset = [self calculateInfinitePageOffsetForCenterIndex:index];
+	centerIndex = index;
 	CGFloat xOffset = [self scrollOffsetForPageIndex:index];
 	loaded = NO;
 	ignoreScroll = YES;
