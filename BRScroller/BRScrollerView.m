@@ -134,11 +134,15 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	ignoreScroll = YES;
 	[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
 	ignoreScroll = NO;
-	[self reloadDataInternal];
+	[self layoutIfNeeded];
+	if ( pageCount > 0 && [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
+		[scrollerDelegate scroller:self didDisplayPage:centerIndex];
+	}
 	loaded = YES;
 	if ( animationsEnabled ) {
 		[UIView setAnimationsEnabled:YES];
 	}
+	[self flashScrollIndicators];
 	[self handleDidSettle];
 }
 
@@ -260,6 +264,10 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		if ( BRFloatsAreEqual(self.contentOffset.x, expectedOffset) == NO ) {
 			self.contentOffset = CGPointMake(expectedOffset, 0);
 		}
+	}
+	
+	if ( [self containerCountForViewWidth:self.bounds.size.width] != [pages count] ) {
+		[self setupContainersForPageWidth:(loaded == NO)];
 	}
 	
 	[self layoutForCurrentScrollOffset];
@@ -460,7 +468,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	return floorf([pages count] / 2.0);
 }
 
-- (void)reloadDataInternal {
+- (void)setupContainersForPageWidth:(BOOL)reload {
 	const CGRect viewBounds = self.bounds;
 	log4Debug(@"Frame %@, scroller bounds %@, center %@, offset %f", NSStringFromCGRect(self.frame),
 			  NSStringFromCGRect(viewBounds), NSStringFromCGPoint(self.center), self.contentOffset.x);
@@ -470,15 +478,17 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	const NSUInteger len = [self containerCountForViewWidth:viewBounds.size.width];
 	NSUInteger idx = 0;
 	
-	if ( [pages count] > len ) {
-		log4Debug(@"Discarding %d pages for reload", [pages count] - len);
-		for ( idx = ([pages count] - len); idx > 0; idx-- ) {
+	const NSRange currContainerRange = NSMakeRange(head, [pages count]);
+	[self recalculateScrollIndexesForNumberOfContainers:len];
+	
+	if ( currContainerRange.length > len ) {
+		log4Debug(@"Discarding %lu pages for reload", (unsigned long)currContainerRange.length - len);
+		for ( idx = (currContainerRange.length - len); idx > 0; idx-- ) {
 			UIView *page = [pages lastObject];
 			[page removeFromSuperview];
 			[pages removeLastObject];
 		}
 	}
-	[self recalculateScrollIndexesForNumberOfContainers:len];
 	if ( !(BRFloatsAreEqual(self.contentSize.width, width)
 		   && BRFloatsAreEqual(self.contentSize.height, viewBounds.size.height)) ) {
 		self.contentSize = CGSizeMake(width, viewBounds.size.height);
@@ -491,21 +501,14 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		}
 	}
 	const CGRect pageBounds = CGRectMake(0, 0, pageWidth, viewBounds.size.height);
-	for ( NSUInteger i = head, end = head + len, idx = 0; i < pageCount && i < end; i++, idx++ ) {
+	for ( NSUInteger i = head + (reload ? 0 : [pages count]), end = head + len, idx = (reload ? 0 : [pages count]); i < pageCount && i < end; i++, idx++ ) {
 		CGFloat xOffset = (reverseLayoutOrder
 						   ? (width - ((CGFloat)(i + 1) * pageWidth))
 						   : (CGFloat)i * pageWidth);
 		CGPoint pageCenter = CGPointMake(xOffset + (pageWidth / 2.0), (pageBounds.size.height / 2.0));
 		UIView *page;
-		if ( idx < [pages count] ) {
-			// reuse existing container
-			page = [pages objectAtIndex:idx];
-			page.center = pageCenter;
-			if ( CGRectEqualToRect(page.bounds, pageBounds) ) {
-				page.bounds = pageBounds;
-			}
-		} else {
-			// create new container
+		BOOL newPage = NO;
+		if ( idx >= [pages count] ) {
 			log4Debug(@"Creating page %lu", (unsigned long)i);
 			page = [scrollerDelegate createReusablePageViewForScroller:self];
 			page.center = pageCenter;
@@ -514,14 +517,12 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 			}
 			[pages addObject:page];
 			[self addSubview:page];
+			newPage = YES;
 		}
-		
-		[scrollerDelegate scroller:self willDisplayPage:(i + infinitePageOffset) view:page];
+		if ( reload || newPage ) {
+			[scrollerDelegate scroller:self willDisplayPage:(i + infinitePageOffset) view:page];
+		}
 	}
-	if ( pageCount > 0 && [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
-		[scrollerDelegate scroller:self didDisplayPage:centerIndex];
-	}
-	[self flashScrollIndicators];
 }
 
 - (void)layoutForCurrentScrollOffset {
