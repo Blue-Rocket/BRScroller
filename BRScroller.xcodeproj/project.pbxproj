@@ -66,7 +66,7 @@
 		C94938B2178E6216000B1D4E /* BRImagePreviewLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRImagePreviewLayerView.m; sourceTree = "<group>"; };
 		C94938C7178E6AA9000B1D4E /* BRZoomingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRZoomingImageView.h; sourceTree = "<group>"; };
 		C94938C8178E6AA9000B1D4E /* BRZoomingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRZoomingImageView.m; sourceTree = "<group>"; };
-		C97C128A1ABFB21A00278B25 /* BRScroller.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = BRScroller.podspec; sourceTree = SOURCE_ROOT; };
+		C97C128A1ABFB21A00278B25 /* BRScroller.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = BRScroller.podspec; sourceTree = SOURCE_ROOT; };
 		C98BF84C17939EC400026093 /* BRAsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAsyncImageView.h; sourceTree = "<group>"; };
 		C98BF84D17939EC400026093 /* BRAsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAsyncImageView.m; sourceTree = "<group>"; };
 		C999121B1999A2ED00E0271C /* BRScrollerLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScrollerLogging.h; sourceTree = "<group>"; };
