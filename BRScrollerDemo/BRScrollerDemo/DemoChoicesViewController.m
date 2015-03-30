@@ -67,8 +67,9 @@
 			[friendlyNumber setNumberStyle:NSNumberFormatterDecimalStyle];
 			[friendlyNumber setMaximumFractionDigits:0];
 		}
+		
 		cell.detailTextLabel.text = [NSString stringWithFormat:cell.detailTextLabel.text,
-									 [friendlyNumber stringFromNumber:[NSNumber numberWithUnsignedInteger:kBRScrollerViewInfiniteMaximumPageIndex]]];
+									 [friendlyNumber stringFromNumber:[NSDecimalNumber numberWithUnsignedInteger:kBRScrollerViewInfiniteMaximumPageIndex]]];
 	}
 	return cell;
 }
