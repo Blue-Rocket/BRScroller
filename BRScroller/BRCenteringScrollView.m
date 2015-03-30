@@ -133,8 +133,8 @@
 		} else {
 			centerCoordinate = CGPointMake(0.5, 0.5);
 		}
-		newOffset = CGPointMake(centerCoordinate.x * newContentSize.width - bounds.size.width * 0.5,
-								centerCoordinate.y * newContentSize.height - bounds.size.height * 0.5);
+		newOffset = CGPointMake(MAX(0.0, centerCoordinate.x * newContentSize.width - bounds.size.width * 0.5),
+								MAX(0.0, centerCoordinate.y * newContentSize.height - bounds.size.height * 0.5));
 		newOffset = [self centeredOffsetForRequestedOffset:newOffset contentSize:newContentSize viewSize:viewSize];
 		[UIView setAnimationsEnabled:NO];
 		self.contentSize = newContentSize;
