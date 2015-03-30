@@ -124,8 +124,8 @@
 	if ( resize ) {
 		CGSize viewSize = bounds.size;
 		CGAffineTransform contentScale = CGAffineTransformMakeScale(self.zoomScale, self.zoomScale);
-		CGSize newContentSize = CGSizeApplyAffineTransform(managedViewSize, contentScale);
 		[self cacheManagedViewSize:managedView forViewSize:viewSize];
+		CGSize newContentSize = CGSizeApplyAffineTransform(managedViewSize, contentScale);
 		CGPoint centerCoordinate;
 		if ( oldContentSize.width > 0 && oldContentSize.height > 0 ) {
 			centerCoordinate = CGPointMake((oldContentOffset.x + oldViewSize.width * 0.5) / oldContentSize.width,
