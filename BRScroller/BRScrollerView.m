@@ -25,7 +25,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	BOOL loaded;
 	BOOL reverseLayoutOrder;
 	BOOL infinite;
-
+	
 	BOOL ignoreScroll;
 	BOOL scrolling;
 	
@@ -170,7 +170,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		[self reloadDataCenteredOnPage:index];
 		return;
 	}
-    CGFloat xOffset = [self scrollOffsetForPageIndex:index];
+	CGFloat xOffset = [self scrollOffsetForPageIndex:index];
 	if ( !BRFloatsAreEqual(xOffset, self.contentOffset.x) ) {
 		const BOOL animationsEnabled = [UIView areAnimationsEnabled];
 		if ( animationsEnabled && animated == NO ) {
@@ -392,8 +392,8 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	// we change head pointer when scrolling past half-way width of pages, so swapping them around
 	// does not affect visible pages
 	const CGFloat scrollOffset = (reverseLayoutOrder
-							? (CGFloat)(pageCount * pageWidth) - self.contentOffset.x - self.bounds.size.width
-							: self.contentOffset.x);
+								  ? (CGFloat)(pageCount * pageWidth) - self.contentOffset.x - self.bounds.size.width
+								  : self.contentOffset.x);
 	const CGFloat pageOffset = (scrollOffset - (thePageWidth / 2.0)) / thePageWidth;
 	const NSUInteger h = MIN(pageCount - containerCount, (NSUInteger)MAX(0.0, floor(pageOffset)));
 	log4Trace(@"offset %f, pageOffset = %f, pageCount = %lu, head = %lu, newHead = %lu", scrollOffset, pageOffset,
