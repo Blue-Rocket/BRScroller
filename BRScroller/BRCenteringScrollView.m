@@ -117,27 +117,33 @@
 	const CGSize oldViewSize = self.bounds.size;
 	const CGPoint oldContentOffset = self.contentOffset;
 	const CGSize oldContentSize = self.contentSize;
-	const BOOL resize = (oldContentSize.width > 0.0 && oldContentSize.height > 0.0 && CGSizeEqualToSize(oldViewSize, bounds.size) == NO);
+	const BOOL resize = ((oldContentSize.width > 0.0 && oldContentSize.height > 0.0) == NO
+						 || (oldContentSize.width > 0.0 && oldContentSize.height > 0.0 && CGSizeEqualToSize(oldViewSize, bounds.size) == NO));
 	CGPoint newOffset;
-	CGSize newContentSize;
-	CGAffineTransform contentScale;
-	
 	UIView *managedView = [self viewForZoomingInScrollView:self];
 	if ( resize ) {
 		CGSize viewSize = bounds.size;
+		CGAffineTransform contentScale = CGAffineTransformMakeScale(self.zoomScale, self.zoomScale);
+		CGSize newContentSize = CGSizeApplyAffineTransform(managedViewSize, contentScale);
 		[self cacheManagedViewSize:managedView forViewSize:viewSize];
-		contentScale = CGAffineTransformMakeScale(self.zoomScale, self.zoomScale);
-		newContentSize = CGSizeApplyAffineTransform(managedViewSize, contentScale);
-		CGPoint centerCoordinate = CGPointMake((oldContentOffset.x + oldViewSize.width * 0.5) / oldContentSize.width,
-											   (oldContentOffset.y + oldViewSize.height * 0.5) / oldContentSize.height);
+		CGPoint centerCoordinate;
+		if ( oldContentSize.width > 0 && oldContentSize.height > 0 ) {
+			centerCoordinate = CGPointMake((oldContentOffset.x + oldViewSize.width * 0.5) / oldContentSize.width,
+										   (oldContentOffset.y + oldViewSize.height * 0.5) / oldContentSize.height);
+		} else {
+			centerCoordinate = CGPointMake(0.5, 0.5);
+		}
 		newOffset = CGPointMake(centerCoordinate.x * newContentSize.width - bounds.size.width * 0.5,
 								centerCoordinate.y * newContentSize.height - bounds.size.height * 0.5);
+		newOffset = [self centeredOffsetForRequestedOffset:newOffset contentSize:newContentSize viewSize:viewSize];
 		[UIView setAnimationsEnabled:NO];
 		self.contentSize = newContentSize;
 		[UIView setAnimationsEnabled:YES];
-		bounds.origin.x = newOffset.x;
-		bounds.origin.y = newOffset.y;
+	} else {
+		newOffset = [self centeredOffsetForRequestedOffset:bounds.origin contentSize:oldContentSize viewSize:oldViewSize];
 	}
+	bounds.origin.x = newOffset.x;
+	bounds.origin.y = newOffset.y;
 	[super setBounds:bounds];
 	log4Debug(@"Did set bounds from %@ to %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(bounds));
 }
