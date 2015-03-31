@@ -67,6 +67,10 @@ static unsigned int RoundedToPowerOf2(const float v) {
 	self.layer.contentsScale = 1.0;
 }
 
+- (CGSize)sizeThatFits:(CGSize)size {
+	return size;
+}
+
 - (void)drawLayer:(CALayer *)theLayer inContext:(CGContextRef)context {
 	const CGRect bounds = CGContextGetClipBoundingBox(context);
 	const CGAffineTransform viewTransform = self.transform;
