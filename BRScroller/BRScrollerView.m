@@ -133,11 +133,11 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	loaded = NO;
 	ignoreScroll = YES;
 	[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
-	ignoreScroll = NO;
 	[self layoutIfNeeded];
 	if ( pageCount > 0 && [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
 		[scrollerDelegate scroller:self didDisplayPage:centerIndex];
 	}
+	ignoreScroll = NO;
 	loaded = YES;
 	if ( animationsEnabled ) {
 		[UIView setAnimationsEnabled:YES];
