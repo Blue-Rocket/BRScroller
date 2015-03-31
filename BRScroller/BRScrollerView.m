@@ -217,7 +217,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 - (void)setFrame:(CGRect)frame {
 	const CGRect oldBounds = self.bounds;
 	[super setFrame:frame];
-	if ( CGSizeEqualToSize(oldBounds.size, frame.size) == NO ) {
+	if ( (pageWidth > 0) == NO || CGSizeEqualToSize(oldBounds.size, frame.size) == NO ) {
 		[self cachePageWidth];
 		[self cachePageCount];
 	}
@@ -226,7 +226,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 - (void)setBounds:(CGRect)bounds {
 	const CGRect oldBounds = self.bounds;
 	[super setBounds:bounds];
-	if ( CGSizeEqualToSize(oldBounds.size, bounds.size) == NO ) {
+	if ( (pageWidth > 0) == NO || CGSizeEqualToSize(oldBounds.size, bounds.size) == NO ) {
 		[self cachePageWidth];
 		[self cachePageCount];
 	}
@@ -269,7 +269,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		}
 	}
 	
-	if ( [self containerCountForViewWidth:self.bounds.size.width] != [pages count] ) {
+	if ( loaded == NO || [self containerCountForViewWidth:self.bounds.size.width] != [pages count] ) {
 		[self setupContainersForPageWidth:(loaded == NO)];
 	}
 	
