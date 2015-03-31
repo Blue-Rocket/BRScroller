@@ -440,6 +440,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		CGFloat xOffset = [self scrollOffsetForPageIndex:centerIndex] + perfectOffsetDiff;
 		ignoreScroll = YES;
 		[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
+		ignoreScroll = NO;
 		NSUInteger newHead = [self calculateHeadForPageWidth:pageWidth numContainers:[pages count]];
 		if ( reloadLeft || reloadRight ) {
 			// we've scrolled to the end of our current scroll bounds, so we need to shift the views over 1
@@ -450,7 +451,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 			head = newHead;
 		}
 		[self layoutContainersForHead:newHead];
-		ignoreScroll = NO;
+		[self setupContainersForPageWidth:NO];
 		if ( animationsEnabled ) {
 			[UIView setAnimationsEnabled:YES];
 		}
