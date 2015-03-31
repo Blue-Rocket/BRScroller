@@ -133,6 +133,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	loaded = NO;
 	ignoreScroll = YES;
 	[self setContentOffset:CGPointMake(xOffset, 0) animated:NO];
+	[self setNeedsLayout]; // force reload of pages, in case offset didn't actually change
 	[self layoutIfNeeded];
 	if ( pageCount > 0 && [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
 		[scrollerDelegate scroller:self didDisplayPage:centerIndex];
