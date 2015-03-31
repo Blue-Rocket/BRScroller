@@ -504,7 +504,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		}
 	}
 	const CGRect pageBounds = CGRectMake(0, 0, pageWidth, viewBounds.size.height);
-	for ( NSUInteger i = head + (reload ? 0 : [pages count]), end = head + len, idx = (reload ? 0 : [pages count]); i < pageCount && i < end; i++, idx++ ) {
+	for ( NSUInteger i = head, end = head + len, idx = 0; i < pageCount && i < end; i++, idx++ ) {
 		CGFloat xOffset = (reverseLayoutOrder
 						   ? (width - ((CGFloat)(i + 1) * pageWidth))
 						   : (CGFloat)i * pageWidth);
@@ -514,13 +514,17 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		if ( idx >= [pages count] ) {
 			log4Debug(@"Creating page %lu", (unsigned long)i);
 			page = [scrollerDelegate createReusablePageViewForScroller:self];
-			page.center = pageCenter;
-			if ( CGRectEqualToRect(page.bounds, pageBounds) ) {
-				page.bounds = pageBounds;
-			}
 			[pages addObject:page];
 			[self addSubview:page];
 			newPage = YES;
+		} else {
+			page = pages[idx];
+		}
+		if ( CGPointEqualToPoint(page.center, pageCenter) == NO ) {
+			page.center = pageCenter;
+		}
+		if ( CGRectEqualToRect(page.bounds, pageBounds) == NO ) {
+			page.bounds = pageBounds;
 		}
 		if ( reload || newPage ) {
 			[scrollerDelegate scroller:self willDisplayPage:(i + infinitePageOffset) view:page];
