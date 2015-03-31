@@ -119,7 +119,7 @@
 	const CGSize oldContentSize = self.contentSize;
 	const BOOL resize = ((oldContentSize.width > 0.0 && oldContentSize.height > 0.0) == NO
 						 || (oldContentSize.width > 0.0 && oldContentSize.height > 0.0 && CGSizeEqualToSize(oldViewSize, bounds.size) == NO));
-	CGPoint newOffset;
+	CGPoint newOffset = CGPointZero;
 	UIView *managedView = [self viewForZoomingInScrollView:self];
 	if ( resize ) {
 		CGSize viewSize = bounds.size;
@@ -133,8 +133,10 @@
 		} else {
 			centerCoordinate = CGPointMake(0.5, 0.5);
 		}
-		newOffset = CGPointMake(MAX(0.0, centerCoordinate.x * newContentSize.width - bounds.size.width * 0.5),
-								MAX(0.0, centerCoordinate.y * newContentSize.height - bounds.size.height * 0.5));
+		if ( CGPointEqualToPoint(oldContentOffset, CGPointZero) == NO ) {
+			newOffset = CGPointMake(MAX(0.0, centerCoordinate.x * newContentSize.width - bounds.size.width * 0.5),
+									MAX(0.0, centerCoordinate.y * newContentSize.height - bounds.size.height * 0.5));
+		}
 		newOffset = [self centeredOffsetForRequestedOffset:newOffset contentSize:newContentSize viewSize:viewSize];
 		[UIView setAnimationsEnabled:NO];
 		self.contentSize = newContentSize;
