@@ -155,7 +155,7 @@
 - (CGPoint)centeredOffsetForRequestedOffset:(CGPoint)offset contentSize:(CGSize)contentSize viewSize:(CGSize)viewSize {
 	CGPoint newOffset = offset;
 	UIView *managedView = [self viewForZoomingInScrollView:self];
-	if ( managedView != nil ) {
+	if ( managedView != nil && CGSizeEqualToSize(CGSizeZero, self.contentSize) == NO ) {
 		UIEdgeInsets inset = self.contentInset;
 		contentSize.width += inset.left + inset.right;
 		contentSize.height += inset.top + inset.bottom;
