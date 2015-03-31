@@ -180,6 +180,9 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		if ( animationsEnabled && animated == NO  ) {
 			[UIView setAnimationsEnabled:YES];
 		}
+		if ( animated == NO ) {
+			centerIndex = index;
+		}
 	}
 }
 
