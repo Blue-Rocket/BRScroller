@@ -221,6 +221,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	if ( (pageWidth > 0) == NO || CGSizeEqualToSize(oldBounds.size, frame.size) == NO ) {
 		[self cachePageWidth];
 		[self cachePageCount];
+		[self setNeedsLayout];
 	}
 }
 
@@ -230,6 +231,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	if ( (pageWidth > 0) == NO || CGSizeEqualToSize(oldBounds.size, bounds.size) == NO ) {
 		[self cachePageWidth];
 		[self cachePageCount];
+		[self setNeedsLayout];
 	}
 }
 
