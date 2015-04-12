@@ -282,10 +282,10 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		ignoreScroll = NO;
 	}
 	
-	NSUInteger newCenterIndex = centerIndex;
-	if ( resize == NO && oldCenterIndex != newCenterIndex && (infinite == YES || centerIndex < pageCount) ) {
+	const NSUInteger newCenterIndex = centerIndex;
+	if ( resize == NO && oldCenterIndex != newCenterIndex && (infinite == YES || newCenterIndex < pageCount) ) {
 		if ( [scrollerDelegate respondsToSelector:@selector(scroller:didLeavePage:)] ) {
-			[scrollerDelegate scroller:self didLeavePage:newCenterIndex];
+			[scrollerDelegate scroller:self didLeavePage:oldCenterIndex];
 		}
 		if ( [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
 			[scrollerDelegate scroller:self didDisplayPage:newCenterIndex];
