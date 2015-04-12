@@ -182,7 +182,8 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 			[UIView setAnimationsEnabled:YES];
 		}
 		if ( animated == NO ) {
-			centerIndex = index;
+			// force layout to re-calculate centerIndex and process delegate messages
+			[self layoutIfNeeded];
 		}
 	}
 }
@@ -282,10 +283,10 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		ignoreScroll = NO;
 	}
 	
-	NSUInteger newCenterIndex = centerIndex;
-	if ( resize == NO && oldCenterIndex != newCenterIndex && (infinite == YES || centerIndex < pageCount) ) {
+	const NSUInteger newCenterIndex = centerIndex;
+	if ( resize == NO && oldCenterIndex != newCenterIndex && (infinite == YES || newCenterIndex < pageCount) ) {
 		if ( [scrollerDelegate respondsToSelector:@selector(scroller:didLeavePage:)] ) {
-			[scrollerDelegate scroller:self didLeavePage:newCenterIndex];
+			[scrollerDelegate scroller:self didLeavePage:oldCenterIndex];
 		}
 		if ( [scrollerDelegate respondsToSelector:@selector(scroller:didDisplayPage:)] ) {
 			[scrollerDelegate scroller:self didDisplayPage:newCenterIndex];
@@ -523,6 +524,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 			newPage = YES;
 		} else {
 			page = pages[idx];
+			newPage = ((currContainerRange.location + idx) != i);
 		}
 		if ( CGPointEqualToPoint(page.center, pageCenter) == NO ) {
 			page.center = pageCenter;
