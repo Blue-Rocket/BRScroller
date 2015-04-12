@@ -182,7 +182,8 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 			[UIView setAnimationsEnabled:YES];
 		}
 		if ( animated == NO ) {
-			centerIndex = index;
+			// force layout to re-calculate centerIndex and process delegate messages
+			[self layoutIfNeeded];
 		}
 	}
 }
