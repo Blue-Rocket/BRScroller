@@ -524,6 +524,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 			newPage = YES;
 		} else {
 			page = pages[idx];
+			newPage = ((currContainerRange.location + idx) != i);
 		}
 		if ( CGPointEqualToPoint(page.center, pageCenter) == NO ) {
 			page.center = pageCenter;
