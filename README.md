@@ -90,7 +90,7 @@ $ pod setup
 Change to the directory of your Xcode project, and create a file named `Podfile` with
 contents similar to this:
 
-	platform :ios, '5.0' 
+	platform :ios, '5.1' 
 	pod 'BRScroller', '~> 1.0'
 
 Install into your project:

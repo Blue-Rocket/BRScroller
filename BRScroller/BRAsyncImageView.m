@@ -157,16 +157,9 @@ static NSString * const kImageURLKey = @"BR.imageURL";
 #pragma mark - Layout
 
 - (void)setImageLayerPosition {
-	const CGSize imgSize = imageSize;
 	const CGSize viewSize = self.bounds.size;
-	const CGSize aspectFitSize = BRAspectSizeToFit(imgSize, viewSize);
 	imageLayer.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.5);
-	imageLayer.bounds = CGRectMake(0, 0, imgSize.width, imgSize.height);
-	if ( imgSize.width > 0 && imgSize.height > 0.0 ) {
-		imageLayer.transform = CATransform3DMakeScale(aspectFitSize.width / imgSize.width, aspectFitSize.height / imgSize.height, 1);
-	} else {
-		imageLayer.transform = CATransform3DIdentity;
-	}
+	imageLayer.bounds = CGRectMake(0, 0, viewSize.width, viewSize.height);
 }
 
 - (void)setContentMode:(UIViewContentMode)theMode {
