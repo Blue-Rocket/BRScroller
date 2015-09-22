@@ -20,7 +20,13 @@ Pod::Spec.new do |s|
   
   s.requires_arc = true
   
-  s.default_subspec = 'Core'
+  s.default_subspec = 'All'
+  
+  s.subspec 'All' do |sp|
+    sp.dependency 'BRScroller/Core'
+    sp.dependency 'BRScroller/View-Support'
+	sp.dependency 'BRScroller/Image-Support'
+  end
   
   s.subspec 'Core' do |as|
   	as.source_files = "BRScroller/BRScroller*.{c,h,m}",
