@@ -8,9 +8,9 @@
 
 #import "BRAsyncImageView.h"
 
+#import <CocoaLumberjack/CocoaLumberjack.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "BRScrollerLogging.h"
 #import "BRScrollerUtilities.h"
 
 // our serial update queue... only one writer allowed
@@ -114,7 +114,7 @@ static NSString * const kImageURLKey = @"BR.imageURL";
 		if ( data == nil ) {
 			data = [NSData dataWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:&error];
 			if ( error != nil ) {
-				log4Error(@"Error reading image URL %@: %@", theURL, [error description]);
+				DDLogError(@"Error reading image URL %@: %@", theURL, [error description]);
 				return;
 			}
 		}
