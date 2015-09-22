@@ -8,11 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+#import <BRCocoaLumberjack/BRCocoaLumberjack.h>
 #import "AppDelegate.h"
+
+#if DEBUG
+	const DDLogLevel ddLogLevel = DDLogLevelDebug;
+#else
+	const DDLogLevel ddLogLevel = DDLogLevelInfo;
+#endif
 
 int main(int argc, char *argv[])
 {
 	@autoreleasepool {
+		BRLoggingSetupDefaultLogging();
 	    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
 	}
 }
