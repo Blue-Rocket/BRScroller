@@ -8,8 +8,8 @@
 
 #import "BRScrollerView.h"
 
-#import "BRScrollerDelegate.h"
 #import "BRScrollerLogging.h"
+#import "BRScrollerDelegate.h"
 #import "BRScrollerUtilities.h"
 
 const NSUInteger kBRScrollerViewInfiniteMaximumPageIndex = NSUIntegerMax - 1; // to account for translating to NSInteger for maximum page
@@ -167,7 +167,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	const BOOL crossingInfiniteBounds = (infinite == NO ? NO : (index < infinitePageOffset || index > (infinitePageOffset + pageCount)));
 	if ( crossingInfiniteBounds ) {
 		// cannot animate easily because we cross infinite bounds :-(
-		log4Info(@"Crossing infinite boundary; animation disabled implicitly.");
+		DDLogInfo(@"Crossing infinite boundary; animation disabled implicitly.");
 		[self reloadDataCenteredOnPage:index];
 		return;
 	}
@@ -237,7 +237,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 }
 
 - (void)setContentOffset:(CGPoint)contentOffset {
-	log4Debug(@"Adjusting contentOffset from %@ to %@", NSStringFromCGPoint(self.contentOffset), NSStringFromCGPoint(contentOffset));
+	DDLogDebug(@"Adjusting contentOffset from %@ to %@", NSStringFromCGPoint(self.contentOffset), NSStringFromCGPoint(contentOffset));
 	[super setContentOffset:contentOffset];
 }
 
@@ -355,7 +355,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		reloadDataRange.location = [pages count] - shiftLen;
 		reloadDataRange.length = shiftLen;
 		for ( NSUInteger i = shiftLen; i < [pages count]; i++ ) {
-			log4Trace(@"Swapping page %lu and %lu", (unsigned long)i, (unsigned long)(i - shiftLen));
+			DDLogVerbose(@"Swapping page %lu and %lu", (unsigned long)i, (unsigned long)(i - shiftLen));
 			[pages exchangeObjectAtIndex:i withObjectAtIndex:(i - shiftLen)];
 		}
 	} else if ( newHead < head && (head - newHead) < [pages count] ) {
@@ -363,7 +363,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		NSUInteger shiftLen = head - newHead;
 		reloadDataRange.length = shiftLen;
 		for ( NSInteger i = ([pages count] - shiftLen - 1); i >= 0; i-- ) {
-			log4Trace(@"Swapping page %lu and %lu", (unsigned long)i, (unsigned long)(i+shiftLen));
+			DDLogVerbose(@"Swapping page %lu and %lu", (unsigned long)i, (unsigned long)(i+shiftLen));
 			[pages exchangeObjectAtIndex:i withObjectAtIndex:(i+shiftLen)];
 		}
 	} else {
@@ -376,7 +376,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		CGFloat xOffset = (reverseLayoutOrder
 						   ? ((pageCount * pageWidth) - ((newHead + i + 1) * pageWidth))
 						   : ((newHead + i) * pageWidth));
-		log4Trace(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)(newHead + i + infinitePageOffset),
+		DDLogVerbose(@"Moving container %lu (page %lu) from %@ to %@", (unsigned long)i, (unsigned long)(newHead + i + infinitePageOffset),
 				  NSStringFromCGRect(page.frame), NSStringFromCGRect(CGRectMake(xOffset, 0, pageWidth, pageHeight)));
 		CGPoint pageCenter = CGPointMake(xOffset + (pageWidth / 2.0), (pageHeight / 2.0));
 		CGRect pageBounds = CGRectMake(0, 0, pageWidth, pageHeight);
@@ -403,7 +403,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 								  : self.contentOffset.x);
 	const CGFloat pageOffset = (scrollOffset - (thePageWidth / 2.0)) / thePageWidth;
 	const NSUInteger h = MIN(pageCount - containerCount, (NSUInteger)MAX(0.0, floor(pageOffset)));
-	log4Trace(@"offset %f, pageOffset = %f, pageCount = %lu, head = %lu, newHead = %lu", scrollOffset, pageOffset,
+	DDLogVerbose(@"offset %f, pageOffset = %f, pageCount = %lu, head = %lu, newHead = %lu", scrollOffset, pageOffset,
 			  (unsigned long)containerCount, (unsigned long)head, (unsigned long)h);
 	return h;
 }
@@ -418,7 +418,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	if ( infinite == YES ) {
 		c += infinitePageOffset;
 	}
-	log4Trace(@"offset %f, pageCount = %lu, center = %lu, newCenter = %lu", self.contentOffset.x,
+	DDLogVerbose(@"offset %f, pageCount = %lu, center = %lu, newCenter = %lu", self.contentOffset.x,
 			  (unsigned long)containerCount, (unsigned long)centerIndex, (unsigned long)c);
 	return c;
 }
@@ -478,7 +478,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 
 - (void)setupContainersForPageWidth:(BOOL)reload {
 	const CGRect viewBounds = self.bounds;
-	log4Debug(@"Frame %@, scroller bounds %@, center %@, offset %f", NSStringFromCGRect(self.frame),
+	DDLogDebug(@"Frame %@, scroller bounds %@, center %@, offset %f", NSStringFromCGRect(self.frame),
 			  NSStringFromCGRect(viewBounds), NSStringFromCGPoint(self.center), self.contentOffset.x);
 	const CGFloat width = pageCount * pageWidth;
 	
@@ -490,7 +490,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	[self recalculateScrollIndexesForNumberOfContainers:len];
 	
 	if ( currContainerRange.length > len ) {
-		log4Debug(@"Discarding %lu pages for reload", (unsigned long)currContainerRange.length - len);
+		DDLogDebug(@"Discarding %lu pages for reload", (unsigned long)currContainerRange.length - len);
 		for ( idx = (currContainerRange.length - len); idx > 0; idx-- ) {
 			UIView *page = [pages lastObject];
 			[page removeFromSuperview];
@@ -517,7 +517,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		UIView *page;
 		BOOL newPage = NO;
 		if ( idx >= [pages count] ) {
-			log4Debug(@"Creating page %lu", (unsigned long)i);
+			DDLogDebug(@"Creating page %lu", (unsigned long)i);
 			page = [scrollerDelegate createReusablePageViewForScroller:self];
 			[pages addObject:page];
 			[self addSubview:page];
@@ -560,13 +560,13 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 	if ( ignoreScroll ) {
 		return;
 	}
-	log4Trace(@"scrollView.contentSize.width = %f, scrollView.contentOffset.x = %f",
+	DDLogVerbose(@"scrollView.contentSize.width = %f, scrollView.contentOffset.x = %f",
 			  scrollView.contentSize.width, scrollView.contentOffset.x);
 	scrolling = YES;
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-	log4Trace(@"%@ did end deceleration, decelerating %d, dragging %d",
+	DDLogVerbose(@"%@ did end deceleration, decelerating %d, dragging %d",
 			  scrollView, scrollView.decelerating ? 1 : 0, scrollView.dragging ? 1 : 0);
 	if ( [scrollerDelegate respondsToSelector:@selector(scrollViewDidEndDecelerating:)] ) {
 		[scrollerDelegate scrollViewDidEndDecelerating:scrollView];
@@ -575,7 +575,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 }
 
 - (void) scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-	log4Trace(@"%@ did end scrolling animation, decelerating %d, dragging %d",
+	DDLogVerbose(@"%@ did end scrolling animation, decelerating %d, dragging %d",
 			  scrollView, scrollView.decelerating ? 1 : 0, scrollView.dragging ? 1 : 0);
 	[self handleDidSettle];
 }
@@ -590,7 +590,7 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-	log4Debug(@"Scroll view did end dragging, lastScrollOffset %ld, curr %ld; lastDir = %d",
+	DDLogDebug(@"Scroll view did end dragging, lastScrollOffset %ld, curr %ld; lastDir = %d",
 			  (long)lastScrollOffset, (long)scrollView.contentOffset.x, lastScrollDirection);
 	if ( [scrollerDelegate respondsToSelector:@selector(scrollerDidEndDragging:willDecelerate:pageDestination:)] ) {
 		BRScrollerViewPageDestination destination = BRScrollerViewPageDestinationSame;

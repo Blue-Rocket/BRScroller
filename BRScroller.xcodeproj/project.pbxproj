@@ -30,6 +30,7 @@
 		C94938B3178E6216000B1D4E /* BRImagePreviewLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94938B2178E6216000B1D4E /* BRImagePreviewLayerView.m */; };
 		C94938C9178E6AA9000B1D4E /* BRZoomingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94938C8178E6AA9000B1D4E /* BRZoomingImageView.m */; };
 		C98BF84E17939EC400026093 /* BRAsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C98BF84D17939EC400026093 /* BRAsyncImageView.m */; };
+		F41DFC4396E3C3F6DF2080B3 /* libPods-BRScroller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9894E3F9D4FBB444B8106E77 /* libPods-BRScroller.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +47,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9894E3F9D4FBB444B8106E77 /* libPods-BRScroller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BRScroller.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C5C6B201BB18A3F596D68A5 /* Pods-BRScroller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRScroller.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BRScroller/Pods-BRScroller.debug.xcconfig"; sourceTree = "<group>"; };
+		BD54456C8F679052E32C4C88 /* Pods-BRScroller.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRScroller.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRScroller/Pods-BRScroller.release.xcconfig"; sourceTree = "<group>"; };
 		C949382E178E2EC1000B1D4E /* libBRScroller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBRScroller.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9493831178E2EC1000B1D4E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9493835178E2EC1000B1D4E /* BRScroller-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BRScroller-Prefix.pch"; sourceTree = "<group>"; };
@@ -69,7 +73,7 @@
 		C97C128A1ABFB21A00278B25 /* BRScroller.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = BRScroller.podspec; sourceTree = SOURCE_ROOT; };
 		C98BF84C17939EC400026093 /* BRAsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAsyncImageView.h; sourceTree = "<group>"; };
 		C98BF84D17939EC400026093 /* BRAsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAsyncImageView.m; sourceTree = "<group>"; };
-		C999121B1999A2ED00E0271C /* BRScrollerLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScrollerLogging.h; sourceTree = "<group>"; };
+		C99E6A7A1BB201C100B6E2C3 /* BRScrollerLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScrollerLogging.h; sourceTree = "<group>"; };
 		C9C1F49419B3DC5400063B80 /* BRScrollerImageSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScrollerImageSupport.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,18 +83,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9493832178E2EC1000B1D4E /* Foundation.framework in Frameworks */,
+				F41DFC4396E3C3F6DF2080B3 /* libPods-BRScroller.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		25A5138DE818D17A24329815 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9C5C6B201BB18A3F596D68A5 /* Pods-BRScroller.debug.xcconfig */,
+				BD54456C8F679052E32C4C88 /* Pods-BRScroller.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C9493825178E2EC1000B1D4E = {
 			isa = PBXGroup;
 			children = (
 				C9493833178E2EC1000B1D4E /* BRScroller */,
 				C9493830178E2EC1000B1D4E /* Frameworks */,
 				C949382F178E2EC1000B1D4E /* Products */,
+				25A5138DE818D17A24329815 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,6 +123,7 @@
 				C9493831178E2EC1000B1D4E /* Foundation.framework */,
 				C9493844178E2EEB000B1D4E /* UIKit.framework */,
 				C9493847178E2EEB000B1D4E /* CoreGraphics.framework */,
+				9894E3F9D4FBB444B8106E77 /* libPods-BRScroller.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -118,7 +134,7 @@
 				C9493836178E2EC1000B1D4E /* BRScroller.h */,
 				C9C1F49419B3DC5400063B80 /* BRScrollerImageSupport.h */,
 				C949386A178E305C000B1D4E /* BRScrollerDelegate.h */,
-				C999121B1999A2ED00E0271C /* BRScrollerLogging.h */,
+				C99E6A7A1BB201C100B6E2C3 /* BRScrollerLogging.h */,
 				C9493867178E2FCA000B1D4E /* BRScrollerView.h */,
 				C9493868178E2FCA000B1D4E /* BRScrollerView.m */,
 				C94938A8178E377C000B1D4E /* BRScrollerUtilities.h */,
@@ -187,9 +203,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C949383C178E2EC1000B1D4E /* Build configuration list for PBXNativeTarget "BRScroller" */;
 			buildPhases = (
+				B5170470435FD71AA965733D /* Check Pods Manifest.lock */,
 				C949382A178E2EC1000B1D4E /* Sources */,
 				C949382B178E2EC1000B1D4E /* Frameworks */,
 				C949382C178E2EC1000B1D4E /* CopyFiles */,
+				896410FC6D9C272AC7A5F5CF /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -228,6 +246,36 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		896410FC6D9C272AC7A5F5CF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BRScroller/Pods-BRScroller-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5170470435FD71AA965733D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		C965CCAA179512A90024DFF4 /* Generate framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -320,11 +368,11 @@
 		};
 		C949383D178E2EC1000B1D4E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9C5C6B201BB18A3F596D68A5 /* Pods-BRScroller.debug.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/BRScroller.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BRScroller/BRScroller-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -332,11 +380,11 @@
 		};
 		C949383E178E2EC1000B1D4E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD54456C8F679052E32C4C88 /* Pods-BRScroller.release.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/BRScroller.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BRScroller/BRScroller-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

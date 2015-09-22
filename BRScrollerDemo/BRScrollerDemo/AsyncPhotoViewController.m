@@ -70,7 +70,7 @@ static const int kNumImages = 10;
 
 - (NSString *)cachedImagePathForImageURL:(NSURL *)imageURL atSize:(CGSize)size {
 	NSString *fileName = [[imageURL path] lastPathComponent];
-	NSArray *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+	NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
 	return [NSString stringWithFormat:@"%@/%@-%dx%d.png", cacheDir, fileName, (int)size.width, (int)size.height];
 }
 

@@ -1,0 +1,8 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '5.1'
+inhibit_all_warnings!
+
+target :BRScrollerDemo do
+	pod 'BRCocoaLumberjack', '~> 2.0'
+	pod 'BRScroller',        :path => '../'
+end

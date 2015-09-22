@@ -82,7 +82,7 @@
 		CGRect zoomToRect = CGRectMake(contentPoint.x - (zoomBounds.width * xPercent),
 									   contentPoint.y - (zoomBounds.height * yPercent),
 									   zoomBounds.width, zoomBounds.height);
-		log4Debug(@"Zoom scale %f %@ from %@ to %@",
+		DDLogDebug(@"Zoom scale %f %@ from %@ to %@",
 				  self.zoomScale, NSStringFromCGPoint(self.contentOffset),
 				  NSStringFromCGRect(CGRectMake(self.contentOffset.x, self.contentOffset.y, self.bounds.size.width, self.bounds.size.height)),
 				  NSStringFromCGRect(zoomToRect));
@@ -112,7 +112,7 @@
 	// So we calculate that visual center before the frame changes, then re-calculate it
 	// after setting the frame to achieve the desired effect.
 	
-	log4Debug(@"Will set bounds from %@ to %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(bounds));
+	DDLogDebug(@"Will set bounds from %@ to %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(bounds));
 	
 	const CGSize oldViewSize = self.bounds.size;
 	const CGPoint oldContentOffset = self.contentOffset;
@@ -147,7 +147,7 @@
 	bounds.origin.x = newOffset.x;
 	bounds.origin.y = newOffset.y;
 	[super setBounds:bounds];
-	log4Debug(@"Did set bounds from %@ to %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(bounds));
+	DDLogDebug(@"Did set bounds from %@ to %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(bounds));
 }
 
 - (void)cacheManagedViewSize:(UIView *)managedView forViewSize:(CGSize)viewSize {
@@ -167,7 +167,7 @@
 		if ( contentSize.height < viewSize.height ) {
 			newOffset.y = -(viewSize.height - contentSize.height) / 2.0;
 		}
-		log4Trace(@"Centered offset %@ for size %@", NSStringFromCGPoint(newOffset), NSStringFromCGSize(contentSize));
+		DDLogVerbose(@"Centered offset %@ for size %@", NSStringFromCGPoint(newOffset), NSStringFromCGSize(contentSize));
 	}
 	return newOffset;
 }
@@ -178,7 +178,7 @@
 	// also during zooming operations, where UIScrollView adjusts the contentOffset and contentSize.
 	
 	CGPoint newOffset = [self centeredOffsetForRequestedOffset:offset contentSize:self.contentSize viewSize:self.bounds.size];
-	log4Trace(@"Changing contentOffset (requested %@) from %@ to %@", NSStringFromCGPoint(offset),
+	DDLogVerbose(@"Changing contentOffset (requested %@) from %@ to %@", NSStringFromCGPoint(offset),
 			  NSStringFromCGPoint(self.contentOffset), NSStringFromCGPoint(newOffset));
 	[super setContentOffset:newOffset];
 }

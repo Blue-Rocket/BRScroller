@@ -1,0 +1,7 @@
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#endif
+
+#ifdef __OBJC__
+    #import <BRCocoaLumberjack/BRCocoaLumberjack.h>
+#endif

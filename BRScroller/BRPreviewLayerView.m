@@ -85,7 +85,7 @@ static NSString * const kPreviewKey = @"BR.imageKey";
 
 - (void)layoutSubviews {
 	[super layoutSubviews];
-	log4Debug(@"Layout subviews of view %@ to %@", self, NSStringFromCGRect(self.bounds));
+	DDLogDebug(@"Layout subviews of view %@ to %@", self, NSStringFromCGRect(self.bounds));
 	CGRect bounds = self.bounds;
 	previewLayer.position = CGPointMake(bounds.size.width * 0.5, bounds.size.height * 0.5);
 	CGSize aspectFitSize = [self sizeThatFits:bounds.size];
@@ -181,7 +181,7 @@ static NSString * const kPreviewKey = @"BR.imageKey";
 }
 
 - (void)drawPreviewImage:(UIImage *)image key:(id)key {
-	log4Debug(@"Drawing preview %@ to layer size %@ (view size %@)",
+	DDLogDebug(@"Drawing preview %@ to layer size %@ (view size %@)",
 			  NSStringFromCGSize(image.size),
 			  NSStringFromCGSize(previewLayer.bounds.size),
 			  NSStringFromCGSize(self.bounds.size));

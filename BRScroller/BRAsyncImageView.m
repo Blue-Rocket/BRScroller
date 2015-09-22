@@ -114,7 +114,7 @@ static NSString * const kImageURLKey = @"BR.imageURL";
 		if ( data == nil ) {
 			data = [NSData dataWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:&error];
 			if ( error != nil ) {
-				log4Error(@"Error reading image URL %@: %@", theURL, [error description]);
+				DDLogError(@"Error reading image URL %@: %@", theURL, [error description]);
 				return;
 			}
 		}

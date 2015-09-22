@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AAE28B1C60B59D9675298309 /* libPods-BRScrollerDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3D52E90CA8A9C073CBB081 /* libPods-BRScrollerDemo.a */; };
 		C9493878178E33D7000B1D4E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9493877178E33D7000B1D4E /* UIKit.framework */; };
 		C949387A178E33D7000B1D4E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9493879178E33D7000B1D4E /* Foundation.framework */; };
 		C949387C178E33D7000B1D4E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949387B178E33D7000B1D4E /* CoreGraphics.framework */; };
@@ -18,7 +19,6 @@
 		C949388E178E33D7000B1D4E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C949388D178E33D7000B1D4E /* Default-568h@2x.png */; };
 		C9493891178E33D7000B1D4E /* AsyncPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9493890178E33D7000B1D4E /* AsyncPhotoViewController.m */; };
 		C9493894178E33D7000B1D4E /* AsyncPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9493892178E33D7000B1D4E /* AsyncPhotoViewController.xib */; };
-		C94938A5178E33FB000B1D4E /* libBRScroller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C94938A2178E33E8000B1D4E /* libBRScroller.a */; };
 		C94938BE178E682A000B1D4E /* 1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938B5178E682A000B1D4E /* 1.jpeg */; };
 		C94938BF178E682A000B1D4E /* 2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938B6178E682A000B1D4E /* 2.jpeg */; };
 		C94938C0178E682A000B1D4E /* 3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938B7178E682A000B1D4E /* 3.jpeg */; };
@@ -45,24 +45,10 @@
 		C9B090E617A8632000DD6327 /* BaseDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B090E517A8632000DD6327 /* BaseDemoViewController.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		C94938A1178E33E8000B1D4E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C949389D178E33E8000B1D4E /* BRScroller.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C949382E178E2EC1000B1D4E;
-			remoteInfo = BRScroller;
-		};
-		C94938A3178E33F2000B1D4E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C949389D178E33E8000B1D4E /* BRScroller.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C949382D178E2EC1000B1D4E;
-			remoteInfo = BRScroller;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		08D21A6281D3B82FF6960ABA /* Pods-BRScrollerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRScrollerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRScrollerDemo/Pods-BRScrollerDemo.release.xcconfig"; sourceTree = "<group>"; };
+		34D08B3798ADCCEA311D6684 /* Pods-BRScrollerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRScrollerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BRScrollerDemo/Pods-BRScrollerDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		AF3D52E90CA8A9C073CBB081 /* libPods-BRScrollerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BRScrollerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9493874178E33D7000B1D4E /* BRScrollerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BRScrollerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9493877178E33D7000B1D4E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C9493879178E33D7000B1D4E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -79,7 +65,6 @@
 		C949388F178E33D7000B1D4E /* AsyncPhotoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AsyncPhotoViewController.h; sourceTree = "<group>"; };
 		C9493890178E33D7000B1D4E /* AsyncPhotoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AsyncPhotoViewController.m; sourceTree = "<group>"; };
 		C9493893178E33D7000B1D4E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AsyncPhotoViewController.xib; sourceTree = "<group>"; };
-		C949389D178E33E8000B1D4E /* BRScroller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BRScroller.xcodeproj; path = ../BRScroller.xcodeproj; sourceTree = "<group>"; };
 		C94938B5178E682A000B1D4E /* 1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpeg; sourceTree = "<group>"; };
 		C94938B6178E682A000B1D4E /* 2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpeg; sourceTree = "<group>"; };
 		C94938B7178E682A000B1D4E /* 3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpeg; sourceTree = "<group>"; };
@@ -121,23 +106,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				C98BF8501793A91300026093 /* QuartzCore.framework in Frameworks */,
-				C94938A5178E33FB000B1D4E /* libBRScroller.a in Frameworks */,
 				C9493878178E33D7000B1D4E /* UIKit.framework in Frameworks */,
 				C949387A178E33D7000B1D4E /* Foundation.framework in Frameworks */,
 				C949387C178E33D7000B1D4E /* CoreGraphics.framework in Frameworks */,
+				AAE28B1C60B59D9675298309 /* libPods-BRScrollerDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		30AD82AF44798F0143B4F9CB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				34D08B3798ADCCEA311D6684 /* Pods-BRScrollerDemo.debug.xcconfig */,
+				08D21A6281D3B82FF6960ABA /* Pods-BRScrollerDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C949386B178E33D7000B1D4E = {
 			isa = PBXGroup;
 			children = (
-				C949389D178E33E8000B1D4E /* BRScroller.xcodeproj */,
 				C949387D178E33D7000B1D4E /* BRScrollerDemo */,
 				C9493876178E33D7000B1D4E /* Frameworks */,
 				C9493875178E33D7000B1D4E /* Products */,
+				30AD82AF44798F0143B4F9CB /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -156,6 +150,7 @@
 				C9493879178E33D7000B1D4E /* Foundation.framework */,
 				C98BF84F1793A91300026093 /* QuartzCore.framework */,
 				C9493877178E33D7000B1D4E /* UIKit.framework */,
+				AF3D52E90CA8A9C073CBB081 /* libPods-BRScrollerDemo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -187,14 +182,6 @@
 				C949388D178E33D7000B1D4E /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C949389E178E33E8000B1D4E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C94938A2178E33E8000B1D4E /* libBRScroller.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		C94938B4178E682A000B1D4E /* Images */ = {
@@ -250,14 +237,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C949389A178E33D7000B1D4E /* Build configuration list for PBXNativeTarget "BRScrollerDemo" */;
 			buildPhases = (
+				C106DC8733F0FB029F5F9F71 /* Check Pods Manifest.lock */,
 				C9493870178E33D7000B1D4E /* Sources */,
 				C9493871178E33D7000B1D4E /* Frameworks */,
 				C9493872178E33D7000B1D4E /* Resources */,
+				92832A607F3BDA8FAD988FE0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C94938A4178E33F2000B1D4E /* PBXTargetDependency */,
 			);
 			name = BRScrollerDemo;
 			productName = BRScrollerDemo;
@@ -283,28 +271,12 @@
 			mainGroup = C949386B178E33D7000B1D4E;
 			productRefGroup = C9493875178E33D7000B1D4E /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = C949389E178E33E8000B1D4E /* Products */;
-					ProjectRef = C949389D178E33E8000B1D4E /* BRScroller.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				C9493873178E33D7000B1D4E /* BRScrollerDemo */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		C94938A2178E33E8000B1D4E /* libBRScroller.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libBRScroller.a;
-			remoteRef = C94938A1178E33E8000B1D4E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C9493872178E33D7000B1D4E /* Resources */ = {
@@ -335,6 +307,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		92832A607F3BDA8FAD988FE0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BRScrollerDemo/Pods-BRScrollerDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C106DC8733F0FB029F5F9F71 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C9493870178E33D7000B1D4E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -356,14 +361,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C94938A4178E33F2000B1D4E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BRScroller;
-			targetProxy = C94938A3178E33F2000B1D4E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C9493880178E33D7000B1D4E /* InfoPlist.strings */ = {
@@ -458,6 +455,7 @@
 		};
 		C949389B178E33D7000B1D4E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 34D08B3798ADCCEA311D6684 /* Pods-BRScrollerDemo.debug.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BRScrollerDemo/BRScrollerDemo-Prefix.pch";
@@ -469,6 +467,7 @@
 		};
 		C949389C178E33D7000B1D4E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08D21A6281D3B82FF6960ABA /* Pods-BRScrollerDemo.release.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BRScrollerDemo/BRScrollerDemo-Prefix.pch";
