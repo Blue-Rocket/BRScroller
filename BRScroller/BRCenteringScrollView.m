@@ -8,7 +8,7 @@
 
 #import "BRCenteringScrollView.h"
 
-#import <CocoaLumberjack/CocoaLumberjack.h>
+#import "BRScrollerLogging.h"
 
 @interface BRCenteringScrollView () <UIGestureRecognizerDelegate>
 @end

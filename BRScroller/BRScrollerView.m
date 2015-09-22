@@ -8,7 +8,7 @@
 
 #import "BRScrollerView.h"
 
-#import <CocoaLumberjack/CocoaLumberjack.h>
+#import "BRScrollerLogging.h"
 #import "BRScrollerDelegate.h"
 #import "BRScrollerUtilities.h"
 

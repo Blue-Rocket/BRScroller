@@ -8,9 +8,9 @@
 
 #import "BRAsyncImageView.h"
 
-#import <CocoaLumberjack/CocoaLumberjack.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "BRScrollerLogging.h"
 #import "BRScrollerUtilities.h"
 
 // our serial update queue... only one writer allowed
