@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "01C64399EB7ADE2173CB0B55"
+               BlueprintIdentifier = "5D481E79E6EC2E9D72EB6F62"
                BuildableName = "libBRScroller.a"
                BlueprintName = "BRScroller"
                ReferencedContainer = "container:Pods.xcodeproj">
