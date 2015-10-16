@@ -1,13 +1,13 @@
 PODS:
   - BRCocoaLumberjack (2.0.1):
     - CocoaLumberjack (~> 2.0)
-  - CocoaLumberjack (2.0.1):
-    - CocoaLumberjack/Default (= 2.0.1)
-    - CocoaLumberjack/Extensions (= 2.0.1)
-  - CocoaLumberjack/Core (2.0.1)
-  - CocoaLumberjack/Default (2.0.1):
+  - CocoaLumberjack (2.0.3):
+    - CocoaLumberjack/Default (= 2.0.3)
+    - CocoaLumberjack/Extensions (= 2.0.3)
+  - CocoaLumberjack/Core (2.0.3)
+  - CocoaLumberjack/Default (2.0.3):
     - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.0.1):
+  - CocoaLumberjack/Extensions (2.0.3):
     - CocoaLumberjack/Default
 
 DEPENDENCIES:
@@ -15,6 +15,6 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   BRCocoaLumberjack: 529d9525681ea2514d3d607011267848bc337bbe
-  CocoaLumberjack: 019d1361244274a6138c788c6cb80baabc13fb8f
+  CocoaLumberjack: f58d8a19629f4d8379ae14bb3534def24161430e
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

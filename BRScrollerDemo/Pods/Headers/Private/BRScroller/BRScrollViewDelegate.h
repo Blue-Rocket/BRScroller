@@ -1,1 +1,1 @@
-../../../../../BRScroller/BRScrollViewDelegate.h
+../../../../../BRScroller/Core/BRScrollViewDelegate.h

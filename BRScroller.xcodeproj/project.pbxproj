@@ -23,13 +23,21 @@
 /* Begin PBXBuildFile section */
 		C9493832178E2EC1000B1D4E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9493831178E2EC1000B1D4E /* Foundation.framework */; };
 		C9493837178E2EC1000B1D4E /* BRScroller.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9493836178E2EC1000B1D4E /* BRScroller.h */; };
-		C9493869178E2FCA000B1D4E /* BRScrollerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9493868178E2FCA000B1D4E /* BRScrollerView.m */; };
-		C94938A7178E376B000B1D4E /* BRScrollerUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = C94938A6178E376A000B1D4E /* BRScrollerUtilities.c */; };
-		C94938AC178E4CB5000B1D4E /* BRCenteringScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94938AB178E4CB5000B1D4E /* BRCenteringScrollView.m */; };
-		C94938B0178E5AE5000B1D4E /* BRPreviewLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94938AF178E5AE5000B1D4E /* BRPreviewLayerView.m */; };
-		C94938B3178E6216000B1D4E /* BRImagePreviewLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94938B2178E6216000B1D4E /* BRImagePreviewLayerView.m */; };
-		C94938C9178E6AA9000B1D4E /* BRZoomingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94938C8178E6AA9000B1D4E /* BRZoomingImageView.m */; };
-		C98BF84E17939EC400026093 /* BRAsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C98BF84D17939EC400026093 /* BRAsyncImageView.m */; };
+		C95D44751BD0A16300A089FC /* BRScrollerUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = C95D445F1BD0A16300A089FC /* BRScrollerUtilities.c */; settings = {ASSET_TAGS = (); }; };
+		C95D44761BD0A16300A089FC /* BRScrollerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44621BD0A16300A089FC /* BRScrollerView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D44771BD0A16300A089FC /* BRAsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44671BD0A16300A089FC /* BRAsyncImageView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D44781BD0A16300A089FC /* BRImagePreviewLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44691BD0A16300A089FC /* BRImagePreviewLayerView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D44791BD0A16300A089FC /* BRZoomingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D446B1BD0A16300A089FC /* BRZoomingImageView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D447A1BD0A16300A089FC /* BRCenteringScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44711BD0A16300A089FC /* BRCenteringScrollView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D447B1BD0A16300A089FC /* BRPreviewLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44731BD0A16300A089FC /* BRPreviewLayerView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D447E1BD0A5F600A089FC /* BRBasePdfPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D447D1BD0A5F600A089FC /* BRBasePdfPageView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D44811BD0A61200A089FC /* BRPdfPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44801BD0A61200A089FC /* BRPdfPageView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D44841BD0A62A00A089FC /* BRTiledPdfPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44831BD0A62A00A089FC /* BRTiledPdfPageView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D44871BD0A79200A089FC /* BRPdfDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44861BD0A79200A089FC /* BRPdfDrawingUtils.m */; settings = {ASSET_TAGS = (); }; };
+		C95D448B1BD0B0AF00A089FC /* BRCachedPreviewPdfPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D448A1BD0B0AF00A089FC /* BRCachedPreviewPdfPageView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D448F1BD0B61D00A089FC /* BRDefaultImageRenderService.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D448E1BD0B61D00A089FC /* BRDefaultImageRenderService.m */; settings = {ASSET_TAGS = (); }; };
+		C95D44921BD0C9ED00A089FC /* BRDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44911BD0C9ED00A089FC /* BRDrawingUtils.m */; settings = {ASSET_TAGS = (); }; };
+		C95D44951BD0D01B00A089FC /* BRCachedPreviewPdfPageZoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44941BD0D01B00A089FC /* BRCachedPreviewPdfPageZoomView.m */; settings = {ASSET_TAGS = (); }; };
 		F41DFC4396E3C3F6DF2080B3 /* libPods-BRScroller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9894E3F9D4FBB444B8106E77 /* libPods-BRScroller.a */; };
 /* End PBXBuildFile section */
 
@@ -53,28 +61,49 @@
 		C949382E178E2EC1000B1D4E /* libBRScroller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBRScroller.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9493831178E2EC1000B1D4E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9493835178E2EC1000B1D4E /* BRScroller-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BRScroller-Prefix.pch"; sourceTree = "<group>"; };
-		C9493836178E2EC1000B1D4E /* BRScroller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScroller.h; sourceTree = "<group>"; };
+		C9493836178E2EC1000B1D4E /* BRScroller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BRScroller.h; path = BRScroller/BRScroller.h; sourceTree = "<group>"; };
 		C9493844178E2EEB000B1D4E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C9493847178E2EEB000B1D4E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		C9493867178E2FCA000B1D4E /* BRScrollerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRScrollerView.h; sourceTree = "<group>"; };
-		C9493868178E2FCA000B1D4E /* BRScrollerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRScrollerView.m; sourceTree = "<group>"; };
-		C949386A178E305C000B1D4E /* BRScrollerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScrollerDelegate.h; sourceTree = "<group>"; };
-		C94938A6178E376A000B1D4E /* BRScrollerUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BRScrollerUtilities.c; sourceTree = "<group>"; };
-		C94938A8178E377C000B1D4E /* BRScrollerUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScrollerUtilities.h; sourceTree = "<group>"; };
-		C94938AA178E4CB5000B1D4E /* BRCenteringScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRCenteringScrollView.h; sourceTree = "<group>"; };
-		C94938AB178E4CB5000B1D4E /* BRCenteringScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRCenteringScrollView.m; sourceTree = "<group>"; };
-		C94938AD178E4CCC000B1D4E /* BRScrollViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScrollViewDelegate.h; sourceTree = "<group>"; };
-		C94938AE178E5AE5000B1D4E /* BRPreviewLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPreviewLayerView.h; sourceTree = "<group>"; };
-		C94938AF178E5AE5000B1D4E /* BRPreviewLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPreviewLayerView.m; sourceTree = "<group>"; };
-		C94938B1178E6216000B1D4E /* BRImagePreviewLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRImagePreviewLayerView.h; sourceTree = "<group>"; };
-		C94938B2178E6216000B1D4E /* BRImagePreviewLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRImagePreviewLayerView.m; sourceTree = "<group>"; };
-		C94938C7178E6AA9000B1D4E /* BRZoomingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRZoomingImageView.h; sourceTree = "<group>"; };
-		C94938C8178E6AA9000B1D4E /* BRZoomingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRZoomingImageView.m; sourceTree = "<group>"; };
+		C95D445C1BD0A16300A089FC /* BRScrollerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRScrollerDelegate.h; sourceTree = "<group>"; };
+		C95D445E1BD0A16300A089FC /* BRScrollerLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRScrollerLogging.h; sourceTree = "<group>"; };
+		C95D445F1BD0A16300A089FC /* BRScrollerUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BRScrollerUtilities.c; sourceTree = "<group>"; };
+		C95D44601BD0A16300A089FC /* BRScrollerUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRScrollerUtilities.h; sourceTree = "<group>"; };
+		C95D44611BD0A16300A089FC /* BRScrollerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRScrollerView.h; sourceTree = "<group>"; };
+		C95D44621BD0A16300A089FC /* BRScrollerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRScrollerView.m; sourceTree = "<group>"; };
+		C95D44631BD0A16300A089FC /* BRScrollViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRScrollViewDelegate.h; sourceTree = "<group>"; };
+		C95D44641BD0A16300A089FC /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Core.h; path = BRScroller/Core.h; sourceTree = "<group>"; };
+		C95D44661BD0A16300A089FC /* BRAsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAsyncImageView.h; sourceTree = "<group>"; };
+		C95D44671BD0A16300A089FC /* BRAsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAsyncImageView.m; sourceTree = "<group>"; };
+		C95D44681BD0A16300A089FC /* BRImagePreviewLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRImagePreviewLayerView.h; sourceTree = "<group>"; };
+		C95D44691BD0A16300A089FC /* BRImagePreviewLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRImagePreviewLayerView.m; sourceTree = "<group>"; };
+		C95D446A1BD0A16300A089FC /* BRZoomingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRZoomingImageView.h; sourceTree = "<group>"; };
+		C95D446B1BD0A16300A089FC /* BRZoomingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRZoomingImageView.m; sourceTree = "<group>"; };
+		C95D446C1BD0A16300A089FC /* Image-Support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Image-Support.h"; path = "BRScroller/Image-Support.h"; sourceTree = "<group>"; };
+		C95D446E1BD0A16300A089FC /* PDF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDF.h; path = BRScroller/PDF.h; sourceTree = "<group>"; };
+		C95D44701BD0A16300A089FC /* BRCenteringScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRCenteringScrollView.h; sourceTree = "<group>"; };
+		C95D44711BD0A16300A089FC /* BRCenteringScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRCenteringScrollView.m; sourceTree = "<group>"; };
+		C95D44721BD0A16300A089FC /* BRPreviewLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPreviewLayerView.h; sourceTree = "<group>"; };
+		C95D44731BD0A16300A089FC /* BRPreviewLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPreviewLayerView.m; sourceTree = "<group>"; };
+		C95D44741BD0A16300A089FC /* View-Support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "View-Support.h"; path = "BRScroller/View-Support.h"; sourceTree = "<group>"; };
+		C95D447C1BD0A5F600A089FC /* BRBasePdfPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRBasePdfPageView.h; sourceTree = "<group>"; };
+		C95D447D1BD0A5F600A089FC /* BRBasePdfPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRBasePdfPageView.m; sourceTree = "<group>"; };
+		C95D447F1BD0A61200A089FC /* BRPdfPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPdfPageView.h; sourceTree = "<group>"; };
+		C95D44801BD0A61200A089FC /* BRPdfPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPdfPageView.m; sourceTree = "<group>"; };
+		C95D44821BD0A62A00A089FC /* BRTiledPdfPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRTiledPdfPageView.h; sourceTree = "<group>"; };
+		C95D44831BD0A62A00A089FC /* BRTiledPdfPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRTiledPdfPageView.m; sourceTree = "<group>"; };
+		C95D44851BD0A79200A089FC /* BRPdfDrawingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPdfDrawingUtils.h; sourceTree = "<group>"; };
+		C95D44861BD0A79200A089FC /* BRPdfDrawingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPdfDrawingUtils.m; sourceTree = "<group>"; };
+		C95D44881BD0AB1B00A089FC /* BRTiledLayerDrawingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRTiledLayerDrawingDelegate.h; sourceTree = "<group>"; };
+		C95D44891BD0B0AF00A089FC /* BRCachedPreviewPdfPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRCachedPreviewPdfPageView.h; sourceTree = "<group>"; };
+		C95D448A1BD0B0AF00A089FC /* BRCachedPreviewPdfPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRCachedPreviewPdfPageView.m; sourceTree = "<group>"; };
+		C95D448C1BD0B29500A089FC /* BRImageRenderService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRImageRenderService.h; sourceTree = "<group>"; };
+		C95D448D1BD0B61D00A089FC /* BRDefaultImageRenderService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRDefaultImageRenderService.h; sourceTree = "<group>"; };
+		C95D448E1BD0B61D00A089FC /* BRDefaultImageRenderService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRDefaultImageRenderService.m; sourceTree = "<group>"; };
+		C95D44901BD0C9ED00A089FC /* BRDrawingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRDrawingUtils.h; sourceTree = "<group>"; };
+		C95D44911BD0C9ED00A089FC /* BRDrawingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRDrawingUtils.m; sourceTree = "<group>"; };
+		C95D44931BD0D01B00A089FC /* BRCachedPreviewPdfPageZoomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRCachedPreviewPdfPageZoomView.h; sourceTree = "<group>"; };
+		C95D44941BD0D01B00A089FC /* BRCachedPreviewPdfPageZoomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRCachedPreviewPdfPageZoomView.m; sourceTree = "<group>"; };
 		C97C128A1ABFB21A00278B25 /* BRScroller.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = BRScroller.podspec; sourceTree = SOURCE_ROOT; };
-		C98BF84C17939EC400026093 /* BRAsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAsyncImageView.h; sourceTree = "<group>"; };
-		C98BF84D17939EC400026093 /* BRAsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAsyncImageView.m; sourceTree = "<group>"; };
-		C99E6A7A1BB201C100B6E2C3 /* BRScrollerLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScrollerLogging.h; sourceTree = "<group>"; };
-		C9C1F49419B3DC5400063B80 /* BRScrollerImageSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRScrollerImageSupport.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +131,7 @@
 		C9493825178E2EC1000B1D4E = {
 			isa = PBXGroup;
 			children = (
+				C95D445A1BD09F2700A089FC /* Packaging */,
 				C9493833178E2EC1000B1D4E /* BRScroller */,
 				C9493830178E2EC1000B1D4E /* Frameworks */,
 				C949382F178E2EC1000B1D4E /* Products */,
@@ -131,16 +161,10 @@
 		C9493833178E2EC1000B1D4E /* BRScroller */ = {
 			isa = PBXGroup;
 			children = (
-				C9493836178E2EC1000B1D4E /* BRScroller.h */,
-				C9C1F49419B3DC5400063B80 /* BRScrollerImageSupport.h */,
-				C949386A178E305C000B1D4E /* BRScrollerDelegate.h */,
-				C99E6A7A1BB201C100B6E2C3 /* BRScrollerLogging.h */,
-				C9493867178E2FCA000B1D4E /* BRScrollerView.h */,
-				C9493868178E2FCA000B1D4E /* BRScrollerView.m */,
-				C94938A8178E377C000B1D4E /* BRScrollerUtilities.h */,
-				C94938A6178E376A000B1D4E /* BRScrollerUtilities.c */,
-				C94938AD178E4CCC000B1D4E /* BRScrollViewDelegate.h */,
-				C94938A9178E4C7A000B1D4E /* Page Views */,
+				C95D445B1BD0A16200A089FC /* Core */,
+				C95D44651BD0A16300A089FC /* Image-Support */,
+				C95D446D1BD0A16300A089FC /* PDF */,
+				C95D446F1BD0A16300A089FC /* View-Support */,
 				C9493834178E2EC1000B1D4E /* Supporting Files */,
 			);
 			path = BRScroller;
@@ -150,50 +174,84 @@
 			isa = PBXGroup;
 			children = (
 				C9493835178E2EC1000B1D4E /* BRScroller-Prefix.pch */,
-				C97C128A1ABFB21A00278B25 /* BRScroller.podspec */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C94938A9178E4C7A000B1D4E /* Page Views */ = {
+		C95D445A1BD09F2700A089FC /* Packaging */ = {
 			isa = PBXGroup;
 			children = (
-				C965CCA517948C830024DFF4 /* Preview layer support */,
-				C965CCA417948C5C0024DFF4 /* Image content support */,
-				C965CCA317948C480024DFF4 /* Zoom support */,
+				C97C128A1ABFB21A00278B25 /* BRScroller.podspec */,
+				C9493836178E2EC1000B1D4E /* BRScroller.h */,
+				C95D44641BD0A16300A089FC /* Core.h */,
+				C95D446C1BD0A16300A089FC /* Image-Support.h */,
+				C95D446E1BD0A16300A089FC /* PDF.h */,
+				C95D44741BD0A16300A089FC /* View-Support.h */,
 			);
-			name = "Page Views";
+			name = Packaging;
 			sourceTree = "<group>";
 		};
-		C965CCA317948C480024DFF4 /* Zoom support */ = {
+		C95D445B1BD0A16200A089FC /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				C94938AA178E4CB5000B1D4E /* BRCenteringScrollView.h */,
-				C94938AB178E4CB5000B1D4E /* BRCenteringScrollView.m */,
-				C94938C7178E6AA9000B1D4E /* BRZoomingImageView.h */,
-				C94938C8178E6AA9000B1D4E /* BRZoomingImageView.m */,
+				C95D445C1BD0A16300A089FC /* BRScrollerDelegate.h */,
+				C95D445E1BD0A16300A089FC /* BRScrollerLogging.h */,
+				C95D44601BD0A16300A089FC /* BRScrollerUtilities.h */,
+				C95D445F1BD0A16300A089FC /* BRScrollerUtilities.c */,
+				C95D44611BD0A16300A089FC /* BRScrollerView.h */,
+				C95D44621BD0A16300A089FC /* BRScrollerView.m */,
+				C95D44631BD0A16300A089FC /* BRScrollViewDelegate.h */,
 			);
-			name = "Zoom support";
+			path = Core;
 			sourceTree = "<group>";
 		};
-		C965CCA417948C5C0024DFF4 /* Image content support */ = {
+		C95D44651BD0A16300A089FC /* Image-Support */ = {
 			isa = PBXGroup;
 			children = (
-				C98BF84C17939EC400026093 /* BRAsyncImageView.h */,
-				C98BF84D17939EC400026093 /* BRAsyncImageView.m */,
-				C94938B1178E6216000B1D4E /* BRImagePreviewLayerView.h */,
-				C94938B2178E6216000B1D4E /* BRImagePreviewLayerView.m */,
+				C95D44661BD0A16300A089FC /* BRAsyncImageView.h */,
+				C95D44671BD0A16300A089FC /* BRAsyncImageView.m */,
+				C95D448D1BD0B61D00A089FC /* BRDefaultImageRenderService.h */,
+				C95D448E1BD0B61D00A089FC /* BRDefaultImageRenderService.m */,
+				C95D44901BD0C9ED00A089FC /* BRDrawingUtils.h */,
+				C95D44911BD0C9ED00A089FC /* BRDrawingUtils.m */,
+				C95D44681BD0A16300A089FC /* BRImagePreviewLayerView.h */,
+				C95D44691BD0A16300A089FC /* BRImagePreviewLayerView.m */,
+				C95D448C1BD0B29500A089FC /* BRImageRenderService.h */,
+				C95D446A1BD0A16300A089FC /* BRZoomingImageView.h */,
+				C95D446B1BD0A16300A089FC /* BRZoomingImageView.m */,
 			);
-			name = "Image content support";
+			path = "Image-Support";
 			sourceTree = "<group>";
 		};
-		C965CCA517948C830024DFF4 /* Preview layer support */ = {
+		C95D446D1BD0A16300A089FC /* PDF */ = {
 			isa = PBXGroup;
 			children = (
-				C94938AE178E5AE5000B1D4E /* BRPreviewLayerView.h */,
-				C94938AF178E5AE5000B1D4E /* BRPreviewLayerView.m */,
+				C95D447C1BD0A5F600A089FC /* BRBasePdfPageView.h */,
+				C95D447D1BD0A5F600A089FC /* BRBasePdfPageView.m */,
+				C95D44891BD0B0AF00A089FC /* BRCachedPreviewPdfPageView.h */,
+				C95D448A1BD0B0AF00A089FC /* BRCachedPreviewPdfPageView.m */,
+				C95D44931BD0D01B00A089FC /* BRCachedPreviewPdfPageZoomView.h */,
+				C95D44941BD0D01B00A089FC /* BRCachedPreviewPdfPageZoomView.m */,
+				C95D44851BD0A79200A089FC /* BRPdfDrawingUtils.h */,
+				C95D44861BD0A79200A089FC /* BRPdfDrawingUtils.m */,
+				C95D447F1BD0A61200A089FC /* BRPdfPageView.h */,
+				C95D44801BD0A61200A089FC /* BRPdfPageView.m */,
+				C95D44821BD0A62A00A089FC /* BRTiledPdfPageView.h */,
+				C95D44831BD0A62A00A089FC /* BRTiledPdfPageView.m */,
 			);
-			name = "Preview layer support";
+			path = PDF;
+			sourceTree = "<group>";
+		};
+		C95D446F1BD0A16300A089FC /* View-Support */ = {
+			isa = PBXGroup;
+			children = (
+				C95D44701BD0A16300A089FC /* BRCenteringScrollView.h */,
+				C95D44711BD0A16300A089FC /* BRCenteringScrollView.m */,
+				C95D44881BD0AB1B00A089FC /* BRTiledLayerDrawingDelegate.h */,
+				C95D44721BD0A16300A089FC /* BRPreviewLayerView.h */,
+				C95D44731BD0A16300A089FC /* BRPreviewLayerView.m */,
+			);
+			path = "View-Support";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,7 +282,7 @@
 		C9493826178E2EC1000B1D4E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Blue Rocket";
 			};
 			buildConfigurationList = C9493829178E2EC1000B1D4E /* Build configuration list for PBXProject "BRScroller" */;
@@ -297,13 +355,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9493869178E2FCA000B1D4E /* BRScrollerView.m in Sources */,
-				C94938A7178E376B000B1D4E /* BRScrollerUtilities.c in Sources */,
-				C94938AC178E4CB5000B1D4E /* BRCenteringScrollView.m in Sources */,
-				C94938B0178E5AE5000B1D4E /* BRPreviewLayerView.m in Sources */,
-				C94938B3178E6216000B1D4E /* BRImagePreviewLayerView.m in Sources */,
-				C94938C9178E6AA9000B1D4E /* BRZoomingImageView.m in Sources */,
-				C98BF84E17939EC400026093 /* BRAsyncImageView.m in Sources */,
+				C95D44761BD0A16300A089FC /* BRScrollerView.m in Sources */,
+				C95D44951BD0D01B00A089FC /* BRCachedPreviewPdfPageZoomView.m in Sources */,
+				C95D44791BD0A16300A089FC /* BRZoomingImageView.m in Sources */,
+				C95D44921BD0C9ED00A089FC /* BRDrawingUtils.m in Sources */,
+				C95D44781BD0A16300A089FC /* BRImagePreviewLayerView.m in Sources */,
+				C95D447B1BD0A16300A089FC /* BRPreviewLayerView.m in Sources */,
+				C95D44811BD0A61200A089FC /* BRPdfPageView.m in Sources */,
+				C95D44841BD0A62A00A089FC /* BRTiledPdfPageView.m in Sources */,
+				C95D44871BD0A79200A089FC /* BRPdfDrawingUtils.m in Sources */,
+				C95D448B1BD0B0AF00A089FC /* BRCachedPreviewPdfPageView.m in Sources */,
+				C95D447A1BD0A16300A089FC /* BRCenteringScrollView.m in Sources */,
+				C95D44771BD0A16300A089FC /* BRAsyncImageView.m in Sources */,
+				C95D448F1BD0B61D00A089FC /* BRDefaultImageRenderService.m in Sources */,
+				C95D44751BD0A16300A089FC /* BRScrollerUtilities.c in Sources */,
+				C95D447E1BD0A5F600A089FC /* BRBasePdfPageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,7 +380,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -324,6 +389,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -346,7 +412,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;

@@ -28,6 +28,9 @@
 		C94938C4178E682A000B1D4E /* 7.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938BB178E682A000B1D4E /* 7.jpeg */; };
 		C94938C5178E682A000B1D4E /* 8.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938BC178E682A000B1D4E /* 8.jpeg */; };
 		C94938C6178E682A000B1D4E /* 9.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938BD178E682A000B1D4E /* 9.jpeg */; };
+		C95D44991BD0D14F00A089FC /* PdfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44971BD0D14F00A089FC /* PdfViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C95D449A1BD0D14F00A089FC /* PdfViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C95D44981BD0D14F00A089FC /* PdfViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		C95D449C1BD0D2F400A089FC /* SVN Book.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C95D449B1BD0D2F400A089FC /* SVN Book.pdf */; settings = {ASSET_TAGS = (); }; };
 		C9610C6717A0DA5C00382E4D /* ReverseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9610C6617A0DA5C00382E4D /* ReverseViewController.m */; };
 		C965CC9D17947CA40024DFF4 /* DemoChoicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C965CC9C17947CA40024DFF4 /* DemoChoicesViewController.m */; };
 		C965CCA11794817B0024DFF4 /* SimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C965CC9F1794817B0024DFF4 /* SimpleViewController.m */; };
@@ -74,6 +77,10 @@
 		C94938BB178E682A000B1D4E /* 7.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 7.jpeg; sourceTree = "<group>"; };
 		C94938BC178E682A000B1D4E /* 8.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpeg; sourceTree = "<group>"; };
 		C94938BD178E682A000B1D4E /* 9.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpeg; sourceTree = "<group>"; };
+		C95D44961BD0D14F00A089FC /* PdfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PdfViewController.h; sourceTree = "<group>"; };
+		C95D44971BD0D14F00A089FC /* PdfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PdfViewController.m; sourceTree = "<group>"; };
+		C95D44981BD0D14F00A089FC /* PdfViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PdfViewController.xib; sourceTree = "<group>"; };
+		C95D449B1BD0D2F400A089FC /* SVN Book.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "SVN Book.pdf"; sourceTree = "<group>"; };
 		C9610C6517A0DA5C00382E4D /* ReverseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReverseViewController.h; sourceTree = "<group>"; };
 		C9610C6617A0DA5C00382E4D /* ReverseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReverseViewController.m; sourceTree = "<group>"; };
 		C965CC9B17947CA40024DFF4 /* DemoChoicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoChoicesViewController.h; sourceTree = "<group>"; };
@@ -187,6 +194,7 @@
 		C94938B4178E682A000B1D4E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C95D449B1BD0D2F400A089FC /* SVN Book.pdf */,
 				C94938B5178E682A000B1D4E /* 1.jpeg */,
 				C94938B6178E682A000B1D4E /* 2.jpeg */,
 				C94938B7178E682A000B1D4E /* 3.jpeg */,
@@ -209,6 +217,9 @@
 				C9493892178E33D7000B1D4E /* AsyncPhotoViewController.xib */,
 				C9B090E417A8632000DD6327 /* BaseDemoViewController.h */,
 				C9B090E517A8632000DD6327 /* BaseDemoViewController.m */,
+				C95D44961BD0D14F00A089FC /* PdfViewController.h */,
+				C95D44971BD0D14F00A089FC /* PdfViewController.m */,
+				C95D44981BD0D14F00A089FC /* PdfViewController.xib */,
 				C9775D6B1795CFED006E3C1E /* DemoTiledView.h */,
 				C9775D6C1795CFED006E3C1E /* DemoTiledView.m */,
 				C9775D6F1795D440006E3C1E /* DemoTiledViewController.h */,
@@ -242,6 +253,7 @@
 				C9493871178E33D7000B1D4E /* Frameworks */,
 				C9493872178E33D7000B1D4E /* Resources */,
 				92832A607F3BDA8FAD988FE0 /* Copy Pods Resources */,
+				7E14344B1F48B21A5CAF904B /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -258,7 +270,7 @@
 		C949386C178E33D7000B1D4E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Blue Rocket";
 			};
 			buildConfigurationList = C949386F178E33D7000B1D4E /* Build configuration list for PBXProject "BRScrollerDemo" */;
@@ -299,7 +311,9 @@
 				C94938C6178E682A000B1D4E /* 9.jpeg in Resources */,
 				C98BF8521793C01E00026093 /* 10.jpeg in Resources */,
 				C965CCA21794817B0024DFF4 /* SimpleViewController.xib in Resources */,
+				C95D449A1BD0D14F00A089FC /* PdfViewController.xib in Resources */,
 				C965CCAE179526A20024DFF4 /* Localizable.strings in Resources */,
+				C95D449C1BD0D2F400A089FC /* SVN Book.pdf in Resources */,
 				C9775D731795D441006E3C1E /* DemoTiledViewController.xib in Resources */,
 				C9775D7B1795F84F006E3C1E /* MultiViewController.xib in Resources */,
 			);
@@ -308,6 +322,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		7E14344B1F48B21A5CAF904B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BRScrollerDemo/Pods-BRScrollerDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		92832A607F3BDA8FAD988FE0 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -352,6 +381,7 @@
 				C965CCA11794817B0024DFF4 /* SimpleViewController.m in Sources */,
 				C9775D6D1795CFED006E3C1E /* DemoTiledView.m in Sources */,
 				C9B090E617A8632000DD6327 /* BaseDemoViewController.m in Sources */,
+				C95D44991BD0D14F00A089FC /* PdfViewController.m in Sources */,
 				C9775D721795D441006E3C1E /* DemoTiledViewController.m in Sources */,
 				C9775D761795D501006E3C1E /* DemoZoomingTiledView.m in Sources */,
 				C9775D7A1795F84F006E3C1E /* MultiViewController.m in Sources */,
@@ -404,6 +434,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -460,6 +491,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BRScrollerDemo/BRScrollerDemo-Prefix.pch";
 				INFOPLIST_FILE = "BRScrollerDemo/BRScrollerDemo-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.bluerocket.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -472,6 +504,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BRScrollerDemo/BRScrollerDemo-Prefix.pch";
 				INFOPLIST_FILE = "BRScrollerDemo/BRScrollerDemo-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.bluerocket.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
