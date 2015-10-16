@@ -7,6 +7,7 @@
 //
 
 #import <BRScroller/Core.h>
-#import <BRScroller/Image-Support.h>
-#import <BRScroller/PDF.h>
 #import <BRScroller/View-Support.h>
+#import <BRScroller/BRAsyncImageView.h>
+#import <BRScroller/BRImagePreviewLayerView.h>
+#import <BRScroller/BRZoomingImageView.h>
