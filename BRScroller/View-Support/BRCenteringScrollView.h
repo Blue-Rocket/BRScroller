@@ -29,15 +29,15 @@
 
 // double-tap zoom support: configure doubleTapToZoom to YES, then double-taps will be
 // detected and treated as a zoom-in action.
-@property (nonatomic, getter = isDoubleTapToZoom) BOOL doubleTapToZoom;
+@property (nonatomic, getter = isDoubleTapToZoom) IBInspectable BOOL doubleTapToZoom;
 
 // the increment by which to zoom in when a double-tap is detected; defaults to 2
-@property (nonatomic) CGFloat doubleTapZoomIncrement;
+@property (nonatomic) IBInspectable CGFloat doubleTapZoomIncrement;
 
 // the maximum amount to allow double-tapping to zoom in to; each double-tap will zoom
 // the content in increments ofdoubleTapZoomIncrement until doubleTapMaxZoomLevel is
 // reached, at which time the content will be scaled back to its initial zoom level
-@property (nonatomic) CGFloat doubleTapMaxZoomLevel;
+@property (nonatomic) IBInspectable CGFloat doubleTapMaxZoomLevel;
 
 // read-only access to the UITapGestureRecognizer handling the double-tap to zoom
 @property (nonatomic, readonly, strong) UITapGestureRecognizer *doubleTapRecognizer;
