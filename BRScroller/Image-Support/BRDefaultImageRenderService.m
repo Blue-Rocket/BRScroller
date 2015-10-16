@@ -37,7 +37,7 @@ static dispatch_once_t PersistenceQueueToken;
 
 - (NSString *)pathForCachedImage:(NSString *)key {
 	return [[self.cacheDir stringByAppendingPathComponent:key]
-			stringByAppendingPathExtension:([key hasSuffix:@".jpg"] ? @".jpg" : @".png")];
+			stringByAppendingPathExtension:([key hasSuffix:@".jpg"] ? @"jpg" : @"png")];
 }
 
 - (void)imageForKey:(NSString *)key
