@@ -8,8 +8,8 @@
 
 #import "BRBasePdfPageView.h"
 
-#import <BRCocoaLumberjack/BRCocoaLumberjack.h>
 #import "BRPdfDrawingUtils.h"
+#import "BRScrollerLogging.h"
 
 @implementation BRBasePdfPageView {
 	CGPDFDocumentRef doc;
@@ -56,7 +56,7 @@
 	if ( page == NULL || self.hidden ) {
 		return;
 	}
-	log4Trace(@"Drawing page %lu to %@", (unsigned long)pageIndex, NSStringFromCGRect(rect));
+	DDLogVerbose(@"Drawing page %lu to %@", (unsigned long)pageIndex, NSStringFromCGRect(rect));
 	
 	// This method could be called from a CATiledLayer background thread.
 	// For thread safety, we need to synchronize with the main thread which might try to change the page
@@ -85,7 +85,7 @@
 
 - (void)setBounds:(CGRect)bounds {
 	[super setBounds:bounds];
-	log4Debug(@"Page %lu bounds set to %@", (unsigned long)pageIndex, NSStringFromCGRect(bounds));
+	DDLogDebug(@"Page %lu bounds set to %@", (unsigned long)pageIndex, NSStringFromCGRect(bounds));
 }
 
 #pragma mark Accessors

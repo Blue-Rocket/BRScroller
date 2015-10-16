@@ -8,9 +8,9 @@
 
 #import "BRTiledPdfPageView.h"
 
-#import <BRCocoaLumberjack/BRCocoaLumberjack.h>
 #import <QuartzCore/QuartzCore.h>
 #import "BRPdfDrawingUtils.h"
+#import "BRScrollerLogging.h"
 
 @interface RCTiledPdfPageViewSnapshotDelegate : NSObject {
 	BRTiledPdfPageView *pageView;
@@ -108,7 +108,7 @@ static NSString * const kSnapshotDrawDelegate = @"RCSnapshotDrawDelegate";
 }
 
 - (void)drawLayer:(CALayer *)theLayer inContext:(CGContextRef)context {
-	log4Debug(@"Drawing tile rect %@", NSStringFromCGRect(CGContextGetClipBoundingBox(context)));
+	DDLogDebug(@"Drawing tile rect %@", NSStringFromCGRect(CGContextGetClipBoundingBox(context)));
 	[self drawInRect:theLayer.bounds context:context];
 	
 	// get a thread-safe reference to the delegate
@@ -120,14 +120,14 @@ static NSString * const kSnapshotDrawDelegate = @"RCSnapshotDrawDelegate";
 }
 
 - (void)didMoveToWindow {
-	log4Debug(@"Did move to window, contentsScale = %f", self.layer.contentsScale);
+	DDLogDebug(@"Did move to window, contentsScale = %f", self.layer.contentsScale);
 	// Retina display work-around: so 1024x1024 tiles are drawn instead of 512x512 tiles
 	contentsScale = self.layer.contentsScale;
 	self.layer.contentsScale = 1.0;
 }
 
 - (void)handleRemoveSnapshotLayer:(CALayer *)layer cache:(NSMutableDictionary *)cache {
-	log4Debug(@"Removing snapshot image sublayer %@", layer);
+	DDLogDebug(@"Removing snapshot image sublayer %@", layer);
 	NSString *cacheKey = [layer valueForKey:kCachedSnapshotCacheKey];
 	if ( cacheKey != nil ) {
 		[cache removeObjectForKey:cacheKey];
@@ -149,7 +149,7 @@ static NSString * const kSnapshotDrawDelegate = @"RCSnapshotDrawDelegate";
 	if ( [sublayers count] > 0 ) {
 		[CATransaction begin]; {
 			[CATransaction setDisableActions:YES];
-			log4Debug(@"Removing snapshot image sublayers %@", sublayers);
+			DDLogDebug(@"Removing snapshot image sublayers %@", sublayers);
 			NSMutableDictionary *cache = [self snapshotCacheSet];
 			for ( CALayer *layer in [sublayers copy] ) {
 				[self handleRemoveSnapshotLayer:layer cache:cache];
@@ -230,7 +230,7 @@ static NSString * const kSnapshotDrawDelegate = @"RCSnapshotDrawDelegate";
 		imgLayer.borderColor = [UIColor greenColor].CGColor;
 #endif
 		
-		log4Debug(@"Adding snapshot image sublayer %@ %@", imgLayer, NSStringFromCGSize(bitmapSize));
+		DDLogDebug(@"Adding snapshot image sublayer %@ %@", imgLayer, NSStringFromCGSize(bitmapSize));
 		[self.layer addSublayer:imgLayer];
 	} [CATransaction commit];
 	CGImageRelease(img);
@@ -301,13 +301,13 @@ static NSString * const kSnapshotDrawDelegate = @"RCSnapshotDrawDelegate";
 				const CGRect tileRect = CGRectIntersection(viewBounds, CGRectMake(col * tileContentSize.width, row * tileContentSize.height,
 																				  tileContentSize.width, tileContentSize.height));
 				NSString *cacheKey = NSStringFromCGRect(tileRect);
-				log4Trace(@"Inspecting tile %@", cacheKey);
+				DDLogDebug(@"Inspecting tile %@", cacheKey);
 				CALayer *imgLayer = [snapshotCacheSet objectForKey:cacheKey];
 				if ( CGRectIntersectsRect(tileRect, visibleContentFrame) ) {
 					CGSize bitmapSize = CGSizeApplyAffineTransform(tileRect.size, scaleTransform);
 					CGImageRef img = CGImageRetain((CGImageRef)[imgLayer valueForKey:kCachedSnapshotImage]);
 					if ( imgLayer == nil ) {
-						log4Debug(@"Caching snapshot image sublayer %@"	, cacheKey);
+						DDLogDebug(@"Caching snapshot image sublayer %@"	, cacheKey);
 						CGContextRef bitmapContext = BRScrollerCreateBitmapContextNoAlpha(bitmapSize);
 						CGContextConcatCTM(bitmapContext, CGAffineTransformMakeTranslation(-tileRect.origin.x * scales.width,
 																						   tileRect.origin.y * scales.height + tileRect.size.height * scales.height));
@@ -428,7 +428,7 @@ static NSString * const kSnapshotDrawDelegate = @"RCSnapshotDrawDelegate";
 	const CGAffineTransform scaleTransform = CGAffineTransformMakeScale(scales.width, scales.height);
 	const CGImageRef img = (__bridge CGImageRef)[theLayer valueForKey:kCachedSnapshotImage];
 	
-	log4Trace(@"Drawing cached tile rect %@ scale %@", NSStringFromCGRect(tileRect), NSStringFromCGSize(scales));
+	DDLogDebug(@"Drawing cached tile rect %@ scale %@", NSStringFromCGRect(tileRect), NSStringFromCGSize(scales));
 	
 	CGContextSaveGState(context); {
 		// draw our cached bitmap image onto the layer itself

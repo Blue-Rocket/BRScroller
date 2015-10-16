@@ -8,8 +8,8 @@
 
 #import "BRCachedPreviewPdfPageView.h"
 
-#import <BRCocoaLumberjack/BRCocoaLumberjack.h>
 #import "BRPdfDrawingUtils.h"
+#import "BRScrollerLogging.h"
 
 @implementation BRCachedPreviewPdfPageView {
 	CGSize previewSize;
@@ -94,7 +94,7 @@
 
 - (void)layoutSubviews {
 	[super layoutSubviews];
-	log4Debug(@"Layout subviews of view %@ to %@", self, NSStringFromCGRect(self.bounds));
+	DDLogDebug(@"Layout subviews of view %@ to %@", self, NSStringFromCGRect(self.bounds));
 	CGRect bounds = self.bounds;
 	if ( CGSizeEqualToSize(previewView.bounds.size, bounds.size) == NO ) {
 		previewView.frame = bounds;
@@ -160,6 +160,7 @@
 	
 	pageView.pageIndex = pageIndex;
 	pageView.page = pdfPage;
+	key = imageKey;
 	
 	// remove any transform applied by layoutSubviews, as we get better rendering of snapshots
 	// when no transform on the view is involved.
@@ -190,7 +191,7 @@
 			CGContextRef bitmapContext = BRScrollerCreateBitmapContextNoAlpha(fitSize);
 			CGContextSetInterpolationQuality(bitmapContext, kCGInterpolationHigh);
 			CGRect drawRect = CGRectMake(0, 0, fitSize.width, fitSize.height);
-			BRScrollerPdfDrawPage(pdfPage, drawRect, NULL, bitmapContext, false);
+			BRScrollerPdfDrawPage(pdfPage, drawRect, [UIColor whiteColor].CGColor, bitmapContext, false);
 			CGImageRef outputImageRef = CGBitmapContextCreateImage(bitmapContext);
 			return [UIImage imageWithCGImage:outputImageRef];
 		} confirmWith:^BOOL(NSString * _Nonnull confirmKey, id  _Nonnull context) {
@@ -202,7 +203,7 @@
 }
 
 - (void)drawPreviewImage:(CGImageRef)image forPage:(NSUInteger)index {
-	log4Debug(@"Drawing %lu preview %@ to layer size %@ (view size %@)", (unsigned long)index,
+	DDLogDebug(@"Drawing %lu preview %@ to layer size %@ (view size %@)", (unsigned long)index,
 			  NSStringFromCGSize(CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image))),
 			  NSStringFromCGSize(previewView.bounds.size),
 			  NSStringFromCGSize(self.bounds.size));
