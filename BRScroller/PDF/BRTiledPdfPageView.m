@@ -69,6 +69,7 @@ static NSString * const kCachedSnapshotTileRect = @"RCCachedSnapshotTileRect";
 		tiledLayer.actions = [NSDictionary dictionaryWithObject:[NSNull null] forKey:@"sublayers"];
 		snapshotOnRefresh = NO;
 		snapshotCacheEnabled = NO;
+		self.backgroundColor = [UIColor whiteColor];
 	}
 	return self;
 }
