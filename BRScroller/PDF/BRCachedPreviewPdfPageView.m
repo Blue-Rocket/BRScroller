@@ -148,7 +148,7 @@
 	NSString *extension = [key pathExtension];
 	NSString *base = [key stringByDeletingPathExtension];
 	return [NSString stringWithFormat:@"%@-%lu-%dx%d.%@", base, (unsigned long)pageView.pageIndex, (int)previewSize.width, (int)previewSize.height,
-			([extension length] > 0 ? extension : @".png")];
+			([extension length] > 0 ? extension : @"png")];
 }
 
 - (void)updateContentWithPage:(CGPDFPageRef)pdfPage atIndex:(NSUInteger)pageIndex withKey:(NSString *)imageKey {
