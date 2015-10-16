@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'Core' do |as|
   	as.source_files = "BRScroller/Core.h", "BRScroller/Core"
-    as.dependency 'CocoaLumberjack', '~> 2.0'
+    as.dependency 'BRCocoaLumberjack', '~> 2.0'
   end
   
   s.subspec 'View-Support' do |as|

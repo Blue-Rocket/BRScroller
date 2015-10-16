@@ -485,6 +485,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		086783FF47156041D45A01D71F018E0A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 971E13B797C4645B01B1A30FE36B301C /* BRCocoaLumberjack.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/BRCocoaLumberjack/BRCocoaLumberjack-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		157BBDB4622D71A85759444CE8568B60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -519,29 +537,10 @@
 			};
 			name = Release;
 		};
-		2C8860C335F2EF5E460E1D8E7A81BA26 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F66C75D4BC3A21F95BDF88AE89359CC /* Pods-BRScroller.release.xcconfig */;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		39424C11210047C2FD8C9087BFD64CA3 /* Debug */ = {
+		56163784432948B6CCB76028CD5EB5AD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 84831BE37A3EEC79EEE150C1F41C8B2B /* Pods-BRScroller.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				MACH_O_TYPE = staticlib;
@@ -555,13 +554,30 @@
 			};
 			name = Debug;
 		};
-		3D8C004D4ACC3966D729782D5BDABEF5 /* Release */ = {
+		8145C5B158C96EA3CA175F2009CBE1D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 971E13B797C4645B01B1A30FE36B301C /* BRCocoaLumberjack.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/BRCocoaLumberjack/BRCocoaLumberjack-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A6CC0B74AFF86710B2C0FEB62F75955F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DD51E8E418DD298D0093C132BCFF133C /* CocoaLumberjack.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/CocoaLumberjack/CocoaLumberjack-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
@@ -574,20 +590,36 @@
 			};
 			name = Release;
 		};
-		AAAB97DD1D3383A63BAE2376780BB738 /* Release */ = {
+		D83DBF48F8BEC03F97618C3E1E988A6A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DD51E8E418DD298D0093C132BCFF133C /* CocoaLumberjack.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/CocoaLumberjack/CocoaLumberjack-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D8EEE9F2033EFB1BFEE8DAC19EBA9183 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F66C75D4BC3A21F95BDF88AE89359CC /* Pods-BRScroller.release.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -632,44 +664,6 @@
 			};
 			name = Debug;
 		};
-		E42EF837DA7D5BAFC99C441BD7465307 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 971E13B797C4645B01B1A30FE36B301C /* BRCocoaLumberjack.xcconfig */;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/BRCocoaLumberjack/BRCocoaLumberjack-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		F33A3988339402623BA25E15119B5C95 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD51E8E418DD298D0093C132BCFF133C /* CocoaLumberjack.xcconfig */;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/CocoaLumberjack/CocoaLumberjack-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -685,8 +679,8 @@
 		5A0E8F688A311C0E45F60DD1C126D259 /* Build configuration list for PBXNativeTarget "BRCocoaLumberjack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E42EF837DA7D5BAFC99C441BD7465307 /* Debug */,
-				3D8C004D4ACC3966D729782D5BDABEF5 /* Release */,
+				8145C5B158C96EA3CA175F2009CBE1D6 /* Debug */,
+				086783FF47156041D45A01D71F018E0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -694,8 +688,8 @@
 		62E0D7ACE82BBE5B5581D69D5BF854DF /* Build configuration list for PBXNativeTarget "Pods-BRScroller" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				39424C11210047C2FD8C9087BFD64CA3 /* Debug */,
-				2C8860C335F2EF5E460E1D8E7A81BA26 /* Release */,
+				56163784432948B6CCB76028CD5EB5AD /* Debug */,
+				D8EEE9F2033EFB1BFEE8DAC19EBA9183 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -703,8 +697,8 @@
 		9D654E3294EB3AD9EA3C197AA9B31997 /* Build configuration list for PBXNativeTarget "CocoaLumberjack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F33A3988339402623BA25E15119B5C95 /* Debug */,
-				AAAB97DD1D3383A63BAE2376780BB738 /* Release */,
+				D83DBF48F8BEC03F97618C3E1E988A6A /* Debug */,
+				A6CC0B74AFF86710B2C0FEB62F75955F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
