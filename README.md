@@ -33,7 +33,7 @@ of the demos available in that project:
 
 * **SimpleViewController**
 
-  A very simple demonstration of `BRScrollView` that shows how the basic
+  A very simple demonstration of `BRScrollerView` that shows how the basic
   principles of managed page views are handled. If you've every coded a
   `UITableViewController` you should feel right at home.
 
@@ -43,6 +43,15 @@ of the demos available in that project:
   similar way to the iOS built-in Photos app. Smaller _preview_ images
   are shown while scrolling between photos. When you pinch to zoom any
   particular photo, the full-resolution version of that is shown.
+  
+* **PdfViewController**
+
+  A demo that showcases the `BRCachedPreviewPdfPageZoomView` to present
+  pages from a PDF file. The `BRScrollerView` is used to swipe between
+  all pages of the PDF, with each page presented in its own zoom-able 
+  scroll view. Smaller _preview_ images are shown quickly while the
+  PDF content is drawn using a `CATiledLayer`, which makes the PDF
+  content remain sharp while zooming.
   
 * **DemoTiledViewController**
 
