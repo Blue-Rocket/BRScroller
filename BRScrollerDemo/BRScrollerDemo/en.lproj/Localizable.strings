@@ -15,6 +15,7 @@
 
 "desc.SimpleViewController" = "Basic BRScrollerView with simple page views.";
 "desc.AsyncPhotoViewController" = "Zoomable photo browser using BRPreviewLayerView, BRAsyncImageView, and friends.";
+"desc.PdfViewController" = "Zoomable PDF browser using BRCachedPreviewPdfPageZoomView and friends.";
 "desc.DemoTiledViewController" = "Zoomable CATiledLayer demonstration.";
 "desc.MultiViewController" = "A full-screen paging scroller with a small thumbnail navigation scroller.";
 "desc.InfiniteViewController" = "Shows an infinite number of pages! OK… %@ to be precise.";

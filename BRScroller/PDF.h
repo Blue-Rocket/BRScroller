@@ -7,3 +7,9 @@
 //
 
 #import <BRScroller/Image-Support.h>
+#import <BRScroller/BRBasePdfPageView.h>
+#import <BRScroller/BRCachedPreviewPdfPageView.h>
+#import <BRScroller/BRCachedPreviewPdfPageZoomView.h>
+#import <BRScroller/BRPdfDrawingUtils.h>
+#import <BRScroller/BRPdfPageView.h>
+#import <BRScroller/BRTiledPdfPageView.h>

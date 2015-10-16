@@ -8,18 +8,7 @@
 
 #import "BRPdfDrawingUtils.h"
 
-CGSize BRScrollerAspectSizeToFit(CGSize aSize, CGSize maxSize) {
-	CGFloat scale = 1.0;
-	if ( aSize.width > 0.0 && aSize.height > 0.0 ) {
-		CGFloat dw = maxSize.width / aSize.width;
-		CGFloat dh = maxSize.height / aSize.height;
-		scale = dw < dh ? dw : dh;
-	}
-	return CGSizeMake(MIN(floorf(maxSize.width), ceilf(aSize.width * scale)),
-					  MIN(floorf(maxSize.height), ceilf(aSize.height * scale)));
-}
-
-CGSize RCPdfWorldSize(CGSize worldSize, int pageRotation) {
+CGSize BRScrollerPdfWorldSize(CGSize worldSize, int pageRotation) {
 	if ( (abs(pageRotation) / 90) % 2 == 1 ) {
 		CGFloat tmp = worldSize.width;
 		worldSize.width = worldSize.height;
@@ -34,19 +23,7 @@ CGSize BRScrollerPdfNaturalSize(CGPDFPageRef page) {
 	}
 	CGSize pdfSize = CGPDFPageGetBoxRect(page, kCGPDFCropBox).size;
 	int pageRotation = CGPDFPageGetRotationAngle(page); // only allowed to be 0, ±90, ±180, ±270
-	return RCPdfWorldSize(pdfSize, pageRotation);
-}
-
-// thanks, ye ol' bithacks: http://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2Float
-unsigned int BRScrollerRoundedToPowerOf2(const float v) {
-	unsigned int r;
-	if ( v > 1.0 ) {
-		float f = (ceilf(v) - 1);
-		r = 1U << ((*(unsigned int*)(&f) >> 23) - 126);
-	} else {
-		r = 1;
-	}
-	return r;
+	return BRScrollerPdfWorldSize(pdfSize, pageRotation);
 }
 
 void BRScrollerPdfDrawPage(CGPDFPageRef page, CGRect rect, CGColorRef backgroundColor,
@@ -104,28 +81,3 @@ void BRScrollerPdfDrawPage(CGPDFPageRef page, CGRect rect, CGColorRef background
 		CGContextDrawPDFPage(context, page);
 	} CGContextRestoreGState(context);
 }
-
-static const int kBitsPerComponent = 8;
-static const int kNumComponents = 4;
-
-static CGContextRef CreateBitmapContext(int pixelsWide, int pixelsHigh, CGBitmapInfo bitmapInfo) {
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGContextRef context = CGBitmapContextCreate(NULL, pixelsWide, pixelsHigh, kBitsPerComponent,
-												 kNumComponents * pixelsWide, colorSpace, bitmapInfo);
-	CGColorSpaceRelease(colorSpace);
-	if ( context == NULL ) {
-		fprintf(stderr, "Context not created!");
-	}
-	return context;
-}
-
-CGContextRef BRScrollerCreateBitmapContext(CGSize bitmapSize) {
-	return CreateBitmapContext((int)bitmapSize.width, (int)bitmapSize.height,
-							   (kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Host));
-}
-
-CGContextRef BRScrollerCreateBitmapContextNoAlpha(CGSize bitmapSize) {
-	return CreateBitmapContext((int)bitmapSize.width, (int)bitmapSize.height,
-							   kCGImageAlphaNoneSkipFirst | kCGBitmapByteOrder32Host);
-}
-

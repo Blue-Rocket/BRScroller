@@ -28,6 +28,9 @@
 		C94938C4178E682A000B1D4E /* 7.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938BB178E682A000B1D4E /* 7.jpeg */; };
 		C94938C5178E682A000B1D4E /* 8.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938BC178E682A000B1D4E /* 8.jpeg */; };
 		C94938C6178E682A000B1D4E /* 9.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C94938BD178E682A000B1D4E /* 9.jpeg */; };
+		C95D44991BD0D14F00A089FC /* PdfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44971BD0D14F00A089FC /* PdfViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C95D449A1BD0D14F00A089FC /* PdfViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C95D44981BD0D14F00A089FC /* PdfViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		C95D449C1BD0D2F400A089FC /* SVN Book.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C95D449B1BD0D2F400A089FC /* SVN Book.pdf */; settings = {ASSET_TAGS = (); }; };
 		C9610C6717A0DA5C00382E4D /* ReverseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9610C6617A0DA5C00382E4D /* ReverseViewController.m */; };
 		C965CC9D17947CA40024DFF4 /* DemoChoicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C965CC9C17947CA40024DFF4 /* DemoChoicesViewController.m */; };
 		C965CCA11794817B0024DFF4 /* SimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C965CC9F1794817B0024DFF4 /* SimpleViewController.m */; };
@@ -74,6 +77,10 @@
 		C94938BB178E682A000B1D4E /* 7.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 7.jpeg; sourceTree = "<group>"; };
 		C94938BC178E682A000B1D4E /* 8.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpeg; sourceTree = "<group>"; };
 		C94938BD178E682A000B1D4E /* 9.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpeg; sourceTree = "<group>"; };
+		C95D44961BD0D14F00A089FC /* PdfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PdfViewController.h; sourceTree = "<group>"; };
+		C95D44971BD0D14F00A089FC /* PdfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PdfViewController.m; sourceTree = "<group>"; };
+		C95D44981BD0D14F00A089FC /* PdfViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PdfViewController.xib; sourceTree = "<group>"; };
+		C95D449B1BD0D2F400A089FC /* SVN Book.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "SVN Book.pdf"; sourceTree = "<group>"; };
 		C9610C6517A0DA5C00382E4D /* ReverseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReverseViewController.h; sourceTree = "<group>"; };
 		C9610C6617A0DA5C00382E4D /* ReverseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReverseViewController.m; sourceTree = "<group>"; };
 		C965CC9B17947CA40024DFF4 /* DemoChoicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoChoicesViewController.h; sourceTree = "<group>"; };
@@ -187,6 +194,7 @@
 		C94938B4178E682A000B1D4E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C95D449B1BD0D2F400A089FC /* SVN Book.pdf */,
 				C94938B5178E682A000B1D4E /* 1.jpeg */,
 				C94938B6178E682A000B1D4E /* 2.jpeg */,
 				C94938B7178E682A000B1D4E /* 3.jpeg */,
@@ -209,6 +217,9 @@
 				C9493892178E33D7000B1D4E /* AsyncPhotoViewController.xib */,
 				C9B090E417A8632000DD6327 /* BaseDemoViewController.h */,
 				C9B090E517A8632000DD6327 /* BaseDemoViewController.m */,
+				C95D44961BD0D14F00A089FC /* PdfViewController.h */,
+				C95D44971BD0D14F00A089FC /* PdfViewController.m */,
+				C95D44981BD0D14F00A089FC /* PdfViewController.xib */,
 				C9775D6B1795CFED006E3C1E /* DemoTiledView.h */,
 				C9775D6C1795CFED006E3C1E /* DemoTiledView.m */,
 				C9775D6F1795D440006E3C1E /* DemoTiledViewController.h */,
@@ -300,7 +311,9 @@
 				C94938C6178E682A000B1D4E /* 9.jpeg in Resources */,
 				C98BF8521793C01E00026093 /* 10.jpeg in Resources */,
 				C965CCA21794817B0024DFF4 /* SimpleViewController.xib in Resources */,
+				C95D449A1BD0D14F00A089FC /* PdfViewController.xib in Resources */,
 				C965CCAE179526A20024DFF4 /* Localizable.strings in Resources */,
+				C95D449C1BD0D2F400A089FC /* SVN Book.pdf in Resources */,
 				C9775D731795D441006E3C1E /* DemoTiledViewController.xib in Resources */,
 				C9775D7B1795F84F006E3C1E /* MultiViewController.xib in Resources */,
 			);
@@ -368,6 +381,7 @@
 				C965CCA11794817B0024DFF4 /* SimpleViewController.m in Sources */,
 				C9775D6D1795CFED006E3C1E /* DemoTiledView.m in Sources */,
 				C9B090E617A8632000DD6327 /* BaseDemoViewController.m in Sources */,
+				C95D44991BD0D14F00A089FC /* PdfViewController.m in Sources */,
 				C9775D721795D441006E3C1E /* DemoTiledViewController.m in Sources */,
 				C9775D761795D501006E3C1E /* DemoZoomingTiledView.m in Sources */,
 				C9775D7A1795F84F006E3C1E /* MultiViewController.m in Sources */,

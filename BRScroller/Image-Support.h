@@ -9,5 +9,7 @@
 #import <BRScroller/Core.h>
 #import <BRScroller/View-Support.h>
 #import <BRScroller/BRAsyncImageView.h>
+#import <BRScroller/BRDefaultImageRenderService.h>
 #import <BRScroller/BRImagePreviewLayerView.h>
+#import <BRScroller/BRImageRenderService.h>
 #import <BRScroller/BRZoomingImageView.h>
