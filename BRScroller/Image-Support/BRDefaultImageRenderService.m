@@ -8,6 +8,7 @@
 
 #import "BRDefaultImageRenderService.h"
 
+#import "BRScrollerLogging.h"
 #import "BRDrawingUtils.h"
 
 static dispatch_queue_t PersistenceQueue;
@@ -31,6 +32,7 @@ static dispatch_once_t PersistenceQueueToken;
 	if ( dir && ![[NSFileManager defaultManager] fileExistsAtPath:dir isDirectory:nil] ) {
 		[[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:nil];
 	}
+	DDLogDebug(@"Using image cache dir %@", dir);
 }
 
 - (NSString *)pathForCachedImage:(NSString *)key {
