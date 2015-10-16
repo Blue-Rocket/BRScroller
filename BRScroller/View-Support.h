@@ -7,5 +7,6 @@
 //
 
 #import <BRScroller/Image-Support.h>
-#import <BRScroller/BRCenteringScrollView.h>
+#import <BRScroller/BRTiledLayerDrawingDelegate.h>
+#import <BRScroller/BRPreviewLayerView.h>
 #import <BRScroller/BRPreviewLayerView.h>

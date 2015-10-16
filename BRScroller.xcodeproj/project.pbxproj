@@ -30,6 +30,10 @@
 		C95D44791BD0A16300A089FC /* BRZoomingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D446B1BD0A16300A089FC /* BRZoomingImageView.m */; settings = {ASSET_TAGS = (); }; };
 		C95D447A1BD0A16300A089FC /* BRCenteringScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44711BD0A16300A089FC /* BRCenteringScrollView.m */; settings = {ASSET_TAGS = (); }; };
 		C95D447B1BD0A16300A089FC /* BRPreviewLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44731BD0A16300A089FC /* BRPreviewLayerView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D447E1BD0A5F600A089FC /* BRBasePdfPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D447D1BD0A5F600A089FC /* BRBasePdfPageView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D44811BD0A61200A089FC /* BRPdfPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44801BD0A61200A089FC /* BRPdfPageView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D44841BD0A62A00A089FC /* BRTiledPdfPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44831BD0A62A00A089FC /* BRTiledPdfPageView.m */; settings = {ASSET_TAGS = (); }; };
+		C95D44871BD0A79200A089FC /* BRPdfDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D44861BD0A79200A089FC /* BRPdfDrawingUtils.m */; settings = {ASSET_TAGS = (); }; };
 		F41DFC4396E3C3F6DF2080B3 /* libPods-BRScroller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9894E3F9D4FBB444B8106E77 /* libPods-BRScroller.a */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +81,15 @@
 		C95D44721BD0A16300A089FC /* BRPreviewLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPreviewLayerView.h; sourceTree = "<group>"; };
 		C95D44731BD0A16300A089FC /* BRPreviewLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPreviewLayerView.m; sourceTree = "<group>"; };
 		C95D44741BD0A16300A089FC /* View-Support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "View-Support.h"; path = "BRScroller/View-Support.h"; sourceTree = "<group>"; };
+		C95D447C1BD0A5F600A089FC /* BRBasePdfPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRBasePdfPageView.h; sourceTree = "<group>"; };
+		C95D447D1BD0A5F600A089FC /* BRBasePdfPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRBasePdfPageView.m; sourceTree = "<group>"; };
+		C95D447F1BD0A61200A089FC /* BRPdfPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPdfPageView.h; sourceTree = "<group>"; };
+		C95D44801BD0A61200A089FC /* BRPdfPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPdfPageView.m; sourceTree = "<group>"; };
+		C95D44821BD0A62A00A089FC /* BRTiledPdfPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRTiledPdfPageView.h; sourceTree = "<group>"; };
+		C95D44831BD0A62A00A089FC /* BRTiledPdfPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRTiledPdfPageView.m; sourceTree = "<group>"; };
+		C95D44851BD0A79200A089FC /* BRPdfDrawingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPdfDrawingUtils.h; sourceTree = "<group>"; };
+		C95D44861BD0A79200A089FC /* BRPdfDrawingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPdfDrawingUtils.m; sourceTree = "<group>"; };
+		C95D44881BD0AB1B00A089FC /* BRTiledLayerDrawingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRTiledLayerDrawingDelegate.h; sourceTree = "<group>"; };
 		C97C128A1ABFB21A00278B25 /* BRScroller.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = BRScroller.podspec; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -195,6 +208,14 @@
 		C95D446D1BD0A16300A089FC /* PDF */ = {
 			isa = PBXGroup;
 			children = (
+				C95D447C1BD0A5F600A089FC /* BRBasePdfPageView.h */,
+				C95D447D1BD0A5F600A089FC /* BRBasePdfPageView.m */,
+				C95D44851BD0A79200A089FC /* BRPdfDrawingUtils.h */,
+				C95D44861BD0A79200A089FC /* BRPdfDrawingUtils.m */,
+				C95D447F1BD0A61200A089FC /* BRPdfPageView.h */,
+				C95D44801BD0A61200A089FC /* BRPdfPageView.m */,
+				C95D44821BD0A62A00A089FC /* BRTiledPdfPageView.h */,
+				C95D44831BD0A62A00A089FC /* BRTiledPdfPageView.m */,
 			);
 			path = PDF;
 			sourceTree = "<group>";
@@ -204,6 +225,7 @@
 			children = (
 				C95D44701BD0A16300A089FC /* BRCenteringScrollView.h */,
 				C95D44711BD0A16300A089FC /* BRCenteringScrollView.m */,
+				C95D44881BD0AB1B00A089FC /* BRTiledLayerDrawingDelegate.h */,
 				C95D44721BD0A16300A089FC /* BRPreviewLayerView.h */,
 				C95D44731BD0A16300A089FC /* BRPreviewLayerView.m */,
 			);
@@ -315,9 +337,13 @@
 				C95D44791BD0A16300A089FC /* BRZoomingImageView.m in Sources */,
 				C95D44781BD0A16300A089FC /* BRImagePreviewLayerView.m in Sources */,
 				C95D447B1BD0A16300A089FC /* BRPreviewLayerView.m in Sources */,
+				C95D44811BD0A61200A089FC /* BRPdfPageView.m in Sources */,
+				C95D44841BD0A62A00A089FC /* BRTiledPdfPageView.m in Sources */,
+				C95D44871BD0A79200A089FC /* BRPdfDrawingUtils.m in Sources */,
 				C95D447A1BD0A16300A089FC /* BRCenteringScrollView.m in Sources */,
 				C95D44771BD0A16300A089FC /* BRAsyncImageView.m in Sources */,
 				C95D44751BD0A16300A089FC /* BRScrollerUtilities.c in Sources */,
+				C95D447E1BD0A5F600A089FC /* BRBasePdfPageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
