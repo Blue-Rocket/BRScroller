@@ -242,6 +242,7 @@
 				C9493871178E33D7000B1D4E /* Frameworks */,
 				C9493872178E33D7000B1D4E /* Resources */,
 				92832A607F3BDA8FAD988FE0 /* Copy Pods Resources */,
+				7E14344B1F48B21A5CAF904B /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -308,6 +309,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		7E14344B1F48B21A5CAF904B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BRScrollerDemo/Pods-BRScrollerDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		92832A607F3BDA8FAD988FE0 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

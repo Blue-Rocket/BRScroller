@@ -1,1 +1,1 @@
-../../../../../BRScroller/BRZoomingImageView.h
+../../../../../BRScroller/Image-Support/BRZoomingImageView.h

@@ -1,1 +1,1 @@
-../../../../../BRScroller/BRCenteringScrollView.h
+../../../../../BRScroller/View-Support/BRCenteringScrollView.h
