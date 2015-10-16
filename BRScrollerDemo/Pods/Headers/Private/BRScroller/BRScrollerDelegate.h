@@ -1,1 +1,1 @@
-../../../../../BRScroller/BRScrollerDelegate.h
+../../../../../BRScroller/Core/BRScrollerDelegate.h

@@ -1,0 +1,1 @@
+../../../BRCocoaLumberjack/BRCocoaLumberjack/BRCocoaLumberjack/BRLogFormatter.h

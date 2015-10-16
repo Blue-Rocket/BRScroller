@@ -1,17 +1,20 @@
 PODS:
   - BRCocoaLumberjack (2.0.1):
     - CocoaLumberjack (~> 2.0)
-  - BRScroller (1.3.0):
-    - BRScroller/All (= 1.3.0)
-  - BRScroller/All (1.3.0):
+  - BRScroller (1.4.0):
+    - BRScroller/All (= 1.4.0)
+  - BRScroller/All (1.4.0):
     - BRScroller/Core
     - BRScroller/Image-Support
+    - BRScroller/PDF
     - BRScroller/View-Support
-  - BRScroller/Core (1.3.0):
+  - BRScroller/Core (1.4.0):
     - CocoaLumberjack (~> 2.0)
-  - BRScroller/Image-Support (1.3.0):
+  - BRScroller/Image-Support (1.4.0):
     - BRScroller/View-Support
-  - BRScroller/View-Support (1.3.0):
+  - BRScroller/PDF (1.4.0):
+    - BRScroller/Image-Support
+  - BRScroller/View-Support (1.4.0):
     - BRScroller/Core
   - CocoaLumberjack (2.0.1):
     - CocoaLumberjack/Default (= 2.0.1)
@@ -32,7 +35,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BRCocoaLumberjack: 529d9525681ea2514d3d607011267848bc337bbe
-  BRScroller: 31f086fb60c0ebc3452e75d1ea6104440a494df2
+  BRScroller: 96b334705e2aafebfb4b62799b606d448c1a7376
   CocoaLumberjack: 019d1361244274a6138c788c6cb80baabc13fb8f
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

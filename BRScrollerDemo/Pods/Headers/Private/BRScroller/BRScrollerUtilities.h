@@ -1,1 +1,1 @@
-../../../../../BRScroller/BRScrollerUtilities.h
+../../../../../BRScroller/Core/BRScrollerUtilities.h
