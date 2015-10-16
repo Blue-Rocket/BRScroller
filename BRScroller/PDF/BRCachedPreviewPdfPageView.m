@@ -145,13 +145,16 @@
 }
 
 - (NSString *)previewImageKey {
-	return [NSString stringWithFormat:@"%@-%lu-%dx%d", key, (unsigned long)pageView.pageIndex, (int)previewSize.width, (int)previewSize.height];
+	NSString *extension = [key pathExtension];
+	NSString *base = [key stringByDeletingPathExtension];
+	return [NSString stringWithFormat:@"%@-%lu-%dx%d.%@", base, (unsigned long)pageView.pageIndex, (int)previewSize.width, (int)previewSize.height,
+			([extension length] > 0 ? extension : @".png")];
 }
 
-- (void)updateContentWithPage:(CGPDFPageRef)pdfPage atIndex:(NSUInteger)pageIndex withKey:(NSString *)key {
+- (void)updateContentWithPage:(CGPDFPageRef)pdfPage atIndex:(NSUInteger)pageIndex withKey:(NSString *)imageKey {
 	if ( pdfPage == pageView.page ) {
 		// already set to same, don't set again
-		log4Debug(@"Page %lu already set on %@", (unsigned long)pageIndex, self);
+		DDLogDebug(@"Page %lu already set on %@", (unsigned long)pageIndex, self);
 		return;
 	}
 	
