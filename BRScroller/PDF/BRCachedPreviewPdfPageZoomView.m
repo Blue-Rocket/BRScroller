@@ -18,8 +18,6 @@
 	if ( (self = [super initWithFrame:theFrame]) ) {
 		self.pdfView = [[BRCachedPreviewPdfPageView alloc] initWithFrame:theFrame];
 		pdfView.pageView.snapshotOnRefresh = YES;
-		self.minimumZoomScale = 1.0;
-		self.maximumZoomScale = 4.0;
 		self.scrollEnabled = YES;
 	}
 	return self;
