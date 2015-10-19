@@ -112,7 +112,7 @@
 	// So we calculate that visual center before the frame changes, then re-calculate it
 	// after setting the frame to achieve the desired effect.
 	
-	DDLogDebug(@"Will set bounds from %@ to %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(bounds));
+	DDLogVerbose(@"Will set bounds from %@ to %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(bounds));
 	
 	const CGSize oldViewSize = self.bounds.size;
 	const CGPoint oldContentOffset = self.contentOffset;
@@ -147,7 +147,7 @@
 	bounds.origin.x = newOffset.x;
 	bounds.origin.y = newOffset.y;
 	[super setBounds:bounds];
-	DDLogDebug(@"Did set bounds from %@ to %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(bounds));
+	DDLogVerbose(@"Did set bounds from %@ to %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(bounds));
 }
 
 - (void)cacheManagedViewSize:(UIView *)managedView forViewSize:(CGSize)viewSize {
