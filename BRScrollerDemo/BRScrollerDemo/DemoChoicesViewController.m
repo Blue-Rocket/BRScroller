@@ -60,7 +60,7 @@
 	NSString *descKey = [@"desc." stringByAppendingString:classes[indexPath.row]];
 	cell.detailTextLabel.text = NSLocalizedString(descKey, nil);
 	
-	if ( indexPath.row == 4 ) {
+	if ( [cell.textLabel.text isEqualToString:@"InfiniteViewController"] ) {
 		static NSNumberFormatter *friendlyNumber;
 		if ( friendlyNumber == nil ) {
 			friendlyNumber = [[NSNumberFormatter alloc] init];
