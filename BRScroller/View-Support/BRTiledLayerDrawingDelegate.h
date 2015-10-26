@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  API for a tiled layer drawing delegate.
  */
@@ -29,3 +31,5 @@
 - (void)tiledLayerView:(UIView *)theView drawingToLayer:(CALayer *)layer context:(CGContextRef)context;
 
 @end
+
+NS_ASSUME_NONNULL_END

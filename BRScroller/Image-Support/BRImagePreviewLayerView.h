@@ -11,17 +11,20 @@
 @class BRAsyncImageView;
 
 /**
- Thin wrapper of BRPreviewLayerView to handle a common case of using a UIImage for the
- content. A default BRAsyncImageView is used for the contentView, but you may provide your
- view by setting the contentView property, as long as that view supports a NSURL
- `imageURL` property or a NSData `imageData` property.
+ Thin wrapper of @c BRPreviewLayerView to handle a common case of using a @c UIImage for the
+ content. A default @c BRAsyncImageView is used for the contentView, but you may provide your
+ view by setting the @c contentView property, as long as that view supports either a NSURL 
+ property named @c imageURL or a @c NSData property named @c imageData.
  */
 @interface BRImagePreviewLayerView : BRPreviewLayerView
 
-@property (nonatomic, strong) NSURL *imageURL;
-@property (nonatomic, strong) NSData *imageData;
+/** The URL of the image to display. */
+@property (nonatomic, strong, nullable) NSURL *imageURL;
 
-/** Alias for getting / setting the contentView property. */
-@property (nonatomic, strong) BRAsyncImageView *imageContentView;
+/** Raw image data to display, which takes precedence over the @c imageURL property. */
+@property (nonatomic, strong, nullable) NSData *imageData;
+
+/** Alias for getting / setting the @c contentView property. */
+@property (nonatomic, strong, nullable) BRAsyncImageView *imageContentView;
 
 @end

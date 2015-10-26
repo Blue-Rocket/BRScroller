@@ -10,8 +10,16 @@
 
 @class BRImagePreviewLayerView;
 
+NS_ASSUME_NONNULL_BEGIN
+
+/**
+ Thin wrapper around @c BRCenteringScrollView to support showing a zoomable image.
+ */
 @interface BRZoomingImageView : BRCenteringScrollView
 
+/** The image view that serves as the zoomable content. */
 @property (nonatomic, strong, readonly) BRImagePreviewLayerView *imageView;
 
 @end
+
+NS_ASSUME_NONNULL_END
