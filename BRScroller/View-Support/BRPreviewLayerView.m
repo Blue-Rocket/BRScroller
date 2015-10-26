@@ -152,7 +152,7 @@ static NSString * const kPreviewKey = @"BR.imageKey";
 		BOOL needsPreview = YES;
 		if ( [delegate respondsToSelector:@selector(previewImageForView:atSize:)] ) {
 			UIImage *img = [delegate previewImageForView:self atSize:previewSize];
-			if ( img != NULL ) {
+			if ( img != nil ) {
 				needsPreview = NO;
 				[self drawPreviewImage:img key:key];
 			}

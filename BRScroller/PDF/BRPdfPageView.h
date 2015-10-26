@@ -8,6 +8,9 @@
 
 #import "BRBasePdfPageView.h"
 
+/**
+ A view that renders a PDF page directly.
+ */
 @interface BRPdfPageView : BRBasePdfPageView
 
 @end
