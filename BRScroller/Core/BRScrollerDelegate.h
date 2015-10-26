@@ -21,10 +21,10 @@ typedef enum {
 	/** The scoll view will end up on the same page as it started on. */
 	BRScrollerViewPageDestinationSame = 0,
 	
-	/** The scoll view will end up on the previous page (to the left, or to the right if the scroll view is configured with @c reverse set to @c YES). */
+	/** The scoll view will end up on the previous page (to the left, or to the right if the scroll view is configured with @c reverseLayoutOrder set to @c YES). */
 	BRScrollerViewPageDestinationPrevious = -1,
 	
-	/** The scoll view will end up on the next page (to the right, or to the left if the scroll view is configured with @c reverse set to @c YES). */
+	/** The scoll view will end up on the next page (to the right, or to the left if the scroll view is configured with @c reverseLayoutOrder set to @c YES). */
 	BRScrollerViewPageDestinationNext = 1,
 	
 } BRScrollerViewPageDestination;
