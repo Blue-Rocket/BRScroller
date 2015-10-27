@@ -34,6 +34,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)didDisplayAsyncImageInView:(BRAsyncImageView *)view;
 
+/**
+ Callback when an image is not found at the requested URL. This callback will occur on the main thread.
+ 
+ @param view     The view that attempted to load the URL.
+ @param imageURL The URL that the view attempted to load.
+ @param error    The error.
+ */
+- (void)asyncImageView:(BRAsyncImageView *)view didFailToLoadImageAtURL:(NSURL *)imageURL error:(NSError *)error;
+
 @end
 
 /**

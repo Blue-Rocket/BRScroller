@@ -113,8 +113,13 @@ static NSString * const kImageURLKey = @"BR.imageURL";
 		NSData *data = imageData;
 		if ( data == nil ) {
 			data = [NSData dataWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:&error];
-			if ( error != nil ) {
+			if ( data == nil || error != nil ) {
 				DDLogError(@"Error reading image URL %@: %@", theURL, [error description]);
+				if ( [self.delegate respondsToSelector:@selector(asyncImageView:didFailToLoadImageAtURL:error:)] ) {
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[self.delegate asyncImageView:self didFailToLoadImageAtURL:theURL error:error];
+					});
+				}
 				return;
 			}
 		}
