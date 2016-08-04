@@ -382,7 +382,10 @@ static const NSUInteger kInfiniteOrigin = NSIntegerMax;
 		CGRect pageBounds = CGRectMake(0, 0, pageWidth, pageHeight);
 		BOOL centerMoved = (CGPointEqualToPoint(pageCenter, page.center) == NO);
 		if ( centerMoved ) {
+			[CATransaction begin];
+			[CATransaction setDisableActions:YES];
 			page.center = pageCenter;
+			[CATransaction commit];
 		}
 		if ( !CGRectEqualToRect(page.bounds, pageBounds) ) {
 			page.bounds = pageBounds;
