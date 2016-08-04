@@ -12,7 +12,7 @@
 #import "BRPdfDrawingUtils.h"
 #import "BRScrollerLogging.h"
 
-@interface RCTiledPdfPageViewSnapshotDelegate : NSObject {
+@interface BRTiledPdfPageViewSnapshotDelegate : NSObject {
 	BRTiledPdfPageView *pageView;
 }
 - (id)initWithPageView:(BRTiledPdfPageView *)view;
@@ -20,16 +20,16 @@
 
 #pragma mark -
 
-@interface RCTiledPdfPageViewFastFadeTiledLayer : CATiledLayer
+@interface BRTiledPdfPageViewFastFadeTiledLayer : CATiledLayer
 @end
 
 #pragma mark -
 
-static NSString * const kCachedSnapshotKeys = @"RCCachedSnapshotKeys";
-static NSString * const kCachedSnapshotCacheKey = @"RCCachedSnapshotCacheKey";
-static NSString * const kCachedSnapshotImage = @"RCCachedSnapshotImage";
-static NSString * const kCachedSnapshotScale = @"RCCachedSnapshotScale";
-static NSString * const kCachedSnapshotTileRect = @"RCCachedSnapshotTileRect";
+static NSString * const kCachedSnapshotKeys = @"BRCachedSnapshotKeys";
+static NSString * const kCachedSnapshotCacheKey = @"BRCachedSnapshotCacheKey";
+static NSString * const kCachedSnapshotImage = @"BRCachedSnapshotImage";
+static NSString * const kCachedSnapshotScale = @"BRCachedSnapshotScale";
+static NSString * const kCachedSnapshotTileRect = @"BRCachedSnapshotTileRect";
 
 // Defining the DEBUG_TILES property turns on border properties on snapshot tiles
 // and is useful for visually debugging, it will show where the bitmap layer ends up
@@ -52,7 +52,7 @@ static NSString * const kCachedSnapshotTileRect = @"RCCachedSnapshotTileRect";
 @synthesize snapshotOnRefresh, snapshotCacheEnabled, renderingCachedTile;
 
 + (Class) layerClass {
-	return [RCTiledPdfPageViewFastFadeTiledLayer class];
+	return [BRTiledPdfPageViewFastFadeTiledLayer class];
 }
 
 - (id) initWithFrame:(CGRect)frame {
@@ -90,12 +90,12 @@ static NSString * const kCachedSnapshotTileRect = @"RCCachedSnapshotTileRect";
 	}
 }
 
-static NSString * const kSnapshotDrawDelegate = @"RCSnapshotDrawDelegate";
+static NSString * const kSnapshotDrawDelegate = @"BRSnapshotDrawDelegate";
 
-- (RCTiledPdfPageViewSnapshotDelegate *)snapshotDrawDelegate {
-	RCTiledPdfPageViewSnapshotDelegate *delegate = [self.layer valueForKey:kSnapshotDrawDelegate];
+- (BRTiledPdfPageViewSnapshotDelegate *)snapshotDrawDelegate {
+	BRTiledPdfPageViewSnapshotDelegate *delegate = [self.layer valueForKey:kSnapshotDrawDelegate];
 	if ( delegate == nil ) {
-		delegate = [[RCTiledPdfPageViewSnapshotDelegate alloc] initWithPageView:self];
+		delegate = [[BRTiledPdfPageViewSnapshotDelegate alloc] initWithPageView:self];
 		[self.layer setValue:delegate forKey:kSnapshotDrawDelegate];
 	}
 	return delegate;
@@ -403,7 +403,7 @@ static NSString * const kSnapshotDrawDelegate = @"RCSnapshotDrawDelegate";
 
 #pragma mark -
 
-@implementation RCTiledPdfPageViewFastFadeTiledLayer
+@implementation BRTiledPdfPageViewFastFadeTiledLayer
 
 + (CFTimeInterval)fadeDuration {
 	return 0;
@@ -413,7 +413,7 @@ static NSString * const kSnapshotDrawDelegate = @"RCSnapshotDrawDelegate";
 
 #pragma mark -
 
-@implementation RCTiledPdfPageViewSnapshotDelegate
+@implementation BRTiledPdfPageViewSnapshotDelegate
 
 - (id)initWithPageView:(BRTiledPdfPageView *)view {
 	if ( (self = [super init]) ) {
