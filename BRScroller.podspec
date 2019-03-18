@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "BRScroller"
-  s.version      = "1.4.4"
+  s.version      = "1.4.5"
   s.summary      = "Memory-friendly iOS horizontally scrolling view."
   s.description  = <<-DESC
                    BRScroller provides a `UIScrollView` subclass that efficiently manages
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.license      = "Apache License, Version 2.0"
   s.author       = { "Matt Magoffin" => "git+matt@msqr.us" }
 
-  s.platform     = :ios, "5.1"
+  s.platform     = :ios, "8.0"
 
   s.source       = { :git => "https://github.com/Blue-Rocket/BRScroller.git", 
   					 :tag => s.version.to_s }
@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'Core' do |as|
   	as.source_files = "BRScroller/Core.h", "BRScroller/Core"
-    as.dependency 'BRCocoaLumberjack', '~> 2.0'
+    as.dependency 'BRCocoaLumberjack', '~> 2.0.3'
   end
   
   s.subspec 'View-Support' do |as|
