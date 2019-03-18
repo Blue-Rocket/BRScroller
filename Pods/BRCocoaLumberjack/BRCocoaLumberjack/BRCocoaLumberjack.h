@@ -25,10 +25,10 @@
 #define DDLogDebug(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, BRLogLevelForClass([self class]), DDLogFlagDebug,   0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 #define DDLogVerbose(frmt, ...)  LOG_MAYBE(LOG_ASYNC_ENABLED, BRLogLevelForClass([self class]), DDLogFlagVerbose, 0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
-#define DDLogCWarn(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagWarning, 0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define DDLogCInfo(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagInfo,    0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define DDLogCDebug(frmt, ...)   LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define DDLogCVerbose(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagVerbose, 0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define DDLogCWarn(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, BRCLogLevel, DDLogFlagWarning, 0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define DDLogCInfo(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, BRCLogLevel, DDLogFlagInfo,    0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define DDLogCDebug(frmt, ...)   LOG_MAYBE(LOG_ASYNC_ENABLED, BRCLogLevel, DDLogFlagDebug,   0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define DDLogCVerbose(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, BRCLogLevel, DDLogFlagVerbose, 0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
 // 1.x backwards compatibility
 #define DDLogTrace DDLogVerbose

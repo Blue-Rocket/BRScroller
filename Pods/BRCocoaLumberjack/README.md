@@ -123,6 +123,28 @@ $ pod install
 
 Open your project in Xcode using the **.xcworkspace** file CocoaPods generated.
 
+### Pod logging
+
+Note that as BRCocoaLumberjack disables all but `Error` level logging unless a
+`LOGGING=1` preprocessor macro is defined, _other_ pods included in your app's
+project that also use BRCocoaLumberjack will not do any logging by default,
+because the generated **Pods.xcodeproj** will not have that macro defined. You
+can work around this by adding the following to your `Podfile`:
+
+```ruby
+post_install do |installer|
+	installer.pods_project.build_configurations.each do |config|
+		if config.name == 'Debug'
+			# for Debug, add LOGGING=1 macro to support BRCocoaLumberjack logging within pods themselves
+			config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)', 'DEBUG=1']
+			config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] |= ['LOGGING=1']
+		end
+	end
+end
+```
+
+That will basically add `LOGGING=1` to the Pod project's **Debug** configuration.
+
 ## via Static Framework
 
 Using this approach you'll build a static library framework that you can manually
