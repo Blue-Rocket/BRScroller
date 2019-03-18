@@ -110,7 +110,7 @@ static NSString * const kImageURLKey = @"BR.imageURL";
 	}
 	dispatch_async(queue, ^{
 		NSError *error = nil;
-		NSData *data = imageData;
+        NSData *data = self->imageData;
 		if ( data == nil ) {
 			data = [NSData dataWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:&error];
 			if ( data == nil || error != nil ) {
@@ -141,12 +141,12 @@ static NSString * const kImageURLKey = @"BR.imageURL";
 		}
 		
 		@synchronized( self ) {
-			if ( imageURL != nil && [theURL isEqual:imageURL] ) {
-				imageSize = img.size;
+            if ( self->imageURL != nil && [theURL isEqual:self->imageURL] ) {
+                self->imageSize = img.size;
 				[CATransaction begin]; {
 					[CATransaction setDisableActions:YES];
-					imageLayer.contents = (id)img.CGImage;
-					imageLayer.hidden = NO;
+                    self->imageLayer.contents = (id)img.CGImage;
+                    self->imageLayer.hidden = NO;
 					[self setImageLayerPosition];
 				} [CATransaction commit];
 				dispatch_async(dispatch_get_main_queue(), ^{

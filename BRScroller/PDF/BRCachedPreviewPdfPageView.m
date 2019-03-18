@@ -222,7 +222,7 @@
 			[CATransaction setAnimationDuration:previewFadeDuration];
 			previewView.layer.opacity = 1.0;
 			[CATransaction setCompletionBlock:^(void) {
-				pageView.layer.hidden = NO;
+                self->pageView.layer.hidden = NO;
 			}];
 			[CATransaction commit];
 		} else {

@@ -26,7 +26,7 @@
  *
  * @see BRLoggingSetupDefaultLoggingWithBundle(NSBundle *bundle)
  */
-void BRLoggingSetupDefaultLogging();
+void BRLoggingSetupDefaultLogging(void);
 
 /**
  * Set up default logging.

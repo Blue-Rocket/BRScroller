@@ -1,6 +1,6 @@
 {
   "name": "BRScroller",
-  "version": "1.4.0",
+  "version": "1.4.4",
   "summary": "Memory-friendly iOS horizontally scrolling view.",
   "description": "BRScroller provides a `UIScrollView` subclass that efficiently manages\nhorizontally-scrolling *pages* of content, much like a `UITableView`\nmanages vertically-scrolling *rows* of content.",
   "homepage": "https://github.com/Blue-Rocket/BRScroller",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/Blue-Rocket/BRScroller.git",
-    "tag": "1.4.0"
+    "tag": "1.4.4"
   },
   "requires_arc": true,
   "default_subspecs": "All",
@@ -43,7 +43,7 @@
         "BRScroller/Core"
       ],
       "dependencies": {
-        "CocoaLumberjack": [
+        "BRCocoaLumberjack": [
           "~> 2.0"
         ]
       }
