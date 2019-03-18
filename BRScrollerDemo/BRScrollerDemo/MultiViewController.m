@@ -55,15 +55,15 @@ static const CGFloat kThumbWidth = 180;
 	if ( CGRectContainsPoint(self.view.bounds, thumbViewOrigin) ) {
 		// hide
 		[UIView animateWithDuration:0.4 animations:^{
-			const CGFloat destY = CGRectGetMaxY(self.view.bounds) + thumbView.bounds.size.height * 0.5 + 1;
-			thumbView.center = CGPointMake(thumbView.center.x, [self.view convertPoint:CGPointMake(0, destY) toView:thumbView.superview].y);
+            const CGFloat destY = CGRectGetMaxY(self.view.bounds) + self->thumbView.bounds.size.height * 0.5 + 1;
+            self->thumbView.center = CGPointMake(self->thumbView.center.x, [self.view convertPoint:CGPointMake(0, destY) toView:self->thumbView.superview].y);
 		}];
 		sender.title = NSLocalizedString(@"show.thumbs", nil);
 	} else {
 		// show
 		[UIView animateWithDuration:0.4 animations:^{
-			const CGFloat destY = CGRectGetMaxY(self.view.bounds) - thumbView.bounds.size.height * 0.5;
-			thumbView.center = CGPointMake(thumbView.center.x, [self.view convertPoint:CGPointMake(0, destY) toView:thumbView.superview].y);
+            const CGFloat destY = CGRectGetMaxY(self.view.bounds) - self->thumbView.bounds.size.height * 0.5;
+            self->thumbView.center = CGPointMake(self->thumbView.center.x, [self.view convertPoint:CGPointMake(0, destY) toView:self->thumbView.superview].y);
 		}];
 		sender.title = NSLocalizedString(@"hide.thumbs", nil);
 	}

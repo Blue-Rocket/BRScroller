@@ -133,7 +133,7 @@
 		0179E27170876CED24679165C476DF59 /* BRScrollerView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BRScrollerView.h; sourceTree = "<group>"; };
 		01F0C28ADCE740033A75F0AA5EBC8813 /* DDASLLogCapture.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DDASLLogCapture.m; path = Classes/DDASLLogCapture.m; sourceTree = "<group>"; };
 		04FE9D4881920ADD5EF6437097C9C714 /* BRLogConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BRLogConstants.h; path = BRCocoaLumberjack/BRCocoaLumberjack/BRLogConstants.h; sourceTree = "<group>"; };
-		0BCA416974C1C98D753467D7C2EDFD0F /* libCocoaLumberjack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libCocoaLumberjack.a; path = libCocoaLumberjack.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BCA416974C1C98D753467D7C2EDFD0F /* libCocoaLumberjack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocoaLumberjack.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ED9B7D4F322D5781B2CF669DE15ADE0 /* BRImageRenderService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BRImageRenderService.h; sourceTree = "<group>"; };
 		0F13589E79FDBC1423400D6C78518BEC /* BRPdfPageView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BRPdfPageView.h; sourceTree = "<group>"; };
 		12325513AD4FEE2D034E995056965311 /* BRCenteringScrollView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BRCenteringScrollView.h; sourceTree = "<group>"; };
@@ -149,17 +149,17 @@
 		2BE92667E918D821B67142F79710F260 /* BRLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BRLogging.h; path = BRCocoaLumberjack/BRCocoaLumberjack/BRLogging.h; sourceTree = "<group>"; };
 		2E91243E25C0E5FE59F7E9C9C7A02398 /* BRCocoaLumberjack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BRCocoaLumberjack.h; path = BRCocoaLumberjack/BRCocoaLumberjack.h; sourceTree = "<group>"; };
 		301E08CC82489B21A8C0EED725B36608 /* Core.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Core.h; path = BRScroller/Core.h; sourceTree = "<group>"; };
-		35BEC9FF906F9DA1796066641114816C /* libPods-BRScrollerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-BRScrollerDemo.a"; path = "libPods-BRScrollerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		35BEC9FF906F9DA1796066641114816C /* libPods-BRScrollerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BRScrollerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		38125C90F8DC3B6ED5DADEDD9A0A6532 /* BRScrollViewDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BRScrollViewDelegate.h; sourceTree = "<group>"; };
 		38E792A6831A43D6773A3662B2D5AC3B /* DDMultiFormatter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DDMultiFormatter.h; path = Classes/Extensions/DDMultiFormatter.h; sourceTree = "<group>"; };
 		3DC5124B8ED95C00B98579EEA6CAD8EE /* BRDefaultImageRenderService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BRDefaultImageRenderService.h; sourceTree = "<group>"; };
 		44930FC6F9876CBF61EE40E75617EEC3 /* BRScroller.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BRScroller.xcconfig; sourceTree = "<group>"; };
 		47CFEAFE28F13C42E4A1BF686FE6EB23 /* CLIColor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLIColor.h; path = Classes/CLI/CLIColor.h; sourceTree = "<group>"; };
-		4B6467080FD58E8A7F37BB6F81D86DCE /* libBRCocoaLumberjack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libBRCocoaLumberjack.a; path = libBRCocoaLumberjack.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B6467080FD58E8A7F37BB6F81D86DCE /* libBRCocoaLumberjack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBRCocoaLumberjack.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C90403B1A0F464B008D297E0760128B /* View-Support.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "View-Support.h"; path = "BRScroller/View-Support.h"; sourceTree = "<group>"; };
 		4DA15D1DF0A612F09D75F8F61959DB7F /* BRCocoaLumberjack.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BRCocoaLumberjack.xcconfig; sourceTree = "<group>"; };
 		4F9CA443C516089914F70A8F5517D22B /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DDContextFilterLogFormatter.h; path = Classes/Extensions/DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
-		5030DF29D9D14820BC334B8798040F7A /* BRScroller.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = BRScroller.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		5030DF29D9D14820BC334B8798040F7A /* BRScroller.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = BRScroller.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		5364FF832584D6B0F97D52F97D1CEDD5 /* BRPdfDrawingUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = BRPdfDrawingUtils.m; sourceTree = "<group>"; };
 		54CF8666483BEBE4BE30E31143318B8E /* PDF.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PDF.h; path = BRScroller/PDF.h; sourceTree = "<group>"; };
 		574530824F5D5D9959CF1C51950A47E6 /* BRTiledPdfPageView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BRTiledPdfPageView.h; sourceTree = "<group>"; };
@@ -170,7 +170,7 @@
 		781F466C25EFE4D941E3165648F08F76 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DDAbstractDatabaseLogger.h; path = Classes/DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
 		7A3A710B8577402B2666C7C290F40654 /* DDLoggerNames.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DDLoggerNames.h; path = Classes/DDLoggerNames.h; sourceTree = "<group>"; };
 		7A74ED3399A310B9766FFD2303657FAB /* BRScroller-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "BRScroller-dummy.m"; sourceTree = "<group>"; };
-		7BD74CC8E568B20A270FCE9F229F875A /* BRScrollerUtilities.c */ = {isa = PBXFileReference; includeInIndex = 1; path = BRScrollerUtilities.c; sourceTree = "<group>"; };
+		7BD74CC8E568B20A270FCE9F229F875A /* BRScrollerUtilities.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = BRScrollerUtilities.c; sourceTree = "<group>"; };
 		7CF1285CA3D180B7D94C5D90CC769452 /* BRPreviewLayerView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = BRPreviewLayerView.m; sourceTree = "<group>"; };
 		7EB8DA6938DD2C2AF65401BBF66D1208 /* BRCocoaLumberjack-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BRCocoaLumberjack-prefix.pch"; sourceTree = "<group>"; };
 		7F5B7A3BDB8CBCDCC641529813F599DA /* BRLogging.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BRLogging.m; path = BRCocoaLumberjack/BRCocoaLumberjack/BRLogging.m; sourceTree = "<group>"; };
@@ -186,9 +186,9 @@
 		948DB6BCFA3157B8B37DCF87F5A43B01 /* DDTTYLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = Classes/DDTTYLogger.h; sourceTree = "<group>"; };
 		9594ABF4FF0A52CAD81059726089C56F /* DDFileLogger+Buffering.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "DDFileLogger+Buffering.h"; path = "Classes/Extensions/DDFileLogger+Buffering.h"; sourceTree = "<group>"; };
 		971DC7A0A2328A959F2BE80AA8812F16 /* BRPreviewLayerView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BRPreviewLayerView.h; sourceTree = "<group>"; };
-		9B35212960BB63490C4BD4513C96DE56 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9FA369721BFD3EA9FC1749CF7B33BF7F /* libBRScroller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libBRScroller.a; path = libBRScroller.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B35212960BB63490C4BD4513C96DE56 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9FA369721BFD3EA9FC1749CF7B33BF7F /* libBRScroller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBRScroller.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07D9C30C443C91795FB0BB022844950 /* DDLoggerNames.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DDLoggerNames.m; path = Classes/DDLoggerNames.m; sourceTree = "<group>"; };
 		A78267112C3717F0CFAD428A03CF0893 /* DDFileLogger+Buffering.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "DDFileLogger+Buffering.m"; path = "Classes/Extensions/DDFileLogger+Buffering.m"; sourceTree = "<group>"; };
 		A7A0CA01967199A8BFC35E31F5608A35 /* BRCachedPreviewPdfPageZoomView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BRCachedPreviewPdfPageZoomView.h; sourceTree = "<group>"; };
@@ -219,7 +219,7 @@
 		DCD4D1DB17BACF9A519221E0FAC4ED6B /* BRScrollerView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = BRScrollerView.m; sourceTree = "<group>"; };
 		DE1E07724318B9AE79893D4B8086514C /* DDASLLogCapture.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DDASLLogCapture.h; path = Classes/DDASLLogCapture.h; sourceTree = "<group>"; };
 		E28569A57427C7BF3595BC03791E8C34 /* BRBasePdfPageView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BRBasePdfPageView.h; sourceTree = "<group>"; };
-		E327757A4F19F806E50C820C55804DE2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		E327757A4F19F806E50C820C55804DE2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		E6BE656524496614CAF22BC5C16F4617 /* BRScrollerLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BRScrollerLogging.h; sourceTree = "<group>"; };
 		E9B8381E60056B74A3D65CA900F1137D /* DDFileLogger+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "DDFileLogger+Internal.h"; path = "Classes/DDFileLogger+Internal.h"; sourceTree = "<group>"; };
 		EAEAB23DAB003721158F32601124E393 /* CocoaLumberjack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CocoaLumberjack.h; path = Classes/CocoaLumberjack.h; sourceTree = "<group>"; };
@@ -401,7 +401,6 @@
 				7F5B7A3BDB8CBCDCC641529813F599DA /* BRLogging.m */,
 				69EC0941CECCEBBCE60A4BEEE60A7C69 /* Support Files */,
 			);
-			name = BRCocoaLumberjack;
 			path = BRCocoaLumberjack;
 			sourceTree = "<group>";
 		};
@@ -561,7 +560,6 @@
 				323EAC7EA91608D18930B20AD9A825C1 /* Core */,
 				1067A8E73FE0ECB6FCEC6848AD99E00B /* Support Files */,
 			);
-			name = CocoaLumberjack;
 			path = CocoaLumberjack;
 			sourceTree = "<group>";
 		};
@@ -727,7 +725,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1010;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -857,7 +855,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/BRScroller/BRScroller-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
@@ -924,8 +922,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};
@@ -1048,7 +1045,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/BRScroller/BRScroller-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
