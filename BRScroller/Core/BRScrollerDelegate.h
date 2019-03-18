@@ -49,6 +49,7 @@ typedef enum {
 
 @required
 
+
 /**
  Return the number of pages of content to display.
  
