@@ -159,7 +159,7 @@ static NSString * const kPreviewKey = @"BR.imageKey";
 		}
 		if ( needsPreview ) {
 			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-				UIImage *img = [delegate renderPreviewImageForView:self key:key atSize:previewSize];
+                UIImage *img = [self->delegate renderPreviewImageForView:self key:key atSize:self->previewSize];
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[self drawPreviewImage:img key:key];
 				});

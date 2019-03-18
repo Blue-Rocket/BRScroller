@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2015, Deusty, LLC
+// Copyright (c) 2010-2019, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -43,14 +43,36 @@
  **/
 @interface DDContextWhitelistFilterLogFormatter : NSObject <DDLogFormatter>
 
+/**
+ *  Designated default initializer
+ */
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
-- (void)addToWhitelist:(NSUInteger)loggingContext;
-- (void)removeFromWhitelist:(NSUInteger)loggingContext;
+/**
+ *  Add a context to the whitelist
+ *
+ *  @param loggingContext the context
+ */
+- (void)addToWhitelist:(NSInteger)loggingContext;
 
-@property (readonly, copy) NSArray *whitelist;
+/**
+ *  Remove context from whitelist
+ *
+ *  @param loggingContext the context
+ */
+- (void)removeFromWhitelist:(NSInteger)loggingContext;
 
-- (BOOL)isOnWhitelist:(NSUInteger)loggingContext;
+/**
+ *  Return the whitelist
+ */
+@property (readonly, copy) NSArray<NSNumber *> *whitelist;
+
+/**
+ *  Check if a context is on the whitelist
+ *
+ *  @param loggingContext the context
+ */
+- (BOOL)isOnWhitelist:(NSInteger)loggingContext;
 
 @end
 
@@ -65,11 +87,31 @@
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
-- (void)addToBlacklist:(NSUInteger)loggingContext;
-- (void)removeFromBlacklist:(NSUInteger)loggingContext;
+/**
+ *  Add a context to the blacklist
+ *
+ *  @param loggingContext the context
+ */
+- (void)addToBlacklist:(NSInteger)loggingContext;
 
-@property (readonly, copy) NSArray *blacklist;
+/**
+ *  Remove context from blacklist
+ *
+ *  @param loggingContext the context
+ */
+- (void)removeFromBlacklist:(NSInteger)loggingContext;
 
-- (BOOL)isOnBlacklist:(NSUInteger)loggingContext;
+/**
+ *  Return the blacklist
+ */
+@property (readonly, copy) NSArray<NSNumber *> *blacklist;
+
+
+/**
+ *  Check if a context is on the blacklist
+ *
+ *  @param loggingContext the context
+ */
+- (BOOL)isOnBlacklist:(NSInteger)loggingContext;
 
 @end

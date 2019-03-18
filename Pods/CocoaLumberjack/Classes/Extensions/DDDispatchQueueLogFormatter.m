@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2015, Deusty, LLC
+// Copyright (c) 2010-2019, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -14,20 +14,22 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDDispatchQueueLogFormatter.h"
-#import <libkern/OSAtomic.h>
-
+#import <pthread/pthread.h>
+#import <objc/runtime.h>
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
+#pragma mark - DDDispatchQueueLogFormatter
+
 @interface DDDispatchQueueLogFormatter () {
-    NSString *_dateFormatString;
-    
-    int32_t _atomicLoggerCount;
+    DDDispatchQueueLogFormatterMode _mode;
+    NSString *_dateFormatterKey;
+    DDAtomicCounter *_atomicLoggerCounter;
     NSDateFormatter *_threadUnsafeDateFormatter; // Use [self stringFromDate]
     
-    OSSpinLock _lock;
+    pthread_mutex_t _mutex;
     
     NSUInteger _minQueueLength;           // _prefix == Only access via atomic property
     NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
@@ -41,13 +43,27 @@
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _dateFormatString = @"yyyy-MM-dd HH:mm:ss:SSS";
+        _mode = DDDispatchQueueLogFormatterModeShareble;
 
-        _atomicLoggerCount = 0;
+        // We need to carefully pick the name for storing in thread dictionary to not
+        // use a formatter configured by subclass and avoid surprises.
+        Class cls = [self class];
+        Class superClass = class_getSuperclass(cls);
+        SEL configMethodName = @selector(configureDateFormatter:);
+        Method configMethod = class_getInstanceMethod(cls, configMethodName);
+        while (class_getInstanceMethod(superClass, configMethodName) == configMethod) {
+            cls = superClass;
+            superClass = class_getSuperclass(cls);
+        }
+        // now `cls` is the class that provides implementation for `configureDateFormatter:`
+        _dateFormatterKey = [NSString stringWithFormat:@"%s_NSDateFormatter", class_getName(cls)];
+
+        _atomicLoggerCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
         _threadUnsafeDateFormatter = nil;
 
         _minQueueLength = 0;
         _maxQueueLength = 0;
+        pthread_mutex_init(&_mutex, NULL);
         _replacements = [[NSMutableDictionary alloc] init];
 
         // Set default replacements:
@@ -56,6 +72,17 @@
     }
 
     return self;
+}
+
+- (instancetype)initWithMode:(DDDispatchQueueLogFormatterMode)mode {
+    if ((self = [self init])) {
+        _mode = mode;
+    }
+    return self;
+}
+
+- (void)dealloc {
+    pthread_mutex_destroy(&_mutex);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,17 +95,17 @@
 - (NSString *)replacementStringForQueueLabel:(NSString *)longLabel {
     NSString *result = nil;
 
-    OSSpinLockLock(&_lock);
+    pthread_mutex_lock(&_mutex);
     {
         result = _replacements[longLabel];
     }
-    OSSpinLockUnlock(&_lock);
+    pthread_mutex_unlock(&_mutex);
 
     return result;
 }
 
 - (void)setReplacementString:(NSString *)shortLabel forQueueLabel:(NSString *)longLabel {
-    OSSpinLockLock(&_lock);
+    pthread_mutex_lock(&_mutex);
     {
         if (shortLabel) {
             _replacements[longLabel] = shortLabel;
@@ -86,55 +113,56 @@
             [_replacements removeObjectForKey:longLabel];
         }
     }
-    OSSpinLockUnlock(&_lock);
+    pthread_mutex_unlock(&_mutex);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark DDLogFormatter
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+- (NSDateFormatter *)createDateFormatter {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [self configureDateFormatter:formatter];
+    return formatter;
+}
+
+- (void)configureDateFormatter:(NSDateFormatter *)dateFormatter {
+    [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss:SSS"];
+    [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
+
+    NSString *calendarIdentifier = NSCalendarIdentifierGregorian;
+
+    [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:calendarIdentifier]];
+}
+
 - (NSString *)stringFromDate:(NSDate *)date {
-    int32_t loggerCount = OSAtomicAdd32(1, &_atomicLoggerCount);
 
-    NSString *calendarIdentifier = nil;
-
-#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
-    calendarIdentifier = NSCalendarIdentifierGregorian;
-#else
-    calendarIdentifier = NSGregorianCalendar;
-#endif
-
-    if (loggerCount <= 1) {
+    NSDateFormatter *dateFormatter = nil;
+    if (_mode == DDDispatchQueueLogFormatterModeNonShareble) {
         // Single-threaded mode.
 
-        if (_threadUnsafeDateFormatter == nil) {
-            _threadUnsafeDateFormatter = [[NSDateFormatter alloc] init];
-            [_threadUnsafeDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-            [_threadUnsafeDateFormatter setDateFormat:_dateFormatString];
+        dateFormatter = _threadUnsafeDateFormatter;
+        if (dateFormatter == nil) {
+            dateFormatter = [self createDateFormatter];
+            _threadUnsafeDateFormatter = dateFormatter;
         }
-
-        [_threadUnsafeDateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:calendarIdentifier]];
-        return [_threadUnsafeDateFormatter stringFromDate:date];
     } else {
         // Multi-threaded mode.
         // NSDateFormatter is NOT thread-safe.
 
-        NSString *key = @"DispatchQueueLogFormatter_NSDateFormatter";
+        NSString *key = _dateFormatterKey;
 
         NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
-        NSDateFormatter *dateFormatter = threadDictionary[key];
+        dateFormatter = threadDictionary[key];
 
         if (dateFormatter == nil) {
-            dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-            [dateFormatter setDateFormat:_dateFormatString];
-
+            dateFormatter = [self createDateFormatter];
             threadDictionary[key] = dateFormatter;
         }
-
-        [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:calendarIdentifier]];
-        return [dateFormatter stringFromDate:date];
     }
+
+    return [dateFormatter stringFromDate:date];
 }
 
 - (NSString *)queueThreadLabelForLogMessage:(DDLogMessage *)logMessage {
@@ -160,7 +188,8 @@
             @"com.apple.root.high-priority",
             @"com.apple.root.low-overcommit-priority",
             @"com.apple.root.default-overcommit-priority",
-            @"com.apple.root.high-overcommit-priority"
+            @"com.apple.root.high-overcommit-priority",
+            @"com.apple.root.default-qos.overcommit"
         ];
 
         for (NSString * name in names) {
@@ -185,11 +214,11 @@
             fullLabel = logMessage->_threadName;
         }
 
-        OSSpinLockLock(&_lock);
+        pthread_mutex_lock(&_mutex);
         {
             abrvLabel = _replacements[fullLabel];
         }
-        OSSpinLockUnlock(&_lock);
+        pthread_mutex_unlock(&_mutex);
 
         if (abrvLabel) {
             queueThreadLabel = abrvLabel;
@@ -237,11 +266,65 @@
 }
 
 - (void)didAddToLogger:(id <DDLogger>  __attribute__((unused)))logger {
-    OSAtomicIncrement32(&_atomicLoggerCount);
+    NSAssert([_atomicLoggerCounter increment] <= 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
 }
 
 - (void)willRemoveFromLogger:(id <DDLogger> __attribute__((unused)))logger {
-    OSAtomicDecrement32(&_atomicLoggerCount);
+    [_atomicLoggerCounter decrement];
 }
+
+@end
+
+#pragma mark - DDAtomicCounter
+
+#define DD_OSATOMIC_API_DEPRECATED (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
+
+#if DD_OSATOMIC_API_DEPRECATED
+#import <stdatomic.h>
+#else
+#import <libkern/OSAtomic.h>
+#endif
+
+@interface DDAtomicCounter() {
+#if DD_OSATOMIC_API_DEPRECATED
+    _Atomic(int32_t) _value;
+#else
+    int32_t _value;
+#endif
+}
+@end
+
+@implementation DDAtomicCounter
+
+- (instancetype)initWithDefaultValue:(int32_t)defaultValue {
+    if ((self = [super init])) {
+        _value = defaultValue;
+    }
+    return self;
+}
+
+- (int32_t)value {
+    return _value;
+}
+
+#if DD_OSATOMIC_API_DEPRECATED
+- (int32_t)increment {
+    atomic_fetch_add_explicit(&_value, 1, memory_order_relaxed);
+    return _value;
+}
+
+- (int32_t)decrement {
+    atomic_fetch_sub_explicit(&_value, 1, memory_order_relaxed);
+    return _value;
+}
+#else
+- (int32_t)increment {
+    return OSAtomicIncrement32(&_value);
+}
+
+- (int32_t)decrement {
+    return OSAtomicDecrement32(&_value);
+}
+#endif
 
 @end

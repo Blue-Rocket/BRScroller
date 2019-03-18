@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2015, Deusty, LLC
+// Copyright (c) 2010-2019, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -32,7 +32,7 @@ extern const char* const kDDASLDDLogValue;
  * This class provides a logger for the Apple System Log facility.
  *
  * As described in the "Getting Started" page,
- * the traditional NSLog() function directs it's output to two places:
+ * the traditional NSLog() function directs its output to two places:
  *
  * - Apple System Log
  * - StdErr (if stderr is a TTY) so log statements show up in Xcode console
@@ -41,10 +41,15 @@ extern const char* const kDDASLDDLogValue;
  * However, if you instead choose to use file logging (for faster performance),
  * you may choose to use a file logger and a tty logger.
  **/
-
+API_DEPRECATED("Use DDOSLogger instead", macosx(10.4,10.12), ios(2.0,10.0), watchos(2.0,3.0), tvos(9.0,10.0))
 @interface DDASLLogger : DDAbstractLogger <DDLogger>
 
-+ (instancetype)sharedInstance;
+/**
+ *  Singleton method
+ *
+ *  @return the shared instance
+ */
+@property (class, readonly, strong) DDASLLogger *sharedInstance;
 
 // Inherited from DDAbstractLogger
 

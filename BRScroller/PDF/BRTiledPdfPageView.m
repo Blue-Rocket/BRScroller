@@ -322,7 +322,7 @@ static NSString * const kSnapshotDrawDelegate = @"BRSnapshotDrawDelegate";
 						imgLayer.position = tileRect.origin;
 						imgLayer.transform = CATransform3DMakeAffineTransform(invertScaleTransform);
 						imgLayer.opacity = 1.0f; // we don't want CATiledLayer to still render under this bitmap
-						imgLayer.delegate = [self snapshotDrawDelegate];
+						imgLayer.delegate = (id<CALayerDelegate>)[self snapshotDrawDelegate];
 						imgLayer.hidden = YES;
 						imgLayer.actions = [NSDictionary dictionaryWithObject:[NSNull null] forKey:@"contents"];
 						
